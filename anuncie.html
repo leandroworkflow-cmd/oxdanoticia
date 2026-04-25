@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Anuncie no Portal X - Alcance milhões de leitores brasileiros com sua marca.">
+<meta name="robots" content="index, follow">
+<title>Anuncie | Portal X</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e8171f;--black:#111;--gray-900:#222;--gray-600:#666;--gray-200:#e5e5e5;--gray-100:#f5f5f5;--white:#fff;--font-serif:'Merriweather',Georgia,serif;--font-sans:'Source Sans 3',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-sans);color:var(--gray-900);background:var(--white);line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+.container{max-width:1200px;margin:0 auto;padding:0 16px;}
+.site-header{background:#fff;border-bottom:3px solid var(--red);position:sticky;top:0;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+.header-inner{display:flex;align-items:center;padding:12px 0;}
+.logo-text{font-family:var(--font-serif);font-size:32px;font-weight:900;letter-spacing:-2px;color:var(--black);}
+.logo-text span{color:var(--red);}
+.logo-tagline{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1px;}
+.main-nav{background:var(--red);}
+.nav-inner{display:flex;overflow-x:auto;scrollbar-width:none;}
+.nav-inner a{color:#fff;font-size:13px;font-weight:600;text-transform:uppercase;padding:10px 14px;white-space:nowrap;display:block;}
+.page-header{background:var(--black);padding:60px 0;margin-bottom:40px;}
+.page-header h1{font-family:var(--font-serif);font-size:40px;font-weight:900;color:#fff;margin-bottom:12px;}
+.page-header p{font-size:18px;color:rgba(255,255,255,0.75);max-width:600px;}
+.breadcrumb{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;}
+.breadcrumb a{color:var(--red);}
+.page-content{padding-bottom:60px;}
+.page-content h2{font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--black);margin:40px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--red);}
+.page-content p{font-size:15px;color:#444;line-height:1.8;margin-bottom:14px;}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:32px 0;}
+.stat-card{background:var(--gray-100);padding:24px;border-radius:6px;text-align:center;border-top:3px solid var(--red);}
+.stat-number{font-family:var(--font-serif);font-size:36px;font-weight:900;color:var(--red);display:block;margin-bottom:4px;}
+.stat-label{font-size:13px;color:var(--gray-600);font-weight:600;}
+.formats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:24px 0;}
+.format-card{border:1px solid var(--gray-200);padding:24px;border-radius:6px;}
+.format-card h3{font-family:var(--font-serif);font-size:16px;font-weight:700;color:var(--black);margin-bottom:8px;}
+.format-card .size{font-size:13px;color:var(--red);font-weight:600;margin-bottom:8px;}
+.format-card p{font-size:14px;color:var(--gray-600);line-height:1.6;}
+.format-card .position{font-size:12px;color:#999;margin-top:8px;border-top:1px solid var(--gray-200);padding-top:8px;}
+.audience-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin:24px 0;}
+.audience-item{display:flex;align-items:center;gap:12px;background:var(--gray-100);padding:16px;border-radius:6px;}
+.audience-icon{font-size:24px;flex-shrink:0;}
+.audience-info h4{font-size:15px;font-weight:700;color:var(--black);margin-bottom:2px;}
+.audience-info p{font-size:13px;color:var(--gray-600);}
+.contact-cta{background:var(--red);padding:40px;border-radius:8px;text-align:center;margin:40px 0;color:#fff;}
+.contact-cta h2{font-family:var(--font-serif);font-size:28px;margin-bottom:12px;border:none;padding:0;color:#fff;}
+.contact-cta p{font-size:16px;opacity:0.9;margin-bottom:24px;}
+.contact-cta a{background:#fff;color:var(--red);padding:14px 32px;border-radius:4px;font-size:16px;font-weight:700;display:inline-block;}
+.footer-nav{background:#222;padding:30px 0;}
+.footer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;}
+.footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.15);}
+.footer-col ul{display:flex;flex-direction:column;gap:6px;}
+.footer-col ul li a{font-size:13px;color:#999;}.footer-col ul li a:hover{color:#fff;}
+.footer-bottom{background:#111;padding:16px 0;}
+.footer-bottom-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-logo{font-family:var(--font-serif);font-size:22px;font-weight:900;color:#fff;}
+.footer-logo span{color:var(--red);}
+.footer-copy{font-size:12px;color:#666;}
+@media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr);}.formats-grid{grid-template-columns:1fr;}.audience-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="container"><div class="header-inner"><a href="/oxdanoticia/"><div class="logo-text">Portal<span>X</span></div><div class="logo-tagline">Notícias em Tempo Real</div></a></div></div></header>
+<nav class="main-nav"><div class="container"><div class="nav-inner"><a href="/oxdanoticia/">Início</a><a href="/oxdanoticia/#">Brasil</a><a href="/oxdanoticia/#">Política</a><a href="/oxdanoticia/#">Economia</a><a href="/oxdanoticia/#">Esportes</a></div></div></nav>
+
+<div class="page-header"><div class="container"><div class="breadcrumb"><a href="/oxdanoticia/">Início</a> › Anuncie</div><h1>Anuncie no Portal X</h1><p>Alcance milhões de leitores brasileiros engajados com as principais notícias do país.</p></div></div>
+
+<div class="container"><div class="page-content">
+
+<h2>Por que anunciar no Portal X?</h2>
+<p>O Portal X é um dos portais de notícias de mais rápido crescimento no Brasil. Nossa audiência é formada por leitores ativos, engajados e interessados nos principais acontecimentos do país. Oferecemos uma plataforma ideal para marcas que desejam se comunicar com um público informado e qualificado.</p>
+
+<div class="stats-grid">
+  <div class="stat-card"><span class="stat-number">500K+</span><div class="stat-label">Pageviews mensais</div></div>
+  <div class="stat-card"><span class="stat-number">200K+</span><div class="stat-label">Visitantes únicos</div></div>
+  <div class="stat-card"><span class="stat-number">4min</span><div class="stat-label">Tempo médio no site</div></div>
+  <div class="stat-card"><span class="stat-number">60%</span><div class="stat-label">Acesso mobile</div></div>
+</div>
+
+<h2>Nossa Audiência</h2>
+<div class="audience-grid">
+  <div class="audience-item"><div class="audience-icon">👥</div><div class="audience-info"><h4>Perfil Demográfico</h4><p>Adultos entre 25 e 54 anos, classes A, B e C, distribuídos por todo o Brasil</p></div></div>
+  <div class="audience-item"><div class="audience-icon">🎓</div><div class="audience-info"><h4>Nível de Educação</h4><p>68% com ensino superior completo ou em andamento</p></div></div>
+  <div class="audience-item"><div class="audience-icon">💼</div><div class="audience-info"><h4>Perfil Profissional</h4><p>Profissionais, empresários, estudantes e tomadores de decisão</p></div></div>
+  <div class="audience-item"><div class="audience-icon">🗺️</div><div class="audience-info"><h4>Distribuição Geográfica</h4><p>São Paulo (35%), Rio de Janeiro (18%), Minas Gerais (12%), demais estados (35%)</p></div></div>
+</div>
+
+<h2>Formatos de Anúncio</h2>
+<div class="formats-grid">
+  <div class="format-card"><h3>Leaderboard</h3><div class="size">728×90 px</div><p>Banner horizontal de alto impacto, exibido no topo da página acima do menu de navegação.</p><div class="position">📍 Topo do site — alta visibilidade</div></div>
+  <div class="format-card"><h3>Retângulo Médio</h3><div class="size">300×250 px</div><p>O formato mais popular da internet. Exibido na sidebar e entre os blocos de notícias.</p><div class="position">📍 Sidebar e conteúdo</div></div>
+  <div class="format-card"><h3>Meia Página</h3><div class="size">300×600 px</div><p>Grande impacto visual na sidebar. Ideal para campanhas de branding e lançamentos.</p><div class="position">📍 Sidebar — grande destaque</div></div>
+  <div class="format-card"><h3>Billboard</h3><div class="size">970×250 px</div><p>Formato panorâmico de alto impacto exibido entre os blocos de notícias no conteúdo.</p><div class="position">📍 Meio do conteúdo</div></div>
+  <div class="format-card"><h3>Conteúdo Patrocinado</h3><div class="size">Artigo completo</div><p>Publireportagem produzida pela nossa equipe editorial, integrada naturalmente ao conteúdo.</p><div class="position">📍 Feed de notícias — marcado como patrocinado</div></div>
+  <div class="format-card"><h3>Newsletter Patrocinada</h3><div class="size">E-mail marketing</div><p>Inclusão da sua marca em nossa newsletter semanal enviada para nossa base de assinantes.</p><div class="position">📍 Newsletter semanal</div></div>
+</div>
+
+<h2>Como Anunciar</h2>
+<p>O Portal X utiliza o <strong>Google AdSense</strong> como plataforma principal de publicidade. Para anunciar automaticamente em nosso portal, basta criar uma campanha no <strong>Google Ads</strong> e segmentar nosso site.</p>
+<p>Para parcerias diretas, publipost, conteúdo patrocinado ou formatos especiais, entre em contato com nossa equipe comercial:</p>
+
+<div class="contact-cta">
+  <h2>Fale com nossa equipe comercial</h2>
+  <p>Solicite uma proposta personalizada e comece a alcançar nossos leitores hoje mesmo.</p>
+  <a href="mailto:comercial@portalx.com.br">comercial@portalx.com.br</a>
+</div>
+
+<p style="text-align:center;font-size:14px;color:#999;">Respondemos em até 24 horas úteis. Trabalhamos com contratos mensais e campanhas pontuais.</p>
+
+</div></div>
+
+<footer><div class="footer-nav"><div class="container"><div class="footer-grid">
+<div class="footer-col"><h4>Brasil</h4><ul><li><a href="#">Política</a></li><li><a href="#">Economia</a></li><li><a href="#">Segurança</a></li><li><a href="#">Saúde</a></li></ul></div>
+<div class="footer-col"><h4>Esportes</h4><ul><li><a href="#">Futebol</a></li><li><a href="#">Fórmula 1</a></li><li><a href="#">Olimpíadas</a></li><li><a href="#">Tênis</a></li></ul></div>
+<div class="footer-col"><h4>Entretenimento</h4><ul><li><a href="#">Cinema</a></li><li><a href="#">Música</a></li><li><a href="#">Streaming</a></li><li><a href="#">Famosos</a></li></ul></div>
+<div class="footer-col"><h4>Serviços</h4><ul><li><a href="#">Clima</a></li><li><a href="#">Câmbio</a></li><li><a href="#">Bolsa</a></li><li><a href="#">Concursos</a></li></ul></div>
+<div class="footer-col"><h4>Portal X</h4><ul><li><a href="sobre.html">Sobre nós</a></li><li><a href="anuncie.html">Anuncie</a></li><li><a href="privacidade.html">Privacidade</a></li><li><a href="termos.html">Termos</a></li></ul></div>
+</div></div></div>
+<div class="footer-bottom"><div class="container"><div class="footer-bottom-inner"><div class="footer-logo">Portal<span>X</span></div><div class="footer-copy">© 2026 Portal X. Todos os direitos reservados.</div></div></div></div>
+</footer>
+</body></html>

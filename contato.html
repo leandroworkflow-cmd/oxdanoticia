@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Entre em contato com o Portal X. Estamos disponíveis para dúvidas, sugestões, denúncias e parcerias comerciais.">
+<meta name="robots" content="index, follow">
+<title>Contato | Portal X</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e8171f;--black:#111;--gray-900:#222;--gray-600:#666;--gray-200:#e5e5e5;--gray-100:#f5f5f5;--white:#fff;--font-serif:'Merriweather',Georgia,serif;--font-sans:'Source Sans 3',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-sans);color:var(--gray-900);background:var(--white);line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+.container{max-width:1200px;margin:0 auto;padding:0 16px;}
+.site-header{background:#fff;border-bottom:3px solid var(--red);position:sticky;top:0;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+.header-inner{display:flex;align-items:center;padding:12px 0;}
+.logo-text{font-family:var(--font-serif);font-size:32px;font-weight:900;letter-spacing:-2px;color:var(--black);}
+.logo-text span{color:var(--red);}
+.logo-tagline{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1px;}
+.main-nav{background:var(--red);}
+.nav-inner{display:flex;overflow-x:auto;scrollbar-width:none;}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nav-inner a{color:#fff;font-size:13px;font-weight:600;text-transform:uppercase;padding:10px 14px;white-space:nowrap;display:block;}
+.nav-inner a:hover{background:rgba(0,0,0,0.2);}
+.page-header{background:var(--gray-100);padding:40px 0;border-bottom:1px solid var(--gray-200);margin-bottom:40px;}
+.page-header h1{font-family:var(--font-serif);font-size:36px;font-weight:900;color:var(--black);margin-bottom:8px;}
+.page-header p{font-size:16px;color:var(--gray-600);}
+.breadcrumb{font-size:13px;color:#999;margin-bottom:12px;}
+.breadcrumb a{color:var(--red);}
+.contact-layout{display:grid;grid-template-columns:1fr 400px;gap:40px;padding-bottom:60px;}
+
+/* INFO CARDS */
+.info-card{display:flex;align-items:flex-start;gap:16px;padding:20px;background:var(--gray-100);border-radius:8px;margin-bottom:16px;border-left:4px solid var(--red);}
+.info-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
+.info-content h3{font-size:15px;font-weight:700;color:var(--black);margin-bottom:4px;}
+.info-content p{font-size:14px;color:var(--gray-600);line-height:1.6;}
+.info-content a{color:var(--red);font-weight:600;}
+
+/* MAPA */
+.mapa-wrap{border-radius:8px;overflow:hidden;margin-bottom:16px;border:1px solid var(--gray-200);}
+
+/* HORÁRIO */
+.horario-box{background:#fff;border:1px solid var(--gray-200);border-radius:8px;padding:20px;margin-top:16px;}
+.horario-box h3{font-family:var(--font-serif);font-size:16px;font-weight:700;margin-bottom:12px;color:var(--black);}
+.horario-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-200);font-size:14px;}
+.horario-item:last-child{border-bottom:none;}
+.horario-dia{color:var(--gray-600);}
+.horario-hora{font-weight:600;color:var(--black);}
+.horario-hora.fechado{color:#999;}
+
+/* FORMULÁRIO */
+.form-card{background:#fff;border:1px solid var(--gray-200);border-radius:8px;padding:28px;position:sticky;top:90px;}
+.form-card h2{font-family:var(--font-serif);font-size:20px;font-weight:700;color:var(--black);margin-bottom:6px;}
+.form-card p{font-size:14px;color:var(--gray-600);margin-bottom:20px;}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:6px;}
+.form-group input,
+.form-group select,
+.form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--gray-200);border-radius:4px;font-size:14px;font-family:var(--font-sans);outline:none;transition:border-color 0.15s;color:var(--gray-900);background:#fff;}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{border-color:var(--red);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.form-required{color:var(--red);}
+.submit-btn{width:100%;background:var(--red);color:#fff;border:none;padding:14px;font-size:15px;font-weight:700;border-radius:4px;cursor:pointer;font-family:var(--font-sans);transition:background 0.15s;}
+.submit-btn:hover{background:#b51117;}
+.success-msg{display:none;background:#e8f5e9;border:1px solid #4caf50;padding:16px;border-radius:4px;color:#2e7d32;font-size:14px;text-align:center;margin-top:16px;}
+
+/* SOCIAL */
+.social-section{margin-top:24px;}
+.social-section h3{font-size:15px;font-weight:700;color:var(--black);margin-bottom:12px;}
+.social-links{display:flex;gap:10px;flex-wrap:wrap;}
+.social-link{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:4px;font-size:13px;font-weight:600;color:#fff;transition:opacity 0.15s;}
+.social-link:hover{opacity:0.85;color:#fff;}
+.social-whatsapp{background:#25D366;}
+.social-instagram{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+.social-facebook{background:#1877F2;}
+.social-twitter{background:#000;}
+
+/* FOOTER */
+.footer-nav{background:#222;padding:30px 0;}
+.footer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;}
+.footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;color:#fff;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.15);}
+.footer-col ul{display:flex;flex-direction:column;gap:6px;}
+.footer-col ul li a{font-size:13px;color:#999;}
+.footer-col ul li a:hover{color:#fff;}
+.footer-bottom{background:#111;padding:16px 0;}
+.footer-bottom-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-logo{font-family:var(--font-serif);font-size:22px;font-weight:900;color:#fff;}
+.footer-logo span{color:var(--red);}
+.footer-copy{font-size:12px;color:#666;}
+
+@media(max-width:900px){.contact-layout{grid-template-columns:1fr;}.form-card{position:static;}}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/oxdanoticia/">
+        <div class="logo-text">Portal<span>X</span></div>
+        <div class="logo-tagline">Notícias em Tempo Real</div>
+      </a>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/oxdanoticia/">Início</a>
+      <a href="/oxdanoticia/#">Brasil</a>
+      <a href="/oxdanoticia/#">Política</a>
+      <a href="/oxdanoticia/#">Economia</a>
+      <a href="/oxdanoticia/#">Esportes</a>
+      <a href="/oxdanoticia/#">Entretenimento</a>
+      <a href="/oxdanoticia/#">Tecnologia</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="/oxdanoticia/">Início</a> › Contato</div>
+    <h1>Fale Conosco</h1>
+    <p>Nossa equipe está pronta para atender você. Entre em contato!</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="contact-layout">
+
+    <!-- INFORMAÇÕES -->
+    <div>
+      <div class="info-card">
+        <div class="info-icon">📞</div>
+        <div class="info-content">
+          <h3>Telefone / WhatsApp</h3>
+          <p><a href="https://wa.me/5531983733041">(31) 98373-3041</a></p>
+          <p style="font-size:13px;margin-top:4px;">Clique para abrir no WhatsApp</p>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon">📧</div>
+        <div class="info-content">
+          <h3>E-mail</h3>
+          <p><a href="mailto:oxadanoticia@outlook.com">oxadanoticia@outlook.com</a></p>
+          <p style="font-size:13px;margin-top:4px;">Respondemos em até 24 horas úteis</p>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon">📍</div>
+        <div class="info-content">
+          <h3>Endereço</h3>
+          <p>Rua Imperatriz Leopoldina, 205<br>Chácaras Del Rey<br>Santa Luzia — MG</p>
+          <p style="margin-top:6px;"><a href="https://maps.google.com/?q=Rua+Imperatriz+Leopoldina+205+Chacaras+Del+Rey+Santa+Luzia+MG" target="_blank">Ver no Google Maps →</a></p>
+        </div>
+      </div>
+
+      <!-- MAPA -->
+      <div class="mapa-wrap">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3749.5!2d-43.8955!3d-19.7654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDQ1JzU1LjQiUyA0M8KwNTMnNDMuOCJX!5e0!3m2!1spt-BR!2sbr!4v1620000000000!5m2!1spt-BR!2sbr"
+          width="100%" height="240" style="border:0;display:block;" allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+
+      <!-- HORÁRIO -->
+      <div class="horario-box">
+        <h3>🕐 Horário de Atendimento</h3>
+        <div class="horario-item"><span class="horario-dia">Segunda-feira</span><span class="horario-hora">9h às 18h</span></div>
+        <div class="horario-item"><span class="horario-dia">Terça-feira</span><span class="horario-hora">9h às 18h</span></div>
+        <div class="horario-item"><span class="horario-dia">Quarta-feira</span><span class="horario-hora">9h às 18h</span></div>
+        <div class="horario-item"><span class="horario-dia">Quinta-feira</span><span class="horario-hora">9h às 18h</span></div>
+        <div class="horario-item"><span class="horario-dia">Sexta-feira</span><span class="horario-hora">9h às 18h</span></div>
+        <div class="horario-item"><span class="horario-dia">Sábado</span><span class="horario-hora fechado">Fechado</span></div>
+        <div class="horario-item"><span class="horario-dia">Domingo</span><span class="horario-hora fechado">Fechado</span></div>
+      </div>
+
+      <!-- REDES SOCIAIS -->
+      <div class="social-section">
+        <h3>Siga o Portal X nas redes sociais</h3>
+        <div class="social-links">
+          <a href="https://wa.me/5531983733041" class="social-link social-whatsapp" target="_blank">💬 WhatsApp</a>
+          <a href="#" class="social-link social-instagram" target="_blank">📷 Instagram</a>
+          <a href="#" class="social-link social-facebook" target="_blank">👍 Facebook</a>
+          <a href="#" class="social-link social-twitter" target="_blank">𝕏 Twitter</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div>
+      <div class="form-card">
+        <h2>Envie sua mensagem</h2>
+        <p>Preencha o formulário e entraremos em contato em breve.</p>
+
+        <form id="contactForm" onsubmit="enviarForm(event)">
+          <div class="form-group">
+            <label>Nome completo <span class="form-required">*</span></label>
+            <input type="text" id="nome" placeholder="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label>E-mail <span class="form-required">*</span></label>
+            <input type="email" id="email" placeholder="seu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Telefone</label>
+            <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+          </div>
+          <div class="form-group">
+            <label>Assunto <span class="form-required">*</span></label>
+            <select id="assunto" required>
+              <option value="">Selecione um assunto</option>
+              <option value="Dúvida">Dúvida</option>
+              <option value="Sugestão de pauta">Sugestão de pauta</option>
+              <option value="Denúncia">Denúncia / Informação</option>
+              <option value="Anunciar">Quero anunciar</option>
+              <option value="Parceria">Parceria comercial</option>
+              <option value="Correção">Correção de matéria</option>
+              <option value="Imprensa">Imprensa</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mensagem <span class="form-required">*</span></label>
+            <textarea id="mensagem" placeholder="Escreva sua mensagem aqui..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Enviar Mensagem ✉️</button>
+        </form>
+
+        <div class="success-msg" id="successMsg">
+          ✅ Mensagem enviada com sucesso! Entraremos em contato em breve.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-nav">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col"><h4>Brasil</h4><ul><li><a href="#">Política</a></li><li><a href="#">Economia</a></li><li><a href="#">Segurança</a></li><li><a href="#">Saúde</a></li></ul></div>
+        <div class="footer-col"><h4>Esportes</h4><ul><li><a href="#">Futebol</a></li><li><a href="#">Fórmula 1</a></li><li><a href="#">Olimpíadas</a></li><li><a href="#">Tênis</a></li></ul></div>
+        <div class="footer-col"><h4>Entretenimento</h4><ul><li><a href="#">Cinema</a></li><li><a href="#">Música</a></li><li><a href="#">Streaming</a></li><li><a href="#">Famosos</a></li></ul></div>
+        <div class="footer-col"><h4>Serviços</h4><ul><li><a href="#">Clima</a></li><li><a href="#">Câmbio</a></li><li><a href="#">Bolsa</a></li><li><a href="#">Concursos</a></li></ul></div>
+        <div class="footer-col"><h4>Portal X</h4><ul>
+          <li><a href="sobre.html">Sobre nós</a></li>
+          <li><a href="anuncie.html">Anuncie</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+          <li><a href="termos.html">Termos</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-inner">
+        <div class="footer-logo">Portal<span>X</span></div>
+        <div class="footer-copy">© 2026 Portal X. Todos os direitos reservados.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function enviarForm(e) {
+  e.preventDefault();
+  const nome = document.getElementById('nome').value;
+  const email = document.getElementById('email').value;
+  const assunto = document.getElementById('assunto').value;
+  const mensagem = document.getElementById('mensagem').value;
+  const telefone = document.getElementById('telefone').value;
+
+  // Abre o WhatsApp com a mensagem
+  const texto = `Olá! Mensagem recebida pelo Portal X:\n\n👤 Nome: ${nome}\n📧 E-mail: ${email}\n📞 Telefone: ${telefone||'Não informado'}\n📋 Assunto: ${assunto}\n\n💬 Mensagem:\n${mensagem}`;
+  const whatsapp = `https://wa.me/5531983733041?text=${encodeURIComponent(texto)}`;
+
+  // Mostra mensagem de sucesso
+  document.getElementById('contactForm').style.opacity = '0.5';
+  document.getElementById('successMsg').style.display = 'block';
+
+  // Abre WhatsApp após 1 segundo
+  setTimeout(() => { window.open(whatsapp, '_blank'); }, 1000);
+}
+</script>
+
+</body>
+</html>
