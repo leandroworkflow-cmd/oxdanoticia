@@ -406,7 +406,12 @@ const AUTORES_BIO = {
   'Mariana Souza':        { bio: 'Jornalista cultural e de entretenimento. Cobre cinema, música e comportamento com olhar crítico e aprofundado.', genero: 'F', cor: '#D35400' },
   'Felipe Cardoso':       { bio: 'Repórter de tecnologia e inovação. Acompanha startups, inteligência artificial e o universo digital.', genero: 'M', cor: '#27AE60' },
   'Juliana Moreira':      { bio: 'Jornalista esportiva com passagem pela cobertura de Copa do Mundo e Jogos Olímpicos.', genero: 'F', cor: '#E91E63' },
-  'Redacao Portal X':     { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' }
+  'Redacao Portal X':     { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
+  'Redação Portal X':    { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
+  'Lionor VS2':          { bio: 'Jornalista sênior com mais de 10 anos de experiência em cobertura política e econômica.', genero: 'M', cor: '#C0392B' },
+  'Carlos Mendonça':     { bio: 'Repórter de economia e mercado financeiro. Cobre o setor há 8 anos.', genero: 'M', cor: '#2980B9' },
+  'Mariana Souza':       { bio: 'Jornalista cultural e de entretenimento. Cobre cinema, música e comportamento.', genero: 'F', cor: '#D35400' },
+  'Juliana Moreira':     { bio: 'Jornalista esportiva com passagem pela cobertura de Copa do Mundo e Olimpíadas.', genero: 'F', cor: '#E91E63' }
 };
 
 function gerarAvatarSVG(genero, cor) {
@@ -565,7 +570,9 @@ async function carregarNoticia() {
     const corpo = data.conteudo || '';
     const isHTML = corpo.includes('<p>') || corpo.includes('<h2>');
     if (isHTML) {
-      document.getElementById('artBody').innerHTML = corpo;
+      // Remove subtítulos de Conclusão
+    corpo = corpo.replace(/<h[23][^>]*>\s*(conclus[aã]o|conclus[oõ]es|consider[aã][çc][oõ]es finais|palavras finais)\s*<\/h[23]>/gi, '');
+    document.getElementById('artBody').innerHTML = corpo;
     } else {
       const paragrafos = corpo.split('\n').filter(p => p.trim());
       document.getElementById('artBody').innerHTML = paragrafos.map(p => {
@@ -592,10 +599,12 @@ async function carregarNoticia() {
 }
 
 function extrairAutor(conteudo) {
-  if (!conteudo) return 'Redação Portal X';
-  const match = conteudo.match(/—\s*([^|<\n]+)\s*\|/);
+  if (!conteudo) return 'Redacao Portal X';
+  const match = conteudo.match(/—\s*<strong>([^<]+)<\/strong>/);
   if (match) return match[1].trim();
-  return 'Redação Portal X';
+  const match2 = conteudo.match(/—\s*([^|<\n]+)\s*\|/);
+  if (match2) return match2[1].trim();
+  return 'Redacao Portal X';
 }
 
 function mostrarErro() {
