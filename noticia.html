@@ -399,15 +399,26 @@ const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const AUTORES_BIO = {
-  'Lionor VS2':           { bio: 'Jornalista sênior com mais de 10 anos de experiência em cobertura política e econômica. Especialista em análise de conjuntura nacional.', inicial: 'L' },
-  'Carlos Mendonça':      { bio: 'Repórter de economia e mercado financeiro. Formado em Jornalismo pela USP, cobre o setor há 8 anos.', inicial: 'C' },
-  'Ana Paula Figueiredo': { bio: 'Editora de política e relações institucionais. Atuou em grandes veículos nacionais antes de integrar o Portal X.', inicial: 'A' },
-  'Roberto Dias':         { bio: 'Correspondente e analista de cenário internacional. Especialista em geopolítica e relações exteriores.', inicial: 'R' },
-  'Mariana Souza':        { bio: 'Jornalista cultural e de entretenimento. Cobre cinema, música e comportamento com olhar crítico e aprofundado.', inicial: 'M' },
-  'Felipe Cardoso':       { bio: 'Repórter de tecnologia e inovação. Acompanha startups, inteligência artificial e o universo digital.', inicial: 'F' },
-  'Juliana Moreira':      { bio: 'Jornalista esportiva com passagem pela cobertura de Copa do Mundo e Jogos Olímpicos.', inicial: 'J' },
-  'Redação Portal X':     { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', inicial: 'P' }
+  'Lionor VS2':           { bio: 'Jornalista sênior com mais de 10 anos de experiência em cobertura política e econômica. Especialista em análise de conjuntura nacional.', genero: 'M', cor: '#C0392B' },
+  'Carlos Mendonca':      { bio: 'Repórter de economia e mercado financeiro. Formado em Jornalismo, cobre o setor há 8 anos.', genero: 'M', cor: '#2980B9' },
+  'Ana Paula Figueiredo': { bio: 'Editora de política e relações institucionais. Atuou em grandes veículos nacionais antes de integrar o Portal X.', genero: 'F', cor: '#8E44AD' },
+  'Roberto Dias':         { bio: 'Correspondente e analista de cenário internacional. Especialista em geopolítica e relações exteriores.', genero: 'M', cor: '#16A085' },
+  'Mariana Souza':        { bio: 'Jornalista cultural e de entretenimento. Cobre cinema, música e comportamento com olhar crítico e aprofundado.', genero: 'F', cor: '#D35400' },
+  'Felipe Cardoso':       { bio: 'Repórter de tecnologia e inovação. Acompanha startups, inteligência artificial e o universo digital.', genero: 'M', cor: '#27AE60' },
+  'Juliana Moreira':      { bio: 'Jornalista esportiva com passagem pela cobertura de Copa do Mundo e Jogos Olímpicos.', genero: 'F', cor: '#E91E63' },
+  'Redacao Portal X':     { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' }
 };
+
+function gerarAvatarSVG(genero, cor) {
+  const encoded = encodeURIComponent;
+  if (genero === 'F') {
+    return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><circle cx="21" cy="15" r="8" fill="#FDBCB4"/><ellipse cx="21" cy="9" rx="9" ry="6" fill="#4A2C0A"/><rect x="12" y="9" width="4" height="12" rx="2" fill="#4A2C0A"/><rect x="26" y="9" width="4" height="12" rx="2" fill="#4A2C0A"/><ellipse cx="21" cy="33" rx="11" ry="8" fill="${cor}" opacity="0.85"/><path d="M16 23 Q21 27 26 23" stroke="white" stroke-width="1.5" fill="none"/></svg>`;
+  } else if (genero === 'M') {
+    return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><circle cx="21" cy="15" r="8" fill="#FDBCB4"/><ellipse cx="21" cy="9" rx="8" ry="4" fill="#2C1810"/><rect x="13" y="9" width="16" height="5" rx="1" fill="#2C1810"/><ellipse cx="21" cy="33" rx="11" ry="8" fill="${cor}" opacity="0.85"/><path d="M19 23 L21 29 L23 23" fill="white" opacity="0.9"/><line x1="16" y1="23" x2="26" y2="23" stroke="white" stroke-width="1.5"/></svg>`;
+  } else {
+    return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><text x="21" y="27" text-anchor="middle" font-size="18" font-weight="bold" fill="white" font-family="serif">X</text></svg>`;
+  }
+}
 
 const TAGS_CATEGORIA = {
   'Brasil':         ['brasil','política','governo','sociedade','cidadania'],
@@ -479,9 +490,10 @@ function renderTags(categoria) {
 }
 
 function renderAuthorBio(autor) {
-  const bio = AUTORES_BIO[autor] || AUTORES_BIO['Redação Portal X'];
+  const bio = AUTORES_BIO[autor] || AUTORES_BIO['Redacao Portal X'] || { bio: 'Jornalista do Portal X.', genero: 'N', cor: '#E8171F' };
+  const svgAvatar = gerarAvatarSVG(bio.genero, bio.cor);
   document.getElementById('artAuthorBio').innerHTML = `
-    <div class="author-bio-avatar">${bio.inicial}</div>
+    <div class="author-bio-avatar" style="background:none;padding:0;">${svgAvatar}</div>
     <div class="author-bio-info">
       <h4>${autor}</h4>
       <span>Jornalista | Portal X</span>
@@ -534,7 +546,9 @@ async function carregarNoticia() {
     document.getElementById('artData').textContent    = formatarData(data.criado_em);
     document.getElementById('artReadTime').textContent = calcularLeitura(data.conteudo||'');
     document.getElementById('artAuthor').textContent  = autor;
-    document.getElementById('artAuthorAvatar').textContent = (AUTORES_BIO[autor]||AUTORES_BIO['Redação Portal X']).inicial;
+    const bioData = AUTORES_BIO[autor] || AUTORES_BIO['Redacao Portal X'] || { genero: 'N', cor: '#E8171F' };
+  const avatarEl = document.getElementById('artAuthorAvatar');
+  if (avatarEl) { avatarEl.innerHTML = gerarAvatarSVG(bioData.genero, bioData.cor); avatarEl.style.background = 'none'; avatarEl.style.padding = '0'; }
 
     // Descrição (primeiro parágrafo limpo)
     const primParag = (data.conteudo||'').replace(/<[^>]*>/g,'').substring(0,200);
