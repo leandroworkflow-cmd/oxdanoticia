@@ -567,12 +567,11 @@ async function carregarNoticia() {
     }
 
     // Corpo — HTML ou texto
-    const corpo = data.conteudo || '';
+    let corpo = data.conteudo || '';
     const isHTML = corpo.includes('<p>') || corpo.includes('<h2>');
     if (isHTML) {
-      // Remove subtítulos de Conclusão
-    corpo = corpo.replace(/<h[23][^>]*>\s*(conclus[aã]o|conclus[oõ]es|consider[aã][çc][oõ]es finais|palavras finais)\s*<\/h[23]>/gi, '');
-    document.getElementById('artBody').innerHTML = corpo;
+      corpo = corpo.replace(/<h[23][^>]*>\s*(conclus[aã]o|conclus[oõ]es|consider[aã][çc][oõ]es finais|palavras finais)\s*<\/h[23]>/gi, '');
+      document.getElementById('artBody').innerHTML = corpo;
     } else {
       const paragrafos = corpo.split('\n').filter(p => p.trim());
       document.getElementById('artBody').innerHTML = paragrafos.map(p => {
