@@ -128,7 +128,7 @@ img{max-width:100%;display:block;}
 
 /* AUTHOR BIO */
 .author-bio{margin:32px 0;padding:24px;background:var(--gray-100);border-radius:6px;display:flex;gap:20px;align-items:flex-start;border:1px solid var(--gray-200);}
-.author-bio-avatar{width:72px;height:72px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:700;font-family:var(--font-serif);flex-shrink:0;}
+.author-bio-avatar{width:72px;height:72px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:700;font-family:var(--font-serif);flex-shrink:0;overflow:hidden;}
 .author-bio-info h4{font-size:16px;font-weight:700;color:var(--black);margin-bottom:2px;}
 .author-bio-info span{font-size:12px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
 .author-bio-info p{font-size:14px;color:var(--gray-600);line-height:1.6;margin-top:8px;}
@@ -414,15 +414,44 @@ const AUTORES_BIO = {
   'Juliana Moreira':     { bio: 'Jornalista esportiva com passagem pela cobertura de Copa do Mundo e Olimpíadas.', genero: 'F', cor: '#E91E63' }
 };
 
-function gerarAvatarSVG(genero, cor) {
-  const encoded = encodeURIComponent;
+// Mapa de fotos dos autores
+const FOTOS_AUTORES = {
+  'Lionor VS2':           '/oxdanoticia/autor-lionor.jpg',
+  'Carlos Mendonca':      '/oxdanoticia/autor-carlos.jpg',
+  'Carlos Mendonça':      '/oxdanoticia/autor-carlos.jpg',
+  'Ana Paula Figueiredo': '/oxdanoticia/autor-ana.jpg',
+  'Roberto Dias':         '/oxdanoticia/autor-roberto.jpg',
+  'Mariana Souza':        '/oxdanoticia/autor-mariana.jpg',
+  'Felipe Cardoso':       '/oxdanoticia/autor-felipe.jpg',
+  'Juliana Moreira':      '/oxdanoticia/autor-juliana.jpg',
+  'Redacao Portal X':     '/oxdanoticia/autor-redacao.jpg',
+  'Redação Portal X':     '/oxdanoticia/autor-redacao.jpg'
+};
+
+function gerarAvatarSVG(genero, cor, autor) {
+  const foto = autor ? FOTOS_AUTORES[autor] : null;
+  if (foto) {
+    return `<img src="${foto}" alt="${autor}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;display:block;" onerror="this.outerHTML=gerarAvatarFallback('${genero}','${cor}')">`;
+  }
+  return gerarAvatarFallback(genero, cor);
+}
+
+// Foto grande na bio
+function gerarAvatarBioSVG(genero, cor, autor) {
+  const foto = autor ? FOTOS_AUTORES[autor] : null;
+  if (foto) {
+    return `<img src="${foto}" alt="${autor}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;" onerror="this.style.display='none'">`;
+  }
+  return gerarAvatarFallback(genero, cor);
+}
+
+function gerarAvatarFallback(genero, cor) {
   if (genero === 'F') {
     return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><circle cx="21" cy="15" r="8" fill="#FDBCB4"/><ellipse cx="21" cy="9" rx="9" ry="6" fill="#4A2C0A"/><rect x="12" y="9" width="4" height="12" rx="2" fill="#4A2C0A"/><rect x="26" y="9" width="4" height="12" rx="2" fill="#4A2C0A"/><ellipse cx="21" cy="33" rx="11" ry="8" fill="${cor}" opacity="0.85"/><path d="M16 23 Q21 27 26 23" stroke="white" stroke-width="1.5" fill="none"/></svg>`;
   } else if (genero === 'M') {
     return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><circle cx="21" cy="15" r="8" fill="#FDBCB4"/><ellipse cx="21" cy="9" rx="8" ry="4" fill="#2C1810"/><rect x="13" y="9" width="16" height="5" rx="1" fill="#2C1810"/><ellipse cx="21" cy="33" rx="11" ry="8" fill="${cor}" opacity="0.85"/><path d="M19 23 L21 29 L23 23" fill="white" opacity="0.9"/><line x1="16" y1="23" x2="26" y2="23" stroke="white" stroke-width="1.5"/></svg>`;
-  } else {
-    return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><text x="21" y="27" text-anchor="middle" font-size="18" font-weight="bold" fill="white" font-family="serif">X</text></svg>`;
   }
+  return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><text x="21" y="27" text-anchor="middle" font-size="18" font-weight="bold" fill="white" font-family="serif">X</text></svg>`;
 }
 
 const TAGS_CATEGORIA = {
@@ -496,7 +525,7 @@ function renderTags(categoria) {
 
 function renderAuthorBio(autor) {
   const bio = AUTORES_BIO[autor] || AUTORES_BIO['Redacao Portal X'] || { bio: 'Jornalista do Portal X.', genero: 'N', cor: '#E8171F' };
-  const svgAvatar = gerarAvatarSVG(bio.genero, bio.cor);
+  const svgAvatar = gerarAvatarBioSVG(bio.genero, bio.cor, autor);
   document.getElementById('artAuthorBio').innerHTML = `
     <div class="author-bio-avatar" style="background:none;padding:0;">${svgAvatar}</div>
     <div class="author-bio-info">
@@ -553,7 +582,7 @@ async function carregarNoticia() {
     document.getElementById('artAuthor').textContent  = autor;
     const bioData = AUTORES_BIO[autor] || AUTORES_BIO['Redacao Portal X'] || { genero: 'N', cor: '#E8171F' };
   const avatarEl = document.getElementById('artAuthorAvatar');
-  if (avatarEl) { avatarEl.innerHTML = gerarAvatarSVG(bioData.genero, bioData.cor); avatarEl.style.background = 'none'; avatarEl.style.padding = '0'; }
+  if (avatarEl) { avatarEl.innerHTML = gerarAvatarSVG(bioData.genero, bioData.cor, autor); avatarEl.style.background = 'none'; avatarEl.style.padding = '0'; }
 
     // Descrição (primeiro parágrafo limpo)
     const primParag = (data.conteudo||'').replace(/<[^>]*>/g,'').substring(0,200);
