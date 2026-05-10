@@ -3,294 +3,319 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Portal X - As principais notícias do Brasil e do mundo em tempo real.">
+<meta name="description" content="O X da Notícia - As principais notícias do Brasil e do mundo em tempo real. Política, economia, esportes, entretenimento e muito mais.">
+<meta name="keywords" content="notícias, brasil, mundo, política, economia, esportes, entretenimento">
 <meta name="robots" content="index, follow">
-<meta property="og:title" content="Portal X - Notícias em Tempo Real">
+<meta property="og:title" content="O X da Notícia - Informação em Tempo Real">
+<meta property="og:description" content="As principais notícias do Brasil e do mundo em tempo real.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://leandroworkflow-cmd.github.io/oxdanoticia">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://leandroworkflow-cmd.github.io/oxdanoticia">
-<title>Portal X - Notícias em Tempo Real</title>
+<title>O X da Notícia - Informação em Tempo Real</title>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"O X da Notícia","url":"https://leandroworkflow-cmd.github.io/oxdanoticia"}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root {
-  --red: #e8171f; --red-dark: #b51117; --black: #111111; --gray-900: #222;
-  --gray-800: #333; --gray-600: #666; --gray-400: #999; --gray-200: #e5e5e5;
-  --gray-100: #f5f5f5; --white: #fff; --blue: #0066cc; --green: #1a8a34;
-  --orange: #e67e00; --font-serif: 'Merriweather', Georgia, serif;
-  --font-sans: 'Source Sans 3', sans-serif; --max-width: 1200px; --transition: 0.15s ease;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; scroll-behavior: smooth; }
-body { font-family: var(--font-sans); color: var(--gray-900); background: var(--white); -webkit-font-smoothing: antialiased; }
-a { text-decoration: none; color: inherit; }
-ul { list-style: none; }
-.container { max-width: var(--max-width); margin: 0 auto; padding: 0 16px; }
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Source Sans 3','Helvetica Neue',sans-serif;background:#f0f0f0;color:#111;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+ul{list-style:none;}
 
-.topbar { background: var(--gray-900); color: var(--gray-400); font-size: 12px; padding: 6px 0; }
-.topbar-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.topbar-links { display: flex; gap: 16px; }
-.topbar-links a { color: var(--gray-400); }
-.topbar-links a:hover { color: var(--white); }
+/* HEADER */
+.header{background:#fff;border-bottom:1px solid #e0e0e0;}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #f0f0f0;}
+.menu-btn{display:flex;align-items:center;gap:6px;font-size:13px;color:#333;font-weight:500;cursor:pointer;}
+.menu-icon{display:flex;flex-direction:column;gap:4px;}
+.menu-icon span{display:block;width:18px;height:2px;background:#333;border-radius:1px;}
+.logo-center{text-align:center;}
+.logo-main{font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1;}
+.logo-main .ox{color:#e8171f;}
+.logo-main .resto{color:#111;}
+.logo-tagline{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:2px;margin-top:2px;}
+.search-area{display:flex;align-items:center;gap:8px;}
+.search-area input{border:none;border-bottom:1.5px solid #ddd;padding:6px 0;font-size:13px;width:140px;outline:none;color:#333;background:transparent;font-family:inherit;}
+.search-area input:focus{border-color:#e8171f;}
+.search-btn{background:none;border:none;cursor:pointer;font-size:16px;color:#666;}
 
-.site-header { background: var(--white); border-bottom: 3px solid var(--red); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; gap: 16px; }
-.logo-text { font-family: var(--font-serif); font-size: 36px; font-weight: 900; letter-spacing: -2px; color: var(--black); line-height: 1; }
-.logo-text span { color: var(--red); }
-.logo-tagline { font-size: 10px; color: var(--gray-600); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
-.header-ad { flex: 1; max-width: 728px; height: 90px; background: var(--gray-100); border: 1px dashed var(--gray-200); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--gray-400); }
-.header-search { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.header-search input { border: 1px solid var(--gray-200); padding: 8px 12px; font-size: 14px; font-family: var(--font-sans); border-radius: 4px; width: 200px; outline: none; }
-.header-search input:focus { border-color: var(--red); }
-.search-btn { background: var(--red); color: var(--white); border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+.nav-cats{display:flex;align-items:center;gap:0;padding:0 24px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid #e8e8e8;}
+.nav-cats::-webkit-scrollbar{display:none;}
+.nav-cat{padding:11px 14px;font-size:13px;font-weight:500;white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.15s;cursor:pointer;display:block;}
+.nav-cat:hover,.nav-cat.active{border-color:#e8171f;color:#e8171f;}
+.nav-cat.c-red{color:#e8171f;}
+.nav-cat.c-blue{color:#0066cc;}
+.nav-cat.c-green{color:#1a8a34;}
+.nav-cat.c-orange{color:#e67e00;}
+.nav-cat.c-purple{color:#6b2fa0;}
+.nav-cat.c-pink{color:#c0246e;}
+.nav-cat.c-teal{color:#007a7a;}
 
-.main-nav { background: var(--red); }
-.nav-inner { display: flex; align-items: center; overflow-x: auto; scrollbar-width: none; }
-.nav-inner::-webkit-scrollbar { display: none; }
-.nav-inner a { color: var(--white); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; white-space: nowrap; transition: background var(--transition); display: block; }
-.nav-inner a:hover, .nav-inner a.active { background: rgba(0,0,0,0.2); color: var(--white); }
+/* BREAKING */
+.breaking{background:#e8171f;padding:7px 24px;display:flex;align-items:center;gap:10px;display:none;}
+.breaking-badge{background:#fff;color:#e8171f;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:2px 8px;border-radius:2px;white-space:nowrap;flex-shrink:0;}
+.breaking-text{font-size:12px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-.breaking { background: var(--black); color: var(--white); padding: 8px 0; overflow: hidden; display: none; }
-.breaking-inner { display: flex; align-items: center; gap: 12px; }
-.breaking-badge { background: var(--red); color: var(--white); font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
-.breaking-text { font-size: 13px; color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* AD TOP */
+.ad-top{background:#fff;border-bottom:1px solid #e8e8e8;padding:10px 0;text-align:center;}
+.ad-box{display:inline-flex;align-items:center;justify-content:center;background:#f5f5f5;border:1px dashed #ddd;border-radius:3px;height:80px;width:728px;max-width:calc(100% - 48px);font-size:11px;color:#bbb;position:relative;}
+.ad-box::before{content:'Publicidade';position:absolute;top:5px;right:8px;font-size:9px;text-transform:uppercase;color:#ccc;}
 
-.main-content { padding: 20px 0; }
-.content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
-
-.section-label { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 3px solid var(--gray-200); position: relative; }
-.section-label::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 60px; height: 3px; background: var(--red); }
-.section-label h2 { font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--gray-900); }
-.more-link { margin-left: auto; font-size: 12px; color: var(--red); font-weight: 600; text-transform: uppercase; }
+/* MAIN */
+.main{max-width:1200px;margin:0 auto;padding:16px 24px;}
 
 /* HERO */
-.hero-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 2px; margin-bottom: 24px; }
-.hero-main { grid-column: 1/2; grid-row: 1/3; position: relative; overflow: hidden; background: var(--gray-200); min-height: 360px; cursor: pointer; }
-.hero-main img { width: 100%; height: 360px; object-fit: cover; display: block; transition: transform 0.3s; }
-.hero-main:hover img { transform: scale(1.03); }
-.hero-side { position: relative; overflow: hidden; background: var(--gray-200); min-height: 176px; cursor: pointer; }
-.hero-side img { width: 100%; height: 176px; object-fit: cover; display: block; transition: transform 0.3s; }
-.hero-side:hover img { transform: scale(1.03); }
-.card-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; background: linear-gradient(transparent, rgba(0,0,0,0.85)); }
-.card-overlay h3 { font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--white); line-height: 1.35; margin-bottom: 4px; }
-.hero-side .card-overlay h3 { font-size: 14px; }
-.card-overlay p { font-size: 13px; color: rgba(255,255,255,0.8); }
-.card-meta-light { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+.hero-section{display:grid;grid-template-columns:1.8fr 1fr;gap:3px;margin-bottom:3px;border-radius:4px;overflow:hidden;}
+.hero-big{position:relative;cursor:pointer;min-height:380px;}
+.hero-big-bg{width:100%;height:380px;object-fit:cover;display:block;background:linear-gradient(160deg,#0d0d1a,#1a3a5c 40%,#2e6b9e 70%,#4a9fd4);}
+.hero-badge{position:absolute;top:14px;left:14px;background:#2ecc71;color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;padding:3px 10px;border-radius:2px;}
+.hero-cat-badge{background:#e8171f;}
+.hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(transparent,rgba(0,0,0,0.88));}
+.hero-title{font-family:'Merriweather',Georgia,serif;font-size:22px;font-weight:700;color:#fff;line-height:1.35;margin-bottom:6px;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.78);}
+.hero-meta{font-size:11px;color:rgba(255,255,255,0.5);margin-top:6px;}
+.hero-right{display:grid;grid-template-rows:1fr 1fr;gap:3px;}
+.hero-card{position:relative;cursor:pointer;overflow:hidden;}
+.hero-card-bg{width:100%;height:188px;object-fit:cover;display:block;transition:transform 0.3s;}
+.hero-card:hover .hero-card-bg{transform:scale(1.04);}
+.hero-card-over{position:absolute;bottom:0;left:0;right:0;padding:12px 14px;background:linear-gradient(transparent,rgba(0,0,0,0.85));}
+.hero-card-cat{font-size:10px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:4px;opacity:0.8;}
+.hero-card-title{font-family:'Merriweather',Georgia,serif;font-size:14px;font-weight:700;color:#fff;line-height:1.35;}
 
-.badge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 2px 8px; border-radius: 3px; margin-bottom: 6px; }
-.badge-red { background: var(--red); color: white; }
-.badge-blue { background: var(--blue); color: white; }
-.badge-green { background: var(--green); color: white; }
-.badge-orange { background: var(--orange); color: white; }
-.badge-black { background: var(--black); color: white; }
-.badge-gray { background: var(--gray-800); color: white; }
+/* MINI ROW */
+.section-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:16px;border-radius:4px;overflow:hidden;}
+.mini-card{position:relative;cursor:pointer;overflow:hidden;}
+.mini-bg{width:100%;height:160px;object-fit:cover;display:block;transition:transform 0.3s;}
+.mini-card:hover .mini-bg{transform:scale(1.04);}
+.mini-over{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(transparent,rgba(0,0,0,0.85));}
+.mini-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;}
+.mini-title{font-family:'Merriweather',Georgia,serif;font-size:13px;font-weight:700;color:#fff;line-height:1.3;}
 
-.news-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 24px; }
-.news-grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
-.news-card { border-bottom: 1px solid var(--gray-200); padding-bottom: 14px; cursor: pointer; }
-.news-card img { width: 100%; height: 160px; object-fit: cover; background: var(--gray-200); margin-bottom: 10px; display: block; }
-.news-card h3 { font-family: var(--font-serif); font-size: 15px; font-weight: 700; line-height: 1.4; color: var(--gray-900); margin-bottom: 6px; transition: color var(--transition); }
-.news-card:hover h3 { color: var(--red); }
-.news-card p { font-size: 13px; color: var(--gray-600); line-height: 1.5; margin-bottom: 6px; }
-.card-meta { font-size: 11px; color: var(--gray-400); display: flex; align-items: center; gap: 6px; }
-.dot { width: 3px; height: 3px; background: var(--gray-400); border-radius: 50%; display: inline-block; }
+/* CONTENT GRID */
+.content-grid{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-top:20px;}
 
-.news-list { display: flex; flex-direction: column; }
-.news-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-200); cursor: pointer; }
-.news-item img { width: 100px; height: 70px; object-fit: cover; background: var(--gray-200); flex-shrink: 0; border-radius: 3px; display: block; }
-.news-item-content h3 { font-family: var(--font-serif); font-size: 14px; font-weight: 700; line-height: 1.35; color: var(--gray-900); margin-bottom: 4px; transition: color var(--transition); }
-.news-item:hover h3 { color: var(--red); }
-.news-item-content p { font-size: 12px; color: var(--gray-600); }
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #e8171f;}
+.sec-title{font-size:16px;font-weight:700;color:#111;}
+.sec-more{font-size:12px;color:#e8171f;font-weight:600;cursor:pointer;}
 
-.ad-block { background: var(--gray-100); border: 1px dashed var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--gray-400); font-size: 11px; position: relative; }
-.ad-block::before { content: 'Publicidade'; position: absolute; top: 4px; right: 8px; font-size: 9px; text-transform: uppercase; }
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.article-card{cursor:pointer;background:#fff;border-radius:3px;overflow:hidden;transition:box-shadow 0.15s;}
+.article-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+.article-card:hover .ac-title{color:#e8171f;}
+.ac-img{width:100%;height:140px;object-fit:cover;display:block;}
+.ac-body{padding:10px 12px;}
+.ac-cat{font-size:10px;font-weight:700;color:#e8171f;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;}
+.ac-title{font-family:'Merriweather',Georgia,serif;font-size:14px;font-weight:700;line-height:1.4;color:#111;margin-bottom:5px;transition:color 0.15s;}
+.ac-meta{font-size:11px;color:#999;}
 
-.sidebar { display: flex; flex-direction: column; gap: 20px; }
-.widget { background: var(--white); border: 1px solid var(--gray-200); }
-.widget-header { background: var(--red); color: var(--white); padding: 8px 12px; font-size: 13px; font-weight: 700; text-transform: uppercase; }
-.widget-body { padding: 12px; }
-.most-read-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--gray-200); cursor: pointer; }
-.most-read-item:last-child { border-bottom: none; }
-.most-read-num { font-size: 26px; font-weight: 700; font-family: var(--font-serif); color: var(--gray-200); line-height: 1; min-width: 30px; flex-shrink: 0; }
-.most-read-text { font-size: 13px; font-weight: 600; color: var(--gray-900); line-height: 1.35; }
-.most-read-item:hover .most-read-text { color: var(--red); }
+/* LIST */
+.list-section{margin-bottom:20px;}
+.list-item{display:flex;gap:12px;padding:12px;background:#fff;margin-bottom:2px;cursor:pointer;transition:box-shadow 0.15s;}
+.list-item:hover{box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+.list-item:hover .li-title{color:#e8171f;}
+.li-img{width:110px;height:74px;object-fit:cover;border-radius:2px;flex-shrink:0;display:block;}
+.li-body{flex:1;}
+.li-cat{font-size:10px;font-weight:700;color:#e8171f;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+.li-title{font-family:'Merriweather',Georgia,serif;font-size:14px;font-weight:700;line-height:1.4;color:#111;margin-bottom:4px;transition:color 0.15s;}
+.li-meta{font-size:11px;color:#999;}
 
-.newsletter { background: var(--red); padding: 20px; color: white; text-align: center; margin-bottom: 24px; }
-.newsletter h3 { font-family: var(--font-serif); font-size: 20px; margin-bottom: 8px; }
-.newsletter p { font-size: 13px; opacity: 0.9; margin-bottom: 14px; }
-.newsletter-form { display: flex; gap: 8px; }
-.newsletter-form input { flex: 1; padding: 10px 14px; border: none; font-size: 14px; border-radius: 4px; outline: none; }
-.newsletter-form button { background: var(--black); color: white; border: none; padding: 10px 18px; font-size: 14px; font-weight: 700; border-radius: 4px; cursor: pointer; }
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:16px;}
+.widget{background:#fff;border-radius:3px;overflow:hidden;}
+.wh{padding:10px 14px;font-size:13px;font-weight:700;color:#111;border-bottom:2px solid #e8171f;display:flex;align-items:center;justify-content:space-between;}
+.wh-more{font-size:11px;color:#e8171f;font-weight:400;cursor:pointer;}
+.wb{padding:12px 14px;}
+.mr-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0f0;cursor:pointer;align-items:flex-start;}
+.mr-item:last-child{border-bottom:none;}
+.mr-num{font-size:28px;font-weight:900;color:#e8e8e8;min-width:28px;line-height:1;flex-shrink:0;font-style:italic;}
+.mr-info{flex:1;}
+.mr-cat{font-size:10px;color:#e8171f;font-weight:700;text-transform:uppercase;margin-bottom:2px;}
+.mr-title{font-size:13px;font-weight:700;color:#111;line-height:1.35;}
+.mr-item:hover .mr-title{color:#e8171f;}
 
-.footer-nav { background: var(--gray-900); padding: 30px 0; }
-.footer-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 24px; }
-.footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--white); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.15); }
-.footer-col ul { display: flex; flex-direction: column; gap: 6px; }
-.footer-col ul li a { font-size: 13px; color: var(--gray-400); }
-.footer-col ul li a:hover { color: var(--white); }
-.footer-bottom { background: var(--black); padding: 16px 0; }
-.footer-bottom-inner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-.footer-logo { font-family: var(--font-serif); font-size: 22px; font-weight: 900; color: var(--white); }
-.footer-logo span { color: var(--red); }
-.footer-copy { font-size: 12px; color: var(--gray-600); }
-.footer-social { display: flex; gap: 10px; }
-.social-btn { width: 32px; height: 32px; border-radius: 4px; background: var(--gray-800); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 12px; font-weight: 700; transition: background var(--transition); }
-.social-btn:hover { background: var(--red); color: white; }
+/* AD SIDE */
+.ad-side{background:#f5f5f5;border:1px dashed #ddd;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:3px;position:relative;}
+.ad-side::before{content:'Publicidade';position:absolute;top:5px;right:8px;font-size:9px;text-transform:uppercase;color:#ccc;}
+.ad-side-txt{font-size:11px;color:#ccc;}
+.ad-side-size{font-size:13px;font-weight:600;color:#bbb;}
 
-.loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; gap: 12px; color: var(--gray-400); }
-.spinner { width: 32px; height: 32px; border: 3px solid var(--gray-200); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.empty-state { text-align: center; padding: 40px; color: var(--gray-400); font-size: 14px; }
+/* WEATHER */
+.weather-main{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.weather-city{font-size:13px;font-weight:700;color:#111;}
+.weather-temp{font-size:28px;font-weight:300;color:#111;}
+.weather-days{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
+.wd{text-align:center;background:#f8f8f8;border-radius:3px;padding:6px 4px;}
+.wd-day{font-size:10px;color:#999;margin-bottom:2px;}
+.wd-icon{font-size:16px;margin:2px 0;}
+.wd-t{font-size:12px;font-weight:600;color:#333;}
 
-@media (max-width: 1024px) { .content-grid { grid-template-columns: 1fr; } .news-grid-4 { grid-template-columns: repeat(2,1fr); } .footer-grid { grid-template-columns: repeat(3,1fr); } .header-ad { display: none; } }
-@media (max-width: 768px) { .topbar { display: none; } .hero-grid { grid-template-columns: 1fr; } .hero-main { grid-row: auto; } .news-grid-3 { grid-template-columns: 1fr; } .news-grid-4 { grid-template-columns: 1fr 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } .newsletter-form { flex-direction: column; } .logo-text { font-size: 28px; } }
-@media (max-width: 480px) { .news-grid-4 { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } }
+/* TRENDING */
+.trending-tags{display:flex;flex-wrap:wrap;gap:6px;padding:12px 14px;}
+.tag{padding:4px 10px;background:#f5f5f5;border:1px solid #e8e8e8;border-radius:20px;font-size:12px;color:#555;cursor:pointer;transition:all 0.15s;}
+.tag:hover{background:#e8171f;color:#fff;border-color:#e8171f;}
+
+/* LOADING */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px;gap:12px;color:#999;}
+.spinner{width:32px;height:32px;border:3px solid #eee;border-top-color:#e8171f;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* PLACEHOLDER IMAGES */
+.ph{display:flex;align-items:center;justify-content:center;}
+.ph1{background:linear-gradient(135deg,#0d1b3e,#1a3a6e 50%,#2e86c1);}
+.ph2{background:linear-gradient(135deg,#3b1a1a,#8b2020 50%,#d4453d);}
+.ph3{background:linear-gradient(135deg,#1a3b1a,#2e7d32 50%,#43a047);}
+.ph4{background:linear-gradient(135deg,#3b2a1a,#784212 50%,#d35400);}
+.ph5{background:linear-gradient(135deg,#2a1a3b,#4a148c 50%,#7b1fa2);}
+.ph6{background:linear-gradient(135deg,#1a2a3b,#0277bd 50%,#29b6f6);}
+.ph7{background:linear-gradient(135deg,#3b1a2a,#ad1457 50%,#e91e63);}
+.ph8{background:linear-gradient(135deg,#1a3a3b,#00695c 50%,#26a69a);}
+
+/* FOOTER */
+.footer{background:#1a1a1a;padding:28px 24px 16px;margin-top:24px;}
+.footer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-bottom:20px;}
+.fc h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#fff;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.fc ul{display:flex;flex-direction:column;gap:5px;}
+.fc ul li a{font-size:12px;color:#666;transition:color 0.15s;cursor:pointer;}
+.fc ul li a:hover{color:#fff;}
+.footer-bot{border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.flogo{font-size:20px;font-weight:900;color:#fff;letter-spacing:-0.5px;}
+.flogo .ox{color:#e8171f;}
+.fcopy{font-size:11px;color:#444;}
+.fsoc{display:flex;gap:6px;}
+.sb{width:28px;height:28px;border-radius:3px;background:#2a2a2a;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;cursor:pointer;transition:background 0.15s;}
+.sb:hover{background:#e8171f;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.content-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:repeat(3,1fr);}.ad-box{width:100%;}}
+@media(max-width:768px){.hero-section{grid-template-columns:1fr;}.hero-right{display:none;}.section-row{grid-template-columns:1fr 1fr;}.cards-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr 1fr;}.header-top{padding:10px 16px;}.logo-main{font-size:22px;}.main{padding:12px 16px;}}
+@media(max-width:480px){.section-row{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="container">
-    <div class="topbar-inner">
-      <span id="currentDate"></span>
-      <div class="topbar-links"><a href="#">Assine</a><a href="#">Login</a><a href="#">Fale Conosco</a></div>
-      <span>☁ São Paulo 22°C</span>
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="menu-btn"><div class="menu-icon"><span></span><span></span><span></span></div> Menu</div>
+    <div class="logo-center">
+      <div class="logo-main"><span class="ox">O X</span><span class="resto"> da Notícia</span></div>
+      <div class="logo-tagline">Informação em tempo real</div>
+    </div>
+    <div class="search-area">
+      <input type="search" id="searchInput" placeholder="Buscar notícias...">
+      <button class="search-btn" onclick="buscar()">&#128269;</button>
     </div>
   </div>
+  <nav class="nav-cats" id="navCats">
+    <a class="nav-cat c-red active" onclick="filtrar(null,this)">Todas</a>
+    <a class="nav-cat c-red" onclick="filtrar('Brasil',this)">Brasil</a>
+    <a class="nav-cat c-blue" onclick="filtrar('Politica',this)">Política</a>
+    <a class="nav-cat" onclick="filtrar('Mundo',this)">Mundo</a>
+    <a class="nav-cat c-green" onclick="filtrar('Economia',this)">Economia</a>
+    <a class="nav-cat c-orange" onclick="filtrar('Esportes',this)">Esportes</a>
+    <a class="nav-cat c-pink" onclick="filtrar('Entretenimento',this)">Entretenimento</a>
+    <a class="nav-cat c-purple" onclick="filtrar('Tecnologia',this)">Tecnologia</a>
+    <a class="nav-cat c-teal" onclick="filtrar('Seguranca',this)">Segurança</a>
+  </nav>
 </div>
 
-<header class="site-header">
-  <div class="container">
-    <div class="header-inner">
-      <a href="/oxdanoticia/">
-        <div class="logo-text">Portal<span>X</span></div>
-        <div class="logo-tagline">Notícias em Tempo Real</div>
-      </a>
-      <div class="header-ad ad-block"><span>Anúncio 728×90</span></div>
-      <div class="header-search">
-        <input type="search" id="searchInput" placeholder="Buscar notícias...">
-        <button class="search-btn" onclick="buscar()">&#128269;</button>
-      </div>
-    </div>
-  </div>
-</header>
-
-<nav class="main-nav">
-  <div class="container">
-    <div class="nav-inner" id="navLinks">
-      <a href="#" class="active" onclick="filtrar(null,this)">Todas</a>
-      <a href="#" onclick="filtrar('Brasil',this)">Brasil</a>
-      <a href="#" onclick="filtrar('Politica',this)">Política</a>
-      <a href="#" onclick="filtrar('Mundo',this)">Mundo</a>
-      <a href="#" onclick="filtrar('Economia',this)">Economia</a>
-      <a href="#" onclick="filtrar('Esportes',this)">Esportes</a>
-      <a href="#" onclick="filtrar('Entretenimento',this)">Entretenimento</a>
-      <a href="#" onclick="filtrar('Tecnologia',this)">Tecnologia</a>
-      <a href="#" onclick="filtrar('Seguranca',this)">Segurança</a>
-    </div>
-  </div>
-</nav>
-
+<!-- BREAKING -->
 <div class="breaking" id="breakingBar">
-  <div class="container">
-    <div class="breaking-inner">
-      <span class="breaking-badge">Urgente</span>
-      <span class="breaking-text" id="breakingText"></span>
-    </div>
-  </div>
+  <span class="breaking-badge">Urgente</span>
+  <span class="breaking-text" id="breakingText"></span>
 </div>
 
-<main class="main-content">
-  <div class="container">
-    <div class="content-grid">
-      <div class="content-area">
+<!-- AD TOP -->
+<div class="ad-top">
+  <div class="ad-box">Anúncio 728×90 — Google AdSense</div>
+</div>
 
-        <section style="margin-bottom:24px;">
-          <div class="section-label"><h2>Destaques</h2></div>
-          <div id="heroSection"><div class="loading"><div class="spinner"></div><span>Carregando...</span></div></div>
-        </section>
+<!-- MAIN -->
+<main class="main">
 
-        <div class="ad-block" style="height:90px;margin-bottom:24px;"><span>Publicidade 728×90</span></div>
+  <!-- HERO -->
+  <section id="heroSection">
+    <div class="loading"><div class="spinner"></div><span>Carregando notícias...</span></div>
+  </section>
 
-        <section style="margin-bottom:24px;">
-          <div class="section-label"><h2>Últimas Notícias</h2></div>
-          <div id="noticiasGrid"><div class="loading"><div class="spinner"></div></div></div>
-        </section>
+  <!-- CONTENT GRID -->
+  <div class="content-grid">
+    <div>
+      <div class="sec-header"><span class="sec-title">Últimas Notícias</span><span class="sec-more">Ver tudo ›</span></div>
+      <div id="cardsGrid" class="cards-grid"></div>
 
-        <div class="ad-block" style="height:250px;margin-bottom:24px;"><span>Publicidade 970×250</span></div>
+      <div class="sec-header"><span class="sec-title">Veja Também</span><span class="sec-more">Ver tudo ›</span></div>
+      <div id="listSection" class="list-section"></div>
+    </div>
 
-        <section style="margin-bottom:24px;">
-          <div class="section-label"><h2>Veja Também</h2></div>
-          <div id="noticiasLista"></div>
-        </section>
-
-        <div class="newsletter">
-          <h3>Receba as principais notícias</h3>
-          <p>Cadastre-se e fique por dentro de tudo que acontece</p>
-          <div class="newsletter-form">
-            <input type="email" placeholder="Seu melhor e-mail">
-            <button type="button">Assinar Grátis</button>
-          </div>
-        </div>
-
+    <aside class="sidebar">
+      <div class="widget">
+        <div class="wh">🔥 Mais Lidas <span class="wh-more">ver tudo ›</span></div>
+        <div class="wb" id="maisLidas"><div class="loading" style="padding:20px;"><div class="spinner"></div></div></div>
       </div>
 
-      <aside class="sidebar">
-        <div class="widget">
-          <div class="widget-header">Publicidade</div>
-          <div class="widget-body" style="padding:0;"><div class="ad-block" style="height:250px;"><span>Anúncio 300×250</span></div></div>
-        </div>
-        <div class="widget">
-          <div class="widget-header">🔥 Mais Lidas</div>
-          <div class="widget-body"><div id="maisLidas"><div class="loading" style="padding:20px;"><div class="spinner"></div></div></div></div>
-        </div>
-        <div class="widget">
-          <div class="widget-header">Publicidade</div>
-          <div class="widget-body" style="padding:0;"><div class="ad-block" style="height:250px;"><span>Anúncio 300×250</span></div></div>
-        </div>
-        <div class="widget">
-          <div class="widget-header">☁ Previsão do Tempo</div>
-          <div class="widget-body">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span style="font-size:13px;font-weight:600;">São Paulo</span><span style="font-size:22px;font-weight:700;">22°C</span></div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;">
-              <div style="font-size:11px;color:#666;"><div>Seg</div><div style="font-size:16px;">☀</div><div style="font-weight:600;">25°</div></div>
-              <div style="font-size:11px;color:#666;"><div>Ter</div><div style="font-size:16px;">⛅</div><div style="font-weight:600;">23°</div></div>
-              <div style="font-size:11px;color:#666;"><div>Qua</div><div style="font-size:16px;">🌧</div><div style="font-weight:600;">19°</div></div>
-              <div style="font-size:11px;color:#666;"><div>Qui</div><div style="font-size:16px;">☀</div><div style="font-weight:600;">24°</div></div>
-            </div>
+      <div class="ad-side" style="height:280px;">
+        <span class="ad-side-txt">Publicidade</span>
+        <span class="ad-side-size">300×250</span>
+      </div>
+
+      <div class="widget">
+        <div class="wh">☁ Previsão do Tempo</div>
+        <div class="wb">
+          <div class="weather-main">
+            <div><div class="weather-city">São Paulo, SP</div><div style="font-size:11px;color:#999;margin-top:2px;">Parcialmente nublado</div></div>
+            <div class="weather-temp">23°</div>
+          </div>
+          <div class="weather-days">
+            <div class="wd"><div class="wd-day">Seg</div><div class="wd-icon">☀</div><div class="wd-t">26°</div></div>
+            <div class="wd"><div class="wd-day">Ter</div><div class="wd-icon">⛅</div><div class="wd-t">24°</div></div>
+            <div class="wd"><div class="wd-day">Qua</div><div class="wd-icon">🌧</div><div class="wd-t">19°</div></div>
+            <div class="wd"><div class="wd-day">Qui</div><div class="wd-icon">☀</div><div class="wd-t">25°</div></div>
           </div>
         </div>
-        <div class="widget">
-          <div class="widget-header">Publicidade</div>
-          <div class="widget-body" style="padding:0;"><div class="ad-block" style="height:600px;"><span>Anúncio 300×600</span></div></div>
-        </div>
-      </aside>
-    </div>
+      </div>
+
+      <div class="widget">
+        <div class="wh">Em Alta</div>
+        <div class="trending-tags" id="trendingTags"></div>
+      </div>
+
+      <div class="ad-side" style="height:400px;">
+        <span class="ad-side-txt">Publicidade</span>
+        <span class="ad-side-size">300×600</span>
+      </div>
+    </aside>
   </div>
 </main>
 
-<footer>
-  <div class="footer-nav">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col"><h4>Brasil</h4><ul><li><a href="#">Política</a></li><li><a href="#">Economia</a></li><li><a href="#">Segurança</a></li><li><a href="#">Saúde</a></li></ul></div>
-        <div class="footer-col"><h4>Esportes</h4><ul><li><a href="#">Futebol</a></li><li><a href="#">Fórmula 1</a></li><li><a href="#">Olimpíadas</a></li><li><a href="#">Tênis</a></li></ul></div>
-        <div class="footer-col"><h4>Entretenimento</h4><ul><li><a href="#">Cinema</a></li><li><a href="#">Música</a></li><li><a href="#">Streaming</a></li><li><a href="#">Famosos</a></li></ul></div>
-        <div class="footer-col"><h4>Serviços</h4><ul><li><a href="#">Clima</a></li><li><a href="#">Câmbio</a></li><li><a href="#">Bolsa</a></li><li><a href="#">Concursos</a></li></ul></div>
-        <div class="footer-col"><h4>Portal X</h4><ul><li><a href="#">Sobre nós</a></li><li><a href="#">Anuncie</a></li><li><a href="#">Privacidade</a></li><li><a href="#">Termos</a></li></ul></div>
-      </div>
-    </div>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="fc"><h4>Brasil</h4><ul><li><a>Política</a></li><li><a>Economia</a></li><li><a>Segurança</a></li><li><a>Saúde</a></li><li><a>Educação</a></li></ul></div>
+    <div class="fc"><h4>Esportes</h4><ul><li><a>Futebol</a></li><li><a>Fórmula 1</a></li><li><a>Olimpíadas</a></li><li><a>Tênis</a></li><li><a>Basquete</a></li></ul></div>
+    <div class="fc"><h4>Entretenimento</h4><ul><li><a>Cinema</a></li><li><a>Música</a></li><li><a>Streaming</a></li><li><a>Famosos</a></li><li><a>Games</a></li></ul></div>
+    <div class="fc"><h4>Serviços</h4><ul><li><a>Clima</a></li><li><a>Câmbio</a></li><li><a>Bolsa</a></li><li><a>Concursos</a></li><li><a>Horóscopo</a></li></ul></div>
+    <div class="fc"><h4>O X da Notícia</h4><ul>
+      <li><a href="sobre.html">Sobre nós</a></li>
+      <li><a href="anuncie.html">Anuncie</a></li>
+      <li><a href="privacidade.html">Privacidade</a></li>
+      <li><a href="termos.html">Termos de Uso</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul></div>
   </div>
-  <div class="footer-bottom">
-    <div class="container">
-      <div class="footer-bottom-inner">
-        <div class="footer-logo">Portal<span>X</span></div>
-        <div class="footer-copy">© 2026 Portal X. Todos os direitos reservados.</div>
-        <div class="footer-social">
-          <a href="#" class="social-btn">f</a><a href="#" class="social-btn">𝕏</a>
-          <a href="#" class="social-btn">ig</a><a href="#" class="social-btn">▶</a>
-        </div>
-      </div>
+  <div class="footer-bot">
+    <div class="flogo"><span class="ox">O X</span> da Notícia</div>
+    <div class="fcopy">© 2026 O X da Notícia · Todos os direitos reservados</div>
+    <div class="fsoc">
+      <div class="sb">f</div><div class="sb">𝕏</div><div class="sb">ig</div><div class="sb">▶</div><div class="sb">W</div>
     </div>
   </div>
 </footer>
@@ -304,158 +329,176 @@ const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 let todas = [];
 let filtroAtivo = null;
 
-document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+const PH = ['ph1','ph2','ph3','ph4','ph5','ph6','ph7','ph8'];
+function ph(i){ return PH[i % PH.length]; }
 
-function formatarData(str) {
-  if (!str) return '';
-  return new Date(str).toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+function urlNoticia(n){ return `noticia.html?id=${n.id}`; }
+
+function formatarData(str){
+  if(!str) return '';
+  return new Date(str).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
 }
 
-function badgeColor(cat) {
-  if (!cat) return 'badge-gray';
-  const c = cat.toLowerCase();
-  if (c.includes('polít') || c.includes('brasil')) return 'badge-red';
-  if (c.includes('econom')) return 'badge-green';
-  if (c.includes('esport')) return 'badge-blue';
-  if (c.includes('entret') || c.includes('cultur')) return 'badge-orange';
-  return 'badge-black';
+function imgEl(url, cls, alt){
+  if(url) return `<img src="${url}" class="${cls}" alt="${alt||''}" onerror="this.className='${cls} ${ph(Math.floor(Math.random()*8))}'">`;
+  return `<div class="${cls} ${ph(Math.floor(Math.random()*8))}"></div>`;
 }
 
-function urlNoticia(n) {
-  return `noticia.html?id=${n.id}`;
-}
-
-function imgSrc(url, alt) {
-  if (url) return `<img src="${url}" alt="${alt||''}" onerror="this.style.display='none'">`;
-  return `<div style="width:100%;height:100%;background:#e5e5e5;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px;min-height:160px;">Sem imagem</div>`;
-}
-
-function renderHero(noticias) {
-  if (!noticias.length) { document.getElementById('heroSection').innerHTML = '<div class="empty-state">Nenhuma notícia.</div>'; return; }
-  const p = noticias[0];
-  const sec = noticias.slice(1,3);
-  let html = `<div class="hero-grid">
-    <article class="hero-main" onclick="window.location='${urlNoticia(p)}'">
-      ${imgSrc(p.url_imagem, p.titulo)}
-      <div class="card-overlay">
-        <span class="badge ${badgeColor(p.categoria)}">${p.categoria||'Notícia'}</span>
-        <h3>${p.titulo||''}</h3>
-        <div class="card-meta-light">${formatarData(p.criado_em)}</div>
-      </div>
-    </article>`;
-  sec.forEach(n => {
-    html += `<article class="hero-side" onclick="window.location='${urlNoticia(n)}'">
-      ${imgSrc(n.url_imagem, n.titulo)}
-      <div class="card-overlay">
-        <span class="badge ${badgeColor(n.categoria)}">${n.categoria||'Notícia'}</span>
-        <h3>${n.titulo||''}</h3>
-      </div>
-    </article>`;
-  });
-  html += '</div>';
-  document.getElementById('heroSection').innerHTML = html;
-  document.querySelectorAll('.hero-main img').forEach(i => { i.style.cssText='width:100%;height:360px;object-fit:cover;display:block;'; });
-  document.querySelectorAll('.hero-side img').forEach(i => { i.style.cssText='width:100%;height:176px;object-fit:cover;display:block;'; });
-}
-
-function renderGrid(noticias) {
-  const items = noticias.slice(3,7);
-  if (!items.length) { document.getElementById('noticiasGrid').innerHTML = '<div class="empty-state">Sem notícias.</div>'; return; }
-  let html = '<div class="news-grid-4">';
-  items.forEach(n => {
-    html += `<article class="news-card" onclick="window.location='${urlNoticia(n)}'">
-      ${imgSrc(n.url_imagem, n.titulo)}
-      <span class="badge ${badgeColor(n.categoria)}">${n.categoria||'Notícia'}</span>
-      <h3>${n.titulo||''}</h3>
-      <div class="card-meta"><span>${formatarData(n.criado_em)}</span></div>
-    </article>`;
-  });
-  html += '</div>';
-  document.getElementById('noticiasGrid').innerHTML = html;
-}
-
-function renderLista(noticias) {
-  const items = noticias.slice(7,15);
-  if (!items.length) { document.getElementById('noticiasLista').innerHTML = ''; return; }
-  let html = '<div class="news-list">';
-  items.forEach(n => {
-    html += `<article class="news-item" onclick="window.location='${urlNoticia(n)}'">
-      ${imgSrc(n.url_imagem, n.titulo)}
-      <div class="news-item-content">
-        <span class="badge ${badgeColor(n.categoria)}" style="font-size:9px;">${n.categoria||''}</span>
-        <h3>${n.titulo||''}</h3>
-        <p>${formatarData(n.criado_em)}</p>
-      </div>
-    </article>`;
-  });
-  html += '</div>';
-  document.getElementById('noticiasLista').innerHTML = html;
-}
-
-function renderMaisLidas(noticias) {
-  let html = '';
-  noticias.slice(0,7).forEach((n,i) => {
-    html += `<div class="most-read-item" onclick="window.location='${urlNoticia(n)}'">
-      <span class="most-read-num">${i+1}</span>
-      <span class="most-read-text">${n.titulo||''}</span>
-    </div>`;
-  });
-  document.getElementById('maisLidas').innerHTML = html || '<div class="empty-state">Sem notícias.</div>';
-}
-
-function renderBreaking(noticias) {
-  if (noticias[0] && noticias[0].titulo) {
-    document.getElementById('breakingText').textContent = noticias[0].titulo;
-    document.getElementById('breakingBar').style.display = 'block';
+function renderBreaking(n){
+  if(n && n.titulo){
+    document.getElementById('breakingText').textContent = n.titulo;
+    document.getElementById('breakingBar').style.display = 'flex';
   }
 }
 
-function aplicarFiltro() {
-  let filtradas = todas;
-  if (filtroAtivo) filtradas = todas.filter(n => (n.categoria||'').toLowerCase().includes(filtroAtivo.toLowerCase()));
-  renderHero(filtradas);
-  renderGrid(filtradas);
-  renderLista(filtradas);
+function renderHero(noticias){
+  if(!noticias.length){ document.getElementById('heroSection').innerHTML = ''; return; }
+  const p = noticias[0];
+  const s1 = noticias[1];
+  const s2 = noticias[2];
+  const minis = noticias.slice(3,6);
+
+  let html = `<div class="hero-section">
+    <div class="hero-big" onclick="window.location='${urlNoticia(p)}'">
+      ${p.url_imagem ? `<img src="${p.url_imagem}" class="hero-big-bg" alt="${p.titulo||''}" onerror="this.className='hero-big-bg ph1'">` : `<div class="hero-big-bg ph1"></div>`}
+      <div class="hero-cat-badge hero-badge">${p.categoria||'Notícia'}</div>
+      <div class="hero-overlay">
+        <div class="hero-title">${p.titulo||''}</div>
+        <div class="hero-meta">Por Redação · ${formatarData(p.criado_em)}</div>
+      </div>
+    </div>
+    <div class="hero-right">`;
+
+  [s1,s2].forEach((n,i) => {
+    if(!n) return;
+    const bg = n.url_imagem ? `<img src="${n.url_imagem}" class="hero-card-bg" alt="${n.titulo||''}" onerror="this.className='hero-card-bg ${ph(i+2)}'">` : `<div class="hero-card-bg ${ph(i+2)}"></div>`;
+    html += `<div class="hero-card" onclick="window.location='${urlNoticia(n)}'">
+      ${bg}
+      <div class="hero-card-over">
+        <div class="hero-card-cat">${n.categoria||''}</div>
+        <div class="hero-card-title">${n.titulo||''}</div>
+      </div>
+    </div>`;
+  });
+
+  html += `</div></div>`;
+
+  if(minis.length){
+    html += `<div class="section-row">`;
+    minis.forEach((n,i) => {
+      const bg = n.url_imagem ? `<img src="${n.url_imagem}" class="mini-bg" alt="${n.titulo||''}" onerror="this.className='mini-bg ${ph(i+5)}'">` : `<div class="mini-bg ${ph(i+5)}"></div>`;
+      const catColors = {'Brasil':'#e8171f','Politica':'#0066cc','Economia':'#1a8a34','Esportes':'#e67e00','Entretenimento':'#c0246e','Tecnologia':'#6b2fa0','Seguranca':'#007a7a'};
+      const cor = catColors[n.categoria] || '#fff';
+      html += `<div class="mini-card" onclick="window.location='${urlNoticia(n)}'">
+        ${bg}
+        <div class="mini-over">
+          <div class="mini-cat" style="color:${cor};">${n.categoria||''}</div>
+          <div class="mini-title">${n.titulo||''}</div>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  document.getElementById('heroSection').innerHTML = html;
 }
 
-function filtrar(cat, el) {
+function renderCards(noticias){
+  const items = noticias.slice(6,10);
+  if(!items.length){ document.getElementById('cardsGrid').innerHTML = ''; return; }
+  let html = '';
+  items.forEach((n,i) => {
+    html += `<div class="article-card" onclick="window.location='${urlNoticia(n)}'">
+      ${imgEl(n.url_imagem,'ac-img',n.titulo)}
+      <div class="ac-body">
+        <div class="ac-cat">${n.categoria||''}</div>
+        <div class="ac-title">${n.titulo||''}</div>
+        <div class="ac-meta">${formatarData(n.criado_em)}</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('cardsGrid').innerHTML = html;
+}
+
+function renderList(noticias){
+  const items = noticias.slice(10,18);
+  if(!items.length){ document.getElementById('listSection').innerHTML = ''; return; }
+  let html = '';
+  items.forEach((n,i) => {
+    html += `<div class="list-item" onclick="window.location='${urlNoticia(n)}'">
+      ${imgEl(n.url_imagem,'li-img',n.titulo)}
+      <div class="li-body">
+        <div class="li-cat">${n.categoria||''}</div>
+        <div class="li-title">${n.titulo||''}</div>
+        <div class="li-meta">${formatarData(n.criado_em)}</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('listSection').innerHTML = html;
+}
+
+function renderMaisLidas(noticias){
+  let html = '';
+  noticias.slice(0,7).forEach((n,i) => {
+    html += `<div class="mr-item" onclick="window.location='${urlNoticia(n)}'">
+      <span class="mr-num">${i+1}</span>
+      <div class="mr-info">
+        <div class="mr-cat">${n.categoria||''}</div>
+        <div class="mr-title">${n.titulo||''}</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('maisLidas').innerHTML = html;
+}
+
+function renderTrending(noticias){
+  const cats = [...new Set(noticias.map(n => n.categoria).filter(Boolean))];
+  const tags = ['#Brasil','#Política','#Economia','#Esportes','#Tecnologia','#Entretenimento','#Segurança','#Saúde','#Mundo'];
+  document.getElementById('trendingTags').innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
+}
+
+function aplicarFiltro(){
+  let filtradas = todas;
+  if(filtroAtivo) filtradas = todas.filter(n => (n.categoria||'').toLowerCase() === filtroAtivo.toLowerCase());
+  renderHero(filtradas);
+  renderCards(filtradas);
+  renderList(filtradas);
+}
+
+function filtrar(cat, el){
   filtroAtivo = cat;
-  document.querySelectorAll('.nav-inner a').forEach(a => a.classList.remove('active'));
-  if (el) el.classList.add('active');
+  document.querySelectorAll('.nav-cat').forEach(a => a.classList.remove('active'));
+  if(el) el.classList.add('active');
   aplicarFiltro();
 }
 
-function buscar() {
-  const termo = document.getElementById('searchInput').value.toLowerCase().trim();
-  if (!termo) { aplicarFiltro(); return; }
-  const filtradas = todas.filter(n => (n.titulo||'').toLowerCase().includes(termo) || (n.conteudo||'').toLowerCase().includes(termo));
-  renderHero(filtradas);
-  renderGrid(filtradas);
-  renderLista(filtradas);
+function buscar(){
+  const t = document.getElementById('searchInput').value.toLowerCase().trim();
+  if(!t){ aplicarFiltro(); return; }
+  const f = todas.filter(n => (n.titulo||'').toLowerCase().includes(t) || (n.conteudo||'').toLowerCase().includes(t));
+  renderHero(f); renderCards(f); renderList(f);
 }
 
-document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key==='Enter') buscar(); });
+document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key==='Enter') buscar(); });
 
-async function carregar() {
-  try {
-    const { data, error } = await db.from('hora').select('*').order('criado_em', { ascending: false }).limit(50);
-    if (error) throw error;
+async function carregar(){
+  try{
+    const { data, error } = await db.from('hora').select('*').order('criado_em',{ascending:false}).limit(60);
+    if(error) throw error;
     todas = data || [];
-    renderBreaking(todas);
-    renderHero(todas);
-    renderGrid(todas);
-    renderLista(todas);
+    if(todas[0]) renderBreaking(todas[0]);
+    aplicarFiltro();
     renderMaisLidas(todas);
+    renderTrending(todas);
     setTimeout(carregar, 60000);
-  } catch(err) {
-    console.error('Erro:', err);
-    document.getElementById('heroSection').innerHTML = '<div class="empty-state">Erro ao carregar notícias.</div>';
+  }catch(e){
+    console.error(e);
+    document.getElementById('heroSection').innerHTML = '<div style="text-align:center;padding:40px;color:#999;">Erro ao carregar notícias.</div>';
   }
 }
 
 carregar();
-
-db.channel('hora').on('postgres_changes', { event:'*', schema:'public', table:'hora' }, () => carregar()).subscribe();
+db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'},()=>carregar()).subscribe();
 </script>
 </body>
 </html>
