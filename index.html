@@ -457,9 +457,16 @@ function renderTrending(noticias){
   document.getElementById('trendingTags').innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
 }
 
+function normalizarTexto(str){
+  return (str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
 function aplicarFiltro(){
   let filtradas = todas;
-  if(filtroAtivo) filtradas = todas.filter(n => (n.categoria||'').toLowerCase() === filtroAtivo.toLowerCase());
+  if(filtroAtivo){
+    const f = normalizarTexto(filtroAtivo);
+    filtradas = todas.filter(n => normalizarTexto(n.categoria) === f || normalizarTexto(n.categoria).includes(f));
+  }
   renderHero(filtradas);
   renderCards(filtradas);
   renderList(filtradas);
@@ -485,7 +492,10 @@ async function carregar(){
   try{
     const { data, error } = await db.from('hora').select('*').order('criado_em',{ascending:false}).limit(60);
     if(error) throw error;
-    todas = data || [];
+    todas = (data || []).map(n => ({
+      ...n,
+      titulo: (n.titulo||'').replace(/\*\*/g,'').trim()
+    }));
     if(todas[0]) renderBreaking(todas[0]);
     aplicarFiltro();
     renderMaisLidas(todas);
