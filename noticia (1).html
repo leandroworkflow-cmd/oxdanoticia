@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Portal X">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Portal X">
+<link rel="canonical" id="canonical" href="">
+<title id="pageTitle">Carregando... | O X da Notícia</title>
+<meta name="description" id="metaDesc" content="">
+<meta property="og:title" id="ogTitle" content="">
+<meta property="og:description" id="ogDesc" content="">
+<meta property="og:image" id="ogImage" content="">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- JSON-LD Article Schema -->
+<script type="application/ld+json" id="articleSchema"></script>
+
+<style>
+:root {
+  --red: #e8171f; --red-dark: #b51117; --black: #111;
+  --gray-900: #1a1a1a; --gray-700: #444; --gray-600: #666;
+  --gray-400: #999; --gray-200: #e5e5e5; --gray-100: #f8f8f8;
+  --white: #fff; --blue: #0066cc;
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Source Sans 3', sans-serif;
+  --max-width: 1200px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:var(--font-sans);color:var(--gray-900);background:#f4f4f4;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 16px;}
+
+/* TOPBAR */
+.topbar{background:#1a1a1a;color:#888;font-size:12px;padding:7px 0;}
+.topbar-inner{display:flex;justify-content:space-between;align-items:center;}
+.topbar-links{display:flex;gap:16px;}
+.topbar-links a{color:#888;transition:color 0.15s;}
+.topbar-links a:hover{color:#fff;}
+
+/* HEADER */
+.site-header{background:#fff;border-bottom:3px solid var(--red);position:sticky;top:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,0.08);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:16px;}
+.logo-wrap a{display:block;}
+.logo-text{font-family:var(--font-serif);font-size:28px;font-weight:900;letter-spacing:-1px;color:#111;line-height:1;}
+.logo-text span{color:var(--red);}
+.logo-tagline{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
+.header-search{display:flex;gap:6px;}
+.header-search input{border:1.5px solid var(--gray-200);padding:8px 14px;font-size:14px;font-family:var(--font-sans);border-radius:4px;width:220px;outline:none;transition:border-color 0.15s;}
+.header-search input:focus{border-color:var(--red);}
+.search-btn{background:var(--red);color:#fff;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-size:14px;transition:background 0.15s;}
+.search-btn:hover{background:var(--red-dark);}
+
+/* NAV */
+.main-nav{background:var(--red);}
+.nav-inner{display:flex;overflow-x:auto;scrollbar-width:none;}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nav-inner a{color:#fff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:10px 15px;white-space:nowrap;display:block;transition:background 0.15s;}
+.nav-inner a:hover{background:rgba(0,0,0,0.18);color:#fff;}
+
+/* PAGE WRAP */
+.page-wrap{max-width:var(--max-width);margin:24px auto;padding:0 16px;display:grid;grid-template-columns:1fr 300px;gap:24px;}
+
+/* BREADCRUMB */
+.breadcrumb{font-size:13px;color:var(--gray-400);margin-bottom:16px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.breadcrumb a{color:var(--red);font-weight:500;}
+.breadcrumb a:hover{text-decoration:underline;}
+.breadcrumb span{color:var(--gray-400);}
+
+/* ARTICLE CARD */
+.article-card{background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow:hidden;}
+
+/* ARTICLE HEADER */
+.article-header{padding:28px 32px 0;}
+.article-category-badge{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 12px;border-radius:3px;background:var(--red);color:#fff;margin-bottom:14px;}
+.article-title{font-family:var(--font-serif);font-size:30px;font-weight:900;line-height:1.35;color:var(--black);margin-bottom:14px;}
+.article-description{font-size:17px;color:var(--gray-600);line-height:1.65;margin-bottom:18px;font-style:italic;border-left:3px solid var(--red);padding-left:14px;}
+
+/* ARTICLE META */
+.article-meta{display:flex;align-items:center;gap:0;padding:14px 0;border-top:1px solid var(--gray-200);border-bottom:1px solid var(--gray-200);margin-bottom:0;flex-wrap:wrap;gap:12px;}
+.author-block{display:flex;align-items:center;gap:10px;}
+.author-avatar{width:42px;height:42px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700;font-family:var(--font-serif);flex-shrink:0;}
+.author-info{line-height:1.3;}
+.author-name{font-size:14px;font-weight:700;color:var(--black);}
+.author-role{font-size:12px;color:var(--gray-400);}
+.meta-divider{width:1px;height:32px;background:var(--gray-200);}
+.meta-date{font-size:13px;color:var(--gray-400);}
+.meta-readtime{font-size:13px;color:var(--gray-400);}
+.share-buttons{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;}
+.share-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;border:none;color:#fff;transition:opacity 0.15s;}
+.share-btn:hover{opacity:0.85;}
+.share-wpp{background:#25D366;}
+.share-tw{background:#000;}
+.share-fb{background:#1877F2;}
+.share-copy{background:var(--gray-400);}
+
+/* FEATURED IMAGE */
+.article-img-wrap{position:relative;}
+.article-img{width:100%;max-height:500px;object-fit:cover;display:block;}
+.article-img-caption{font-size:12px;color:var(--gray-400);padding:8px 32px;background:#fafafa;border-bottom:1px solid var(--gray-200);font-style:italic;}
+
+/* AD STRIP */
+.ad-strip{background:var(--gray-100);border-top:1px solid var(--gray-200);border-bottom:1px solid var(--gray-200);padding:12px 32px;display:flex;align-items:center;justify-content:center;position:relative;}
+.ad-strip::before{content:'Publicidade';position:absolute;top:5px;right:12px;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;color:var(--gray-400);}
+.ad-block-inner{width:100%;height:90px;background:var(--gray-200);display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:12px;border-radius:3px;}
+
+/* ARTICLE BODY */
+.article-body{padding:28px 32px;}
+.article-body p{font-family:var(--font-serif);font-size:17px;line-height:1.9;color:#333;margin-bottom:22px;}
+.article-body p:first-of-type::first-letter{font-size:64px;font-weight:900;float:left;line-height:0.82;margin:8px 10px 0 0;color:var(--red);font-family:var(--font-serif);}
+.article-body h2{font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--black);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--gray-200);position:relative;}
+.article-body h2::before{content:'';position:absolute;bottom:-2px;left:0;width:50px;height:2px;background:var(--red);}
+.article-body h3{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--black);margin:28px 0 12px;}
+.article-body strong{color:var(--black);}
+.article-body em{font-style:italic;color:var(--gray-600);}
+.article-body ul,.article-body ol{margin:0 0 22px 24px;}
+.article-body ul li,.article-body ol li{font-family:var(--font-serif);font-size:16px;line-height:1.8;color:#333;margin-bottom:8px;}
+.article-body blockquote{border-left:4px solid var(--red);padding:14px 20px;margin:24px 0;background:var(--gray-100);border-radius:0 4px 4px 0;}
+.article-body blockquote p{font-size:17px;color:var(--gray-700);font-style:italic;margin:0;}
+
+/* AUTHOR BIO */
+.author-bio{margin:32px 0;padding:24px;background:var(--gray-100);border-radius:6px;display:flex;gap:20px;align-items:flex-start;border:1px solid var(--gray-200);}
+.author-bio-avatar{width:72px;height:72px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:700;font-family:var(--font-serif);flex-shrink:0;overflow:hidden;}
+.author-bio-info h4{font-size:16px;font-weight:700;color:var(--black);margin-bottom:2px;}
+.author-bio-info span{font-size:12px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
+.author-bio-info p{font-size:14px;color:var(--gray-600);line-height:1.6;margin-top:8px;}
+
+/* TAGS */
+.article-tags{margin:24px 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.tags-label{font-size:13px;font-weight:600;color:var(--gray-600);}
+.tag{display:inline-block;padding:4px 12px;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:20px;font-size:12px;color:var(--gray-600);cursor:pointer;transition:all 0.15s;}
+.tag:hover{background:var(--red);color:#fff;border-color:var(--red);}
+
+/* AD MID */
+.ad-mid{margin:32px 0;padding:16px;background:var(--gray-100);border:1px dashed var(--gray-200);display:flex;align-items:center;justify-content:center;position:relative;min-height:260px;border-radius:4px;}
+.ad-mid::before{content:'Publicidade';position:absolute;top:6px;right:10px;font-size:9px;text-transform:uppercase;color:var(--gray-400);}
+
+/* RELATED */
+.related-section{padding:28px 32px;border-top:3px solid var(--gray-100);}
+.related-title{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--black);margin-bottom:20px;padding-bottom:10px;border-bottom:3px solid var(--gray-200);position:relative;}
+.related-title::after{content:'';position:absolute;bottom:-3px;left:0;width:50px;height:3px;background:var(--red);}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.related-card{cursor:pointer;border:1px solid var(--gray-200);border-radius:4px;overflow:hidden;transition:box-shadow 0.15s;}
+.related-card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.related-card img{width:100%;height:120px;object-fit:cover;background:var(--gray-200);display:block;}
+.related-card-body{padding:12px;}
+.related-card-cat{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--red);margin-bottom:4px;}
+.related-card h4{font-family:var(--font-serif);font-size:14px;font-weight:700;line-height:1.4;color:var(--black);}
+.related-card:hover h4{color:var(--red);}
+.related-card-date{font-size:11px;color:var(--gray-400);margin-top:6px;}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:20px;}
+.widget{background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow:hidden;}
+.widget-header{background:var(--red);color:#fff;padding:10px 14px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;}
+.widget-body{padding:14px;}
+.most-read-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray-200);cursor:pointer;align-items:flex-start;}
+.most-read-item:last-child{border-bottom:none;}
+.most-read-num{font-size:22px;font-weight:900;font-family:var(--font-serif);color:var(--gray-200);min-width:28px;line-height:1;flex-shrink:0;}
+.most-read-text{font-size:13px;font-weight:600;color:var(--gray-900);line-height:1.4;}
+.most-read-item:hover .most-read-text{color:var(--red);}
+.most-read-cat{font-size:10px;color:var(--red);font-weight:700;text-transform:uppercase;margin-bottom:2px;}
+.sidebar-ad{background:var(--gray-100);border:1px dashed var(--gray-200);min-height:250px;display:flex;align-items:center;justify-content:center;position:relative;font-size:11px;color:var(--gray-400);}
+.sidebar-ad::before{content:'Publicidade';position:absolute;top:5px;right:8px;font-size:9px;text-transform:uppercase;color:var(--gray-400);}
+
+/* LOADING */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px;gap:14px;color:var(--gray-400);}
+.spinner{width:36px;height:36px;border:3px solid var(--gray-200);border-top-color:var(--red);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* FOOTER */
+.footer-nav{background:#1a1a1a;padding:36px 0;}
+.footer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;}
+.footer-col h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#fff;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.12);}
+.footer-col ul{display:flex;flex-direction:column;gap:7px;}
+.footer-col ul li a{font-size:13px;color:#888;transition:color 0.15s;}
+.footer-col ul li a:hover{color:#fff;}
+.footer-bottom{background:#111;padding:18px 0;}
+.footer-bottom-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-logo{font-family:var(--font-serif);font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px;}
+.footer-logo span{color:var(--red);}
+.footer-copy{font-size:12px;color:#555;}
+.footer-social{display:flex;gap:8px;}
+.social-btn{width:32px;height:32px;border-radius:4px;background:#2a2a2a;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;transition:background 0.15s;}
+.social-btn:hover{background:var(--red);}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.page-wrap{grid-template-columns:1fr;}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:16px;}.related-grid{grid-template-columns:1fr 1fr;}.footer-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:768px){.topbar{display:none;}.article-title{font-size:22px;}.article-header{padding:20px 16px 0;}.article-body{padding:20px 16px;}.article-body p{font-size:16px;}.ad-strip{padding:12px 16px;}.related-section{padding:20px 16px;}.related-grid{grid-template-columns:1fr;}.share-buttons{margin-left:0;}.article-meta{gap:8px;}.sidebar{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <span id="currentDate"></span>
+      <div class="topbar-links">
+        <a href="/oxdanoticia/">Início</a>
+        <a href="/oxdanoticia/sobre.html">Sobre</a>
+        <a href="/oxdanoticia/contato.html">Contato</a>
+        <a href="/oxdanoticia/anuncie.html">Anuncie</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo-wrap">
+        <a href="/oxdanoticia/">
+          <div class="logo-text"><span style="color:#e8171f;">O X</span> da Notícia</div>
+          <div class="logo-tagline">Informação em Tempo Real</div>
+        </a>
+      </div>
+      <div class="header-search">
+        <input type="search" placeholder="Buscar notícias...">
+        <button class="search-btn" onclick="window.location='/oxdanoticia/'">&#128269;</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/oxdanoticia/">Início</a>
+      <a href="/oxdanoticia/?cat=Brasil">Brasil</a>
+      <a href="/oxdanoticia/?cat=Politica">Política</a>
+      <a href="/oxdanoticia/?cat=Mundo">Mundo</a>
+      <a href="/oxdanoticia/?cat=Economia">Economia</a>
+      <a href="/oxdanoticia/?cat=Esportes">Esportes</a>
+      <a href="/oxdanoticia/?cat=Entretenimento">Entretenimento</a>
+      <a href="/oxdanoticia/?cat=Tecnologia">Tecnologia</a>
+      <a href="/oxdanoticia/?cat=Seguranca">Segurança</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <main>
+    <div id="loadingState" class="loading"><div class="spinner"></div><span>Carregando notícia...</span></div>
+
+    <div id="articleContent" style="display:none;">
+      <!-- BREADCRUMB -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/oxdanoticia/">Início</a>
+        <span>›</span>
+        <span id="breadCat"></span>
+        <span>›</span>
+        <span id="breadTitle"></span>
+      </nav>
+
+      <article class="article-card" itemscope itemtype="https://schema.org/NewsArticle">
+
+        <!-- HEADER -->
+        <div class="article-header">
+          <div class="article-category-badge" id="artCat"></div>
+          <h1 class="article-title" id="artTitulo" itemprop="headline"></h1>
+          <div class="article-description" id="artDesc" itemprop="description"></div>
+
+          <!-- META -->
+          <div class="article-meta">
+            <div class="author-block">
+              <div class="author-avatar" id="artAuthorAvatar"></div>
+              <div class="author-info">
+                <div class="author-name" id="artAuthor" itemprop="author"></div>
+                <div class="author-role">Jornalista | Portal X</div>
+              </div>
+            </div>
+            <div class="meta-divider"></div>
+            <div class="meta-date" id="artData" itemprop="datePublished"></div>
+            <div class="meta-divider"></div>
+            <div class="meta-readtime" id="artReadTime"></div>
+            <div class="share-buttons">
+              <button class="share-btn share-wpp" onclick="compartilhar('whatsapp')">💬 WhatsApp</button>
+              <button class="share-btn share-tw" onclick="compartilhar('twitter')">𝕏</button>
+              <button class="share-btn share-fb" onclick="compartilhar('facebook')">Facebook</button>
+              <button class="share-btn share-copy" onclick="compartilhar('copy')">🔗 Copiar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- IMAGEM DESTAQUE -->
+        <div class="article-img-wrap" id="artImgWrap"></div>
+
+        <!-- AD TOPO -->
+        <div class="ad-strip">
+          <div class="ad-block-inner">Anúncio 728×90</div>
+        </div>
+
+        <!-- CORPO -->
+        <div class="article-body" id="artBody" itemprop="articleBody"></div>
+
+        <!-- AD MEIO -->
+        <div class="article-body" style="padding-top:0;">
+          <div class="ad-mid"><span>Anúncio 970×250</span></div>
+        </div>
+
+        <!-- TAGS -->
+        <div class="article-body" style="padding-top:0;">
+          <div class="article-tags" id="artTags"></div>
+        </div>
+
+        <!-- BIO AUTOR -->
+        <div class="article-body" style="padding-top:0;">
+          <div class="author-bio" id="artAuthorBio"></div>
+        </div>
+
+        <!-- RELACIONADAS -->
+        <div class="related-section">
+          <div class="related-title">Veja Também</div>
+          <div class="related-grid" id="relacionadas"></div>
+        </div>
+
+      </article>
+    </div>
+
+    <div id="errorState" style="display:none;text-align:center;padding:80px;color:#999;background:#fff;border-radius:4px;">
+      <h2 style="font-family:'Merriweather',serif;margin-bottom:12px;">Notícia não encontrada</h2>
+      <a href="/oxdanoticia/" style="color:#e8171f;">← Voltar para o início</a>
+    </div>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="widget">
+      <div class="widget-header">Publicidade</div>
+      <div class="widget-body" style="padding:0;">
+        <div class="sidebar-ad" style="height:250px;"><span>Anúncio 300×250</span></div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">🔥 Mais Lidas</div>
+      <div class="widget-body">
+        <div id="maisLidas"><div class="loading" style="padding:20px;"><div class="spinner"></div></div></div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">Publicidade</div>
+      <div class="widget-body" style="padding:0;">
+        <div class="sidebar-ad" style="height:600px;"><span>Anúncio 300×600</span></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-nav">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col"><h4>Brasil</h4><ul><li><a href="#">Política</a></li><li><a href="#">Economia</a></li><li><a href="#">Segurança</a></li><li><a href="#">Saúde</a></li><li><a href="#">Educação</a></li></ul></div>
+        <div class="footer-col"><h4>Esportes</h4><ul><li><a href="#">Futebol</a></li><li><a href="#">Fórmula 1</a></li><li><a href="#">Olimpíadas</a></li><li><a href="#">Tênis</a></li><li><a href="#">Basquete</a></li></ul></div>
+        <div class="footer-col"><h4>Entretenimento</h4><ul><li><a href="#">Cinema</a></li><li><a href="#">Música</a></li><li><a href="#">Streaming</a></li><li><a href="#">Famosos</a></li><li><a href="#">Games</a></li></ul></div>
+        <div class="footer-col"><h4>Serviços</h4><ul><li><a href="#">Clima</a></li><li><a href="#">Câmbio</a></li><li><a href="#">Bolsa</a></li><li><a href="#">Concursos</a></li></ul></div>
+        <div class="footer-col"><h4>Portal X</h4><ul>
+          <li><a href="/oxdanoticia/sobre.html">Sobre nós</a></li>
+          <li><a href="/oxdanoticia/anuncie.html">Anuncie</a></li>
+          <li><a href="/oxdanoticia/privacidade.html">Privacidade</a></li>
+          <li><a href="/oxdanoticia/termos.html">Termos de Uso</a></li>
+          <li><a href="/oxdanoticia/contato.html">Contato</a></li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-inner">
+        <div class="footer-logo"><span style="color:#e8171f;">O X</span> da Notícia</div>
+        <div class="footer-copy">© 2026 Portal X · CNPJ: XX.XXX.XXX/0001-XX · Todos os direitos reservados</div>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Facebook">f</a>
+          <a href="#" class="social-btn" aria-label="Twitter">𝕏</a>
+          <a href="#" class="social-btn" aria-label="Instagram">ig</a>
+          <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+          <a href="https://wa.me/5531983733041" class="social-btn" aria-label="WhatsApp">W</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://zdzktlqycxyqbqsskmuq.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_e4WQ7V1EjIjH2d4n6T0djQ_4NOhZlV1';
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const AUTORES_BIO = {
+  'Lionor VS2':           { bio: 'Jornalista sênior com mais de 10 anos de experiência em cobertura política e econômica. Especialista em análise de conjuntura nacional.', genero: 'M', cor: '#C0392B' },
+  'Carlos Mendonca':      { bio: 'Repórter de economia e mercado financeiro. Formado em Jornalismo, cobre o setor há 8 anos.', genero: 'M', cor: '#2980B9' },
+  'Ana Paula Figueiredo': { bio: 'Editora de política e relações institucionais. Atuou em grandes veículos nacionais antes de integrar o Portal X.', genero: 'F', cor: '#8E44AD' },
+  'Roberto Dias':         { bio: 'Correspondente e analista de cenário internacional. Especialista em geopolítica e relações exteriores.', genero: 'M', cor: '#16A085' },
+  'Mariana Souza':        { bio: 'Jornalista cultural e de entretenimento. Cobre cinema, música e comportamento com olhar crítico e aprofundado.', genero: 'F', cor: '#D35400' },
+  'Felipe Cardoso':       { bio: 'Repórter de tecnologia e inovação. Acompanha startups, inteligência artificial e o universo digital.', genero: 'M', cor: '#27AE60' },
+  'Juliana Moreira':      { bio: 'Jornalista esportiva com passagem pela cobertura de Copa do Mundo e Jogos Olímpicos.', genero: 'F', cor: '#E91E63' },
+  'Redacao Portal X':     { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
+  'Redação Portal X':    { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
+  'Lionor VS2':          { bio: 'Jornalista sênior com mais de 10 anos de experiência em cobertura política e econômica.', genero: 'M', cor: '#C0392B' },
+  'Carlos Mendonça':     { bio: 'Repórter de economia e mercado financeiro. Cobre o setor há 8 anos.', genero: 'M', cor: '#2980B9' },
+  'Mariana Souza':       { bio: 'Jornalista cultural e de entretenimento. Cobre cinema, música e comportamento.', genero: 'F', cor: '#D35400' },
+  'Juliana Moreira':     { bio: 'Jornalista esportiva com passagem pela cobertura de Copa do Mundo e Olimpíadas.', genero: 'F', cor: '#E91E63' }
+};
+
+// Mapa de fotos dos autores
+const FOTOS_AUTORES = {
+  'Lionor VS2':           '/oxdanoticia/autor-lionor.jpeg',
+  'Carlos Mendonca':      '/oxdanoticia/autor-carlos.jpeg',
+  'Carlos Mendonça':      '/oxdanoticia/autor-carlos.jpeg',
+  'Ana Paula Figueiredo': '/oxdanoticia/autor-ana.jpeg',
+  'Roberto Dias':         '/oxdanoticia/autor-roberto.jpeg',
+  'Mariana Souza':        '/oxdanoticia/autor-mariana.jpeg',
+  'Felipe Cardoso':       '/oxdanoticia/autor-felipe.jpeg',
+  'Juliana Moreira':      '/oxdanoticia/autor-juliana.jpeg',
+  'Redacao Portal X':     '/oxdanoticia/autor-redacao.jpeg',
+  'Redação Portal X':     '/oxdanoticia/autor-redacao.jpeg'
+};
+
+function gerarAvatarSVG(genero, cor, autor) {
+  const foto = autor ? FOTOS_AUTORES[autor] : null;
+  if (foto) {
+    return `<img src="${foto}" alt="${autor}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;display:block;" onerror="this.outerHTML=gerarAvatarFallback('${genero}','${cor}')">`;
+  }
+  return gerarAvatarFallback(genero, cor);
+}
+
+// Foto grande na bio
+function gerarAvatarBioSVG(genero, cor, autor) {
+  const foto = autor ? FOTOS_AUTORES[autor] : null;
+  if (foto) {
+    return `<img src="${foto}" alt="${autor}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;" onerror="this.style.display='none'">`;
+  }
+  return gerarAvatarFallback(genero, cor);
+}
+
+function gerarAvatarFallback(genero, cor) {
+  if (genero === 'F') {
+    return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><circle cx="21" cy="15" r="8" fill="#FDBCB4"/><ellipse cx="21" cy="9" rx="9" ry="6" fill="#4A2C0A"/><rect x="12" y="9" width="4" height="12" rx="2" fill="#4A2C0A"/><rect x="26" y="9" width="4" height="12" rx="2" fill="#4A2C0A"/><ellipse cx="21" cy="33" rx="11" ry="8" fill="${cor}" opacity="0.85"/><path d="M16 23 Q21 27 26 23" stroke="white" stroke-width="1.5" fill="none"/></svg>`;
+  } else if (genero === 'M') {
+    return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><circle cx="21" cy="15" r="8" fill="#FDBCB4"/><ellipse cx="21" cy="9" rx="8" ry="4" fill="#2C1810"/><rect x="13" y="9" width="16" height="5" rx="1" fill="#2C1810"/><ellipse cx="21" cy="33" rx="11" ry="8" fill="${cor}" opacity="0.85"/><path d="M19 23 L21 29 L23 23" fill="white" opacity="0.9"/><line x1="16" y1="23" x2="26" y2="23" stroke="white" stroke-width="1.5"/></svg>`;
+  }
+  return `<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg"><circle cx="21" cy="21" r="21" fill="${cor}"/><text x="21" y="27" text-anchor="middle" font-size="18" font-weight="bold" fill="white" font-family="serif">X</text></svg>`;
+}
+
+const TAGS_CATEGORIA = {
+  'Brasil':         ['brasil','política','governo','sociedade','cidadania'],
+  'Economia':       ['economia','mercado','finanças','investimento','inflação'],
+  'Politica':       ['política','congresso','governo','eleições','democracia'],
+  'Esportes':       ['esportes','futebol','campeonato','atleta','competição'],
+  'Entretenimento': ['entretenimento','cultura','arte','música','cinema'],
+  'Tecnologia':     ['tecnologia','inovação','digital','startup','IA'],
+  'Seguranca':      ['segurança','justiça','direito','crime','legislação']
+};
+
+document.getElementById('currentDate').textContent = new Date().toLocaleDateString('pt-BR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+function formatarData(str) {
+  if (!str) return '';
+  return new Date(str).toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+
+function calcularLeitura(texto) {
+  const palavras = texto.replace(/<[^>]*>/g,'').split(/\s+/).length;
+  const minutos = Math.ceil(palavras / 200);
+  return `${minutos} min de leitura`;
+}
+
+function compartilhar(tipo) {
+  const url = encodeURIComponent(window.location.href);
+  const titulo = encodeURIComponent(document.title);
+  if (tipo==='whatsapp') window.open(`https://wa.me/?text=${titulo}%20${url}`,'_blank');
+  if (tipo==='twitter')  window.open(`https://twitter.com/intent/tweet?text=${titulo}&url=${url}`,'_blank');
+  if (tipo==='facebook') window.open(`https://facebook.com/sharer/sharer.php?u=${url}`,'_blank');
+  if (tipo==='copy')     { navigator.clipboard.writeText(window.location.href); alert('Link copiado!'); }
+}
+
+function renderMaisLidas(noticias) {
+  let html = '';
+  noticias.slice(0,7).forEach((n,i) => {
+    html += `<div class="most-read-item" onclick="window.location='noticia.html?id=${n.id}'">
+      <span class="most-read-num">${i+1}</span>
+      <div><div class="most-read-cat">${n.categoria||''}</div><div class="most-read-text">${n.titulo||''}</div></div>
+    </div>`;
+  });
+  document.getElementById('maisLidas').innerHTML = html;
+}
+
+function renderRelacionadas(noticias, idAtual, categoria) {
+  const items = noticias.filter(n => n.id !== idAtual && n.categoria === categoria).slice(0,3);
+  if (!items.length) {
+    document.querySelector('.related-section').style.display = 'none';
+    return;
+  }
+  let html = '';
+  items.forEach(n => {
+    html += `<div class="related-card" onclick="window.location='noticia.html?id=${n.id}'">
+      <img src="${n.url_imagem||''}" alt="${n.titulo||''}" onerror="this.style.display='none'">
+      <div class="related-card-body">
+        <div class="related-card-cat">${n.categoria||''}</div>
+        <h4>${n.titulo||''}</h4>
+        <div class="related-card-date">${formatarData(n.criado_em)}</div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('relacionadas').innerHTML = html;
+}
+
+function renderTags(categoria) {
+  const tags = TAGS_CATEGORIA[categoria] || ['notícia','portal x','brasil'];
+  const html = '<span class="tags-label">Tags:</span>' + tags.map(t => `<span class="tag">#${t}</span>`).join('');
+  document.getElementById('artTags').innerHTML = html;
+}
+
+function renderAuthorBio(autor) {
+  const bio = AUTORES_BIO[autor] || AUTORES_BIO['Redacao Portal X'] || { bio: 'Jornalista do Portal X.', genero: 'N', cor: '#E8171F' };
+  const svgAvatar = gerarAvatarBioSVG(bio.genero, bio.cor, autor);
+  document.getElementById('artAuthorBio').innerHTML = `
+    <div class="author-bio-avatar" style="background:none;padding:0;">${svgAvatar}</div>
+    <div class="author-bio-info">
+      <h4>${autor}</h4>
+      <span>Jornalista | Portal X</span>
+      <p>${bio.bio}</p>
+    </div>`;
+}
+
+async function carregarNoticia() {
+  const params = new URLSearchParams(window.location.search);
+  const id   = params.get('id');
+  const slug = params.get('slug');
+  if (!id && !slug) { mostrarErro(); return; }
+
+  try {
+    let query = db.from('hora').select('*');
+    if (id)   query = query.eq('id', id);
+    else      query = query.eq('slug', slug);
+    const { data, error } = await query.single();
+    if (error || !data) throw new Error('não encontrada');
+
+    // SEO dinâmico
+    const desc = data.conteudo ? data.conteudo.replace(/<[^>]*>/g,'').substring(0,160) : '';
+    document.title = `${data.titulo} | Portal X`;
+    document.getElementById('metaDesc').content = desc;
+    document.getElementById('ogTitle').content  = data.titulo;
+    document.getElementById('ogDesc').content   = desc;
+    document.getElementById('ogImage').content  = data.url_imagem || '';
+    document.getElementById('canonical').href   = window.location.href;
+
+    // JSON-LD
+    const autor = extrairAutor(data.conteudo);
+    document.getElementById('articleSchema').textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": data.titulo,
+      "description": desc,
+      "image": data.url_imagem || '',
+      "author": { "@type": "Person", "name": autor },
+      "publisher": { "@type": "Organization", "name": "Portal X", "logo": { "@type": "ImageObject", "url": "https://leandroworkflow-cmd.github.io/oxdanoticia/logo.png" } },
+      "datePublished": data.criado_em,
+      "dateModified": data.criado_em,
+      "mainEntityOfPage": window.location.href
+    });
+
+    // Preenche UI
+    document.getElementById('artCat').textContent   = data.categoria || 'Notícia';
+    document.getElementById('artTitulo').textContent = (data.titulo||'').replace(/\*\*/g,'').trim();
+    document.getElementById('breadCat').textContent  = data.categoria || '';
+    document.getElementById('breadTitle').textContent = (data.titulo||'').substring(0,50) + '...';
+    document.getElementById('artData').textContent    = formatarData(data.criado_em);
+    document.getElementById('artReadTime').textContent = calcularLeitura(data.conteudo||'');
+    document.getElementById('artAuthor').textContent  = autor;
+    const bioData = AUTORES_BIO[autor] || AUTORES_BIO['Redacao Portal X'] || { genero: 'N', cor: '#E8171F' };
+  const avatarEl = document.getElementById('artAuthorAvatar');
+  if (avatarEl) { avatarEl.innerHTML = gerarAvatarSVG(bioData.genero, bioData.cor, autor); avatarEl.style.background = 'none'; avatarEl.style.padding = '0'; }
+
+    // Descrição (primeiro parágrafo limpo)
+    const primParag = (data.conteudo||'').replace(/<[^>]*>/g,'').substring(0,200);
+    document.getElementById('artDesc').textContent = primParag + '...';
+
+    // Imagem
+    if (data.url_imagem) {
+      document.getElementById('artImgWrap').innerHTML = `
+        <img class="article-img" src="${data.url_imagem}" alt="${data.titulo||''}" itemprop="image">
+        <div class="article-img-caption">Foto: Portal X | ${data.categoria||''}</div>`;
+    }
+
+    // Corpo — HTML ou texto
+    let corpo = data.conteudo || '';
+    // Remove asteriscos do Groq
+    corpo = corpo.replace(/\*\*/g, '');
+    const isHTML = corpo.includes('<p>') || corpo.includes('<h2>');
+    if (isHTML) {
+      corpo = corpo.replace(/<h[23][^>]*>\s*(conclus[aã]o|conclus[oõ]es|consider[aã][çc][oõ]es finais|palavras finais)\s*<\/h[23]>/gi, '');
+      document.getElementById('artBody').innerHTML = corpo;
+    } else {
+      const paragrafos = corpo.split('\n').filter(p => p.trim());
+      document.getElementById('artBody').innerHTML = paragrafos.map(p => {
+        if (p.startsWith('## ')) return `<h2>${p.replace('## ','')}</h2>`;
+        if (p.startsWith('### ')) return `<h3>${p.replace('### ','')}</h3>`;
+        return `<p>${p}</p>`;
+      }).join('');
+    }
+
+    renderTags(data.categoria);
+    renderAuthorBio(autor);
+
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('articleContent').style.display = 'block';
+
+    // Carrega relacionadas e mais lidas
+    const { data: todas } = await db.from('hora').select('*').order('criado_em',{ascending:false}).limit(30);
+    if (todas) {
+      renderMaisLidas(todas);
+      renderRelacionadas(todas, data.id, data.categoria);
+    }
+
+  } catch(err) { mostrarErro(); }
+}
+
+function extrairAutor(conteudo) {
+  if (!conteudo) return 'Redacao Portal X';
+  const match = conteudo.match(/—\s*<strong>([^<]+)<\/strong>/);
+  if (match) return match[1].trim();
+  const match2 = conteudo.match(/—\s*([^|<\n]+)\s*\|/);
+  if (match2) return match2[1].trim();
+  return 'Redacao Portal X';
+}
+
+function mostrarErro() {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('errorState').style.display   = 'block';
+}
+
+carregarNoticia();
+</script>
+</body>
+</html>
