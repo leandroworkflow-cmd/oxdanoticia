@@ -574,7 +574,7 @@ async function carregarNoticia() {
 
     // Preenche UI
     document.getElementById('artCat').textContent   = data.categoria || 'Notícia';
-    document.getElementById('artTitulo').textContent = data.titulo || '';
+    document.getElementById('artTitulo').textContent = (data.titulo||'').replace(/\*\*/g,'').trim();
     document.getElementById('breadCat').textContent  = data.categoria || '';
     document.getElementById('breadTitle').textContent = (data.titulo||'').substring(0,50) + '...';
     document.getElementById('artData').textContent    = formatarData(data.criado_em);
@@ -597,6 +597,8 @@ async function carregarNoticia() {
 
     // Corpo — HTML ou texto
     let corpo = data.conteudo || '';
+    // Remove asteriscos do Groq
+    corpo = corpo.replace(/\*\*/g, '');
     const isHTML = corpo.includes('<p>') || corpo.includes('<h2>');
     if (isHTML) {
       corpo = corpo.replace(/<h[23][^>]*>\s*(conclus[aã]o|conclus[oõ]es|consider[aã][çc][oõ]es finais|palavras finais)\s*<\/h[23]>/gi, '');
