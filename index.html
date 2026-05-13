@@ -168,6 +168,11 @@ ul{list-style:none;}
 .spinner{width:32px;height:32px;border:3px solid #eee;border-top-color:#e8171f;border-radius:50%;animation:spin 0.8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
+/* VAZIO */
+.empty-cat{text-align:center;padding:40px 20px;background:#fff;border-radius:3px;color:#999;}
+.empty-cat strong{display:block;font-size:16px;color:#555;margin-bottom:6px;}
+.empty-cat span{font-size:13px;}
+
 /* PLACEHOLDER IMAGES */
 .ph{display:flex;align-items:center;justify-content:center;}
 .ph1{background:linear-gradient(135deg,#0d1b3e,#1a3a6e 50%,#2e86c1);}
@@ -345,6 +350,10 @@ function imgEl(url, cls, alt){
   return `<div class="${cls} ${ph(Math.floor(Math.random()*8))}"></div>`;
 }
 
+function normalizarTexto(str){
+  return (str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+}
+
 function renderBreaking(n){
   if(n && n.titulo){
     document.getElementById('breakingText').textContent = n.titulo;
@@ -354,7 +363,7 @@ function renderBreaking(n){
 
 function renderHero(noticias){
   if(!noticias.length){ document.getElementById('heroSection').innerHTML = ''; return; }
-  const p = noticias[0];
+  const p  = noticias[0];
   const s1 = noticias[1];
   const s2 = noticias[2];
   const minis = noticias.slice(3,6);
@@ -372,7 +381,9 @@ function renderHero(noticias){
 
   [s1,s2].forEach((n,i) => {
     if(!n) return;
-    const bg = n.url_imagem ? `<img src="${n.url_imagem}" class="hero-card-bg" alt="${n.titulo||''}" onerror="this.className='hero-card-bg ${ph(i+2)}'">` : `<div class="hero-card-bg ${ph(i+2)}"></div>`;
+    const bg = n.url_imagem
+      ? `<img src="${n.url_imagem}" class="hero-card-bg" alt="${n.titulo||''}" onerror="this.className='hero-card-bg ${ph(i+2)}'">` 
+      : `<div class="hero-card-bg ${ph(i+2)}"></div>`;
     html += `<div class="hero-card" onclick="window.location='${urlNoticia(n)}'">
       ${bg}
       <div class="hero-card-over">
@@ -387,7 +398,9 @@ function renderHero(noticias){
   if(minis.length){
     html += `<div class="section-row">`;
     minis.forEach((n,i) => {
-      const bg = n.url_imagem ? `<img src="${n.url_imagem}" class="mini-bg" alt="${n.titulo||''}" onerror="this.className='mini-bg ${ph(i+5)}'">` : `<div class="mini-bg ${ph(i+5)}"></div>`;
+      const bg = n.url_imagem
+        ? `<img src="${n.url_imagem}" class="mini-bg" alt="${n.titulo||''}" onerror="this.className='mini-bg ${ph(i+5)}'">` 
+        : `<div class="mini-bg ${ph(i+5)}"></div>`;
       const catColors = {'Brasil':'#e8171f','Politica':'#0066cc','Economia':'#1a8a34','Esportes':'#e67e00','Entretenimento':'#c0246e','Tecnologia':'#6b2fa0','Seguranca':'#007a7a'};
       const cor = catColors[n.categoria] || '#fff';
       html += `<div class="mini-card" onclick="window.location='${urlNoticia(n)}'">
@@ -404,11 +417,14 @@ function renderHero(noticias){
   document.getElementById('heroSection').innerHTML = html;
 }
 
-function renderCards(noticias){
-  const items = noticias.slice(6,10);
-  if(!items.length){ document.getElementById('cardsGrid').innerHTML = ''; return; }
+// ✅ CORRIGIDO: recebe o slice já calculado em aplicarFiltro()
+function renderCards(items){
+  if(!items.length){
+    document.getElementById('cardsGrid').innerHTML = '<div class="empty-cat"><strong>Nenhuma notícia</strong><span>Sem mais artigos nesta categoria.</span></div>';
+    return;
+  }
   let html = '';
-  items.forEach((n,i) => {
+  items.forEach(n => {
     html += `<div class="article-card" onclick="window.location='${urlNoticia(n)}'">
       ${imgEl(n.url_imagem,'ac-img',n.titulo)}
       <div class="ac-body">
@@ -421,11 +437,14 @@ function renderCards(noticias){
   document.getElementById('cardsGrid').innerHTML = html;
 }
 
-function renderList(noticias){
-  const items = noticias.slice(10,18);
-  if(!items.length){ document.getElementById('listSection').innerHTML = ''; return; }
+// ✅ CORRIGIDO: recebe o slice já calculado em aplicarFiltro()
+function renderList(items){
+  if(!items.length){
+    document.getElementById('listSection').innerHTML = '';
+    return;
+  }
   let html = '';
-  items.forEach((n,i) => {
+  items.forEach(n => {
     html += `<div class="list-item" onclick="window.location='${urlNoticia(n)}'">
       ${imgEl(n.url_imagem,'li-img',n.titulo)}
       <div class="li-body">
@@ -453,24 +472,29 @@ function renderMaisLidas(noticias){
 }
 
 function renderTrending(noticias){
-  const cats = [...new Set(noticias.map(n => n.categoria).filter(Boolean))];
   const tags = ['#Brasil','#Política','#Economia','#Esportes','#Tecnologia','#Entretenimento','#Segurança','#Saúde','#Mundo'];
   document.getElementById('trendingTags').innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
 }
 
-function normalizarTexto(str){
-  return (str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-}
-
+// ✅ NÚCLEO DO FIX: slices dinâmicos baseados no tamanho do array filtrado
 function aplicarFiltro(){
   let filtradas = todas;
+
   if(filtroAtivo){
     const f = normalizarTexto(filtroAtivo);
-    filtradas = todas.filter(n => normalizarTexto(n.categoria) === f || normalizarTexto(n.categoria).includes(f));
+    filtradas = todas.filter(n => normalizarTexto(n.categoria) === f);
   }
-  renderHero(filtradas);
-  renderCards(filtradas);
-  renderList(filtradas);
+
+  // Hero consome índices 0–5 (big=0, side=1,2, minis=3,4,5)
+  // Cards consome os próximos 4 itens após o hero
+  // Lista consome os próximos 8 itens após os cards
+  const heroItems  = filtradas.slice(0, 6);
+  const cardItems  = filtradas.slice(6, 10);
+  const listItems  = filtradas.slice(10, 18);
+
+  renderHero(heroItems);
+  renderCards(cardItems);
+  renderList(listItems);
 }
 
 function filtrar(cat, el){
@@ -483,8 +507,14 @@ function filtrar(cat, el){
 function buscar(){
   const t = document.getElementById('searchInput').value.toLowerCase().trim();
   if(!t){ aplicarFiltro(); return; }
-  const f = todas.filter(n => (n.titulo||'').toLowerCase().includes(t) || (n.conteudo||'').toLowerCase().includes(t));
-  renderHero(f); renderCards(f); renderList(f);
+  const f = todas.filter(n =>
+    (n.titulo||'').toLowerCase().includes(t) ||
+    (n.conteudo||'').toLowerCase().includes(t)
+  );
+  // Na busca, mostra tudo sequencialmente sem pular índices
+  renderHero(f.slice(0,6));
+  renderCards(f.slice(6,10));
+  renderList(f.slice(10,18));
 }
 
 document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key==='Enter') buscar(); });
