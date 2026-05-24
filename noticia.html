@@ -408,6 +408,8 @@ const AUTORES_BIO = {
   'Felipe Cardoso':       { bio: 'Repórter de tecnologia e inovação. Acompanha startups, inteligência artificial e o universo digital.', genero: 'M', cor: '#27AE60' },
   'Juliana Moreira':      { bio: 'Jornalista esportiva com passagem pela cobertura de Copa do Mundo e Jogos Olímpicos.', genero: 'F', cor: '#E91E63' },
   'Redacao Portal X':     { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
+  'Escritor Lecao':       { bio: 'Escritor, empreendedor digital e fundador do O X da Notícia. Apaixonado por literatura, cultura e pelo poder transformador da informação.', genero: 'M', cor: '#C0392B' },
+  'Escritor Lecão':       { bio: 'Escritor, empreendedor digital e fundador do O X da Notícia. Apaixonado por literatura, cultura e pelo poder transformador da informação.', genero: 'M', cor: '#C0392B' },
   'Redação Portal X':    { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
   'Lionor VS2':          { bio: 'Jornalista sênior com mais de 10 anos de experiência em cobertura política e econômica.', genero: 'M', cor: '#C0392B' },
   'Carlos Mendonça':     { bio: 'Repórter de economia e mercado financeiro. Cobre o setor há 8 anos.', genero: 'M', cor: '#2980B9' },
@@ -426,6 +428,8 @@ const FOTOS_AUTORES = {
   'Felipe Cardoso':       '/oxdanoticia/autor-felipe.jpeg',
   'Juliana Moreira':      '/oxdanoticia/autor-juliana.jpeg',
   'Redacao Portal X':     '/oxdanoticia/autor-redacao.jpeg',
+  'Escritor Lecao':       '/oxdanoticia/autor-lecao.jpeg',
+  'Escritor Lecão':       '/oxdanoticia/autor-lecao.jpeg',
   'Redação Portal X':     '/oxdanoticia/autor-redacao.jpeg'
 };
 
@@ -559,7 +563,7 @@ async function carregarNoticia() {
     document.getElementById('canonical').href   = window.location.href;
 
     // JSON-LD
-    const autor = extrairAutor(data.conteudo);
+    const autor = extrairAutor(data.conteudo, data.categoria);
     document.getElementById('articleSchema').textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "NewsArticle",
@@ -629,7 +633,8 @@ async function carregarNoticia() {
   } catch(err) { mostrarErro(); }
 }
 
-function extrairAutor(conteudo) {
+function extrairAutor(conteudo, categoria) {
+  if (categoria === 'Literatura') return 'Escritor Lecão';
   if (!conteudo) return 'Redacao Portal X';
   const match = conteudo.match(/—\s*<strong>([^<]+)<\/strong>/);
   if (match) return match[1].trim();
