@@ -586,6 +586,11 @@ async function carregarNoticia() {
     if (avatarEl) {
       avatarEl.innerHTML = gerarAvatarSVG(bioData.genero, bioData.cor, autor);
       avatarEl.style.background = 'none';
+      avatarEl.style.width = '42px';
+      avatarEl.style.height = '42px';
+      avatarEl.style.borderRadius = '50%';
+      avatarEl.style.overflow = 'hidden';
+      avatarEl.style.flexShrink = '0';
       avatarEl.style.padding = '0';
     }
 
