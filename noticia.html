@@ -431,7 +431,7 @@ const FOTOS_AUTORES = {
 function gerarAvatarSVG(genero, cor, autor) {
   const foto = autor ? FOTOS_AUTORES[autor] : null;
   if (foto) {
-    return `<img src="${foto}" alt="${autor}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;display:block;" onerror="this.style.display='none'">`;
+    return `<img src="${foto}" alt="${autor}" style="width:42px;height:42px;min-width:42px;min-height:42px;max-width:42px;max-height:42px;border-radius:50%;object-fit:cover;object-position:center;display:block;">`;
   }
   return gerarAvatarFallback(genero, cor);
 }
