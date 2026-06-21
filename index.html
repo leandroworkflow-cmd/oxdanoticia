@@ -106,17 +106,6 @@ ul{list-style:none;}
 .sec-title{font-size:16px;font-weight:700;color:#111;}
 .sec-more{font-size:12px;color:#e8171f;font-weight:600;cursor:pointer;}
 
-/* CARDS GRID */
-.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
-.article-card{cursor:pointer;background:#fff;border-radius:3px;overflow:hidden;transition:box-shadow 0.15s;}
-.article-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1);}
-.article-card:hover .ac-title{color:#e8171f;}
-.ac-img{width:100%;height:140px;object-fit:cover;display:block;}
-.ac-body{padding:10px 12px;}
-.ac-cat{font-size:10px;font-weight:700;color:#e8171f;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;}
-.ac-title{font-family:'Merriweather',Georgia,serif;font-size:14px;font-weight:700;line-height:1.4;color:#111;margin-bottom:5px;transition:color 0.15s;}
-.ac-meta{font-size:11px;color:#999;}
-
 /* LIST */
 .list-section{margin-bottom:20px;}
 .list-item{display:flex;gap:12px;padding:12px;background:#fff;margin-bottom:2px;cursor:pointer;transition:box-shadow 0.15s;}
@@ -196,7 +185,7 @@ ul{list-style:none;}
 
 /* RESPONSIVE */
 @media(max-width:1024px){.content-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:repeat(3,1fr);}.ad-box{width:100%;}}
-@media(max-width:768px){.hero-section{grid-template-columns:1fr;}.hero-right{display:none;}.section-row{grid-template-columns:1fr 1fr;}.cards-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr 1fr;}.header-top{padding:10px 16px;}.logo-main{font-size:22px;}.main{padding:12px 16px;}}
+@media(max-width:768px){.hero-section{grid-template-columns:1fr;}.hero-right{display:none;}.section-row{grid-template-columns:1fr 1fr;}.footer-grid{grid-template-columns:1fr 1fr;}.header-top{padding:10px 16px;}.logo-main{font-size:22px;}.main{padding:12px 16px;}}
 @media(max-width:480px){.section-row{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -250,9 +239,6 @@ ul{list-style:none;}
   <!-- CONTENT GRID -->
   <div class="content-grid">
     <div>
-      <div class="sec-header"><span class="sec-title">Últimas Notícias</span><span class="sec-more">Ver tudo ›</span></div>
-      <div id="cardsGrid" class="cards-grid"></div>
-
       <div class="sec-header"><span class="sec-title">Veja Também</span><span class="sec-more">Ver tudo ›</span></div>
       <div id="listSection" class="list-section"></div>
     </div>
@@ -404,26 +390,8 @@ function renderHero(noticias){
   document.getElementById('heroSection').innerHTML = html;
 }
 
-function renderCards(noticias){
-  const start = filtroAtivo ? 3 : 6;
-  const items = noticias.slice(start, start+4);
-  if(!items.length){ document.getElementById('cardsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;background:#fff;"><p>Nenhuma notícia nesta categoria.</p></div>'; return; }
-  let html = '';
-  items.forEach((n,i) => {
-    html += `<div class="article-card" onclick="window.location='${urlNoticia(n)}'">
-      ${imgEl(n.url_imagem,'ac-img',n.titulo)}
-      <div class="ac-body">
-        <div class="ac-cat">${n.categoria||''}</div>
-        <div class="ac-title">${n.titulo||''}</div>
-        <div class="ac-meta">${formatarData(n.criado_em)}</div>
-      </div>
-    </div>`;
-  });
-  document.getElementById('cardsGrid').innerHTML = html;
-}
-
 function renderList(noticias){
-  const start = filtroAtivo ? 7 : 10;
+  const start = filtroAtivo ? 3 : 6;
   const items = noticias.slice(start, start+8);
   if(!items.length){ document.getElementById('listSection').innerHTML = ''; return; }
   let html = '';
@@ -455,7 +423,6 @@ function renderMaisLidas(noticias){
 }
 
 function renderTrending(noticias){
-  const cats = [...new Set(noticias.map(n => n.categoria).filter(Boolean))];
   const tags = ['#Brasil','#Política','#Economia','#Esportes','#Tecnologia','#Entretenimento','#Segurança','#Saúde','#Mundo'];
   document.getElementById('trendingTags').innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
 }
@@ -471,7 +438,6 @@ function aplicarFiltro(){
     filtradas = todas.filter(n => normalizarTexto(n.categoria) === f || normalizarTexto(n.categoria).includes(f));
   }
   renderHero(filtradas);
-  renderCards(filtradas);
   renderList(filtradas);
 }
 
@@ -486,7 +452,7 @@ function buscar(){
   const t = document.getElementById('searchInput').value.toLowerCase().trim();
   if(!t){ aplicarFiltro(); return; }
   const f = todas.filter(n => (n.titulo||'').toLowerCase().includes(t) || (n.conteudo||'').toLowerCase().includes(t));
-  renderHero(f); renderCards(f); renderList(f);
+  renderHero(f); renderList(f);
 }
 
 document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key==='Enter') buscar(); });
