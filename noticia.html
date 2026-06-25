@@ -206,10 +206,10 @@ img{max-width:100%;display:block;}
     <div class="topbar-inner">
       <span id="currentDate"></span>
       <div class="topbar-links">
-        <a href="/oxdanoticia/">Início</a>
-        <a href="/oxdanoticia/sobre.html">Sobre</a>
-        <a href="/oxdanoticia/contato.html">Contato</a>
-        <a href="/oxdanoticia/anuncie.html">Anuncie</a>
+        <a href="/">Início</a>
+        <a href="/sobre.html">Sobre</a>
+        <a href="/contato.html">Contato</a>
+        <a href="/anuncie.html">Anuncie</a>
       </div>
     </div>
   </div>
@@ -219,14 +219,14 @@ img{max-width:100%;display:block;}
   <div class="container">
     <div class="header-inner">
       <div class="logo-wrap">
-        <a href="/oxdanoticia/">
+        <a href="/">
           <div class="logo-text"><span style="color:#e8171f;">O X</span> da Notícia</div>
           <div class="logo-tagline">Informação em Tempo Real</div>
         </a>
       </div>
       <div class="header-search">
         <input type="search" placeholder="Buscar notícias...">
-        <button class="search-btn" onclick="window.location='/oxdanoticia/'">&#128269;</button>
+        <button class="search-btn" onclick="window.location='/'">&#128269;</button>
       </div>
     </div>
   </div>
@@ -235,15 +235,15 @@ img{max-width:100%;display:block;}
 <nav class="main-nav">
   <div class="container">
     <div class="nav-inner">
-      <a href="/oxdanoticia/">Início</a>
-      <a href="/oxdanoticia/?cat=Brasil">Brasil</a>
-      <a href="/oxdanoticia/?cat=Politica">Política</a>
-      <a href="/oxdanoticia/?cat=Mundo">Mundo</a>
-      <a href="/oxdanoticia/?cat=Economia">Economia</a>
-      <a href="/oxdanoticia/?cat=Esportes">Esportes</a>
-      <a href="/oxdanoticia/?cat=Entretenimento">Entretenimento</a>
-      <a href="/oxdanoticia/?cat=Tecnologia">Tecnologia</a>
-      <a href="/oxdanoticia/?cat=Literatura">Literatura</a>
+      <a href="/">Início</a>
+      <a href="/?cat=Brasil">Brasil</a>
+      <a href="/?cat=Politica">Política</a>
+      <a href="/?cat=Mundo">Mundo</a>
+      <a href="/?cat=Economia">Economia</a>
+      <a href="/?cat=Esportes">Esportes</a>
+      <a href="/?cat=Entretenimento">Entretenimento</a>
+      <a href="/?cat=Tecnologia">Tecnologia</a>
+      <a href="/?cat=Literatura">Literatura</a>
     </div>
   </div>
 </nav>
@@ -255,7 +255,7 @@ img{max-width:100%;display:block;}
     <div id="articleContent" style="display:none;">
       <!-- BREADCRUMB -->
       <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="/oxdanoticia/">Início</a>
+        <a href="/">Início</a>
         <span>›</span>
         <span id="breadCat"></span>
         <span>›</span>
@@ -329,7 +329,7 @@ img{max-width:100%;display:block;}
 
     <div id="errorState" style="display:none;text-align:center;padding:80px;color:#999;background:#fff;border-radius:4px;">
       <h2 style="font-family:'Merriweather',serif;margin-bottom:12px;">Notícia não encontrada</h2>
-      <a href="/oxdanoticia/" style="color:#e8171f;">← Voltar para o início</a>
+      <a href="/" style="color:#e8171f;">← Voltar para o início</a>
     </div>
   </main>
 
@@ -367,11 +367,11 @@ img{max-width:100%;display:block;}
         <div class="footer-col"><h4>Entretenimento</h4><ul><li><a href="#">Cinema</a></li><li><a href="#">Música</a></li><li><a href="#">Streaming</a></li><li><a href="#">Famosos</a></li><li><a href="#">Games</a></li></ul></div>
         <div class="footer-col"><h4>Serviços</h4><ul><li><a href="#">Clima</a></li><li><a href="#">Câmbio</a></li><li><a href="#">Bolsa</a></li><li><a href="#">Concursos</a></li></ul></div>
         <div class="footer-col"><h4>Portal X</h4><ul>
-          <li><a href="/oxdanoticia/sobre.html">Sobre nós</a></li>
-          <li><a href="/oxdanoticia/anuncie.html">Anuncie</a></li>
-          <li><a href="/oxdanoticia/privacidade.html">Privacidade</a></li>
-          <li><a href="/oxdanoticia/termos.html">Termos de Uso</a></li>
-          <li><a href="/oxdanoticia/contato.html">Contato</a></li>
+          <li><a href="/sobre.html">Sobre nós</a></li>
+          <li><a href="/anuncie.html">Anuncie</a></li>
+          <li><a href="/privacidade.html">Privacidade</a></li>
+          <li><a href="/termos.html">Termos de Uso</a></li>
+          <li><a href="/contato.html">Contato</a></li>
         </ul></div>
       </div>
     </div>
@@ -566,7 +566,7 @@ async function carregarNoticia() {
       "description": desc,
       "image": data.url_imagem || '',
       "author": { "@type": "Person", "name": autor },
-      "publisher": { "@type": "Organization", "name": "Portal X", "logo": { "@type": "ImageObject", "url": "https://leandroworkflow-cmd.github.io/oxdanoticia/logo.png" } },
+      "publisher": { "@type": "Organization", "name": "Portal X", "logo": { "@type": "ImageObject", "url": "https://oxdanoticia.vercel.app/logo.png" } },
       "datePublished": data.criado_em,
       "dateModified": data.criado_em,
       "mainEntityOfPage": window.location.href
@@ -656,3 +656,4 @@ carregarNoticia();
 </script>
 </body>
 </html>
+"fix: remover prefixo /oxdanoticia/ dos links"
