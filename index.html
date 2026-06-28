@@ -190,6 +190,53 @@ ul{list-style:none;}
 @media(max-width:1024px){.content-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:repeat(3,1fr);}.ad-box{width:100%;}}
 @media(max-width:768px){.hero-section{grid-template-columns:1fr;}.hero-right{display:none;}.section-row{grid-template-columns:1fr 1fr;}.footer-grid{grid-template-columns:1fr 1fr;}.header-top{padding:10px 16px;}.logo-main{font-size:22px;}.main{padding:12px 16px;}}
 @media(max-width:480px){.section-row{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}}
+
+/* ===== AGENDA COPA DO MUNDO ===== */
+.copa-widget{background:#fff;border-radius:4px;overflow:hidden;margin-bottom:20px;font-family:'Source Sans 3','Helvetica Neue',sans-serif;}
+.copa-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#003d1a;gap:12px;}
+.copa-header-left{display:flex;align-items:center;gap:10px;}
+.copa-trophy{font-size:18px;}
+.copa-title{font-size:13px;font-weight:700;color:#fff;letter-spacing:0.3px;}
+.copa-title span{color:#ffd700;}
+.copa-live-badge{background:#e8171f;color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;animation:pulse-badge 1.5s ease-in-out infinite;}
+@keyframes pulse-badge{0%,100%{opacity:1;}50%{opacity:0.6;}}
+.copa-see-all{font-size:11px;color:#a8d5a2;cursor:pointer;white-space:nowrap;text-decoration:none;}
+.copa-see-all:hover{color:#ffd700;}
+.copa-scroll-wrapper{overflow-x:auto;scrollbar-width:thin;scrollbar-color:#e0e0e0 transparent;border-bottom:2px solid #003d1a;}
+.copa-scroll-wrapper::-webkit-scrollbar{height:3px;}
+.copa-scroll-wrapper::-webkit-scrollbar-thumb{background:#003d1a;border-radius:2px;}
+.copa-track{display:flex;gap:0;min-width:max-content;}
+.copa-card{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 14px;min-width:148px;cursor:pointer;border-right:1px solid #f0f0f0;transition:background 0.15s;position:relative;gap:6px;}
+.copa-card:hover{background:#fafaf8;}
+.copa-card:last-child{border-right:none;}
+.copa-card.is-live{background:#fff8f8;border-bottom:3px solid #e8171f;}
+.copa-card.is-next{background:#f8fbff;border-bottom:3px solid #0066cc;}
+.copa-card.is-done{border-bottom:3px solid #ccc;}
+.copa-meta{font-size:10px;color:#999;text-align:center;line-height:1.2;}
+.copa-status-badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:1px 6px;border-radius:2px;margin-bottom:1px;}
+.badge-live{background:#e8171f;color:#fff;}
+.badge-ft{background:#eee;color:#777;}
+.badge-ns{background:#0066cc;color:#fff;}
+.badge-ht{background:#ff6b00;color:#fff;}
+.copa-teams{display:flex;align-items:center;gap:8px;width:100%;justify-content:center;}
+.copa-team{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:0;}
+.copa-flag{width:32px;height:22px;object-fit:cover;border-radius:2px;border:1px solid #eee;flex-shrink:0;}
+.copa-flag-placeholder{width:32px;height:22px;border-radius:2px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.copa-team-name{font-size:11px;font-weight:600;color:#111;text-align:center;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52px;}
+.copa-score-block{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;}
+.copa-score{font-size:18px;font-weight:900;color:#111;letter-spacing:-0.5px;line-height:1;}
+.copa-score.live-score{color:#e8171f;}
+.copa-vs{font-size:11px;font-weight:700;color:#ccc;}
+.copa-minute{font-size:9px;color:#e8171f;font-weight:700;}
+.copa-round{font-size:10px;color:#aaa;text-align:center;}
+.copa-loading{display:flex;align-items:center;justify-content:center;padding:30px;gap:8px;color:#999;font-size:12px;}
+.copa-spinner{width:18px;height:18px;border:2px solid #eee;border-top-color:#003d1a;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
+.copa-error{padding:16px;text-align:center;color:#999;font-size:12px;}
+.copa-tabs{display:flex;border-bottom:1px solid #f0f0f0;background:#fafafa;}
+.copa-tab{padding:8px 14px;font-size:12px;font-weight:600;color:#888;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.copa-tab.active,.copa-tab:hover{color:#003d1a;border-color:#003d1a;}
+.copa-refresh{text-align:right;padding:4px 12px 0;font-size:10px;color:#ccc;}
+@media(max-width:768px){.copa-card{min-width:130px;padding:8px 10px;}.copa-header{padding:8px 12px;}.copa-title{font-size:12px;}}
 </style>
 </head>
 <body>
@@ -238,6 +285,31 @@ ul{list-style:none;}
   <section id="heroSection">
     <div class="loading"><div class="spinner"></div><span>Carregando notícias...</span></div>
   </section>
+
+  <!-- AGENDA COPA DO MUNDO 2026 -->
+  <div id="copa-agenda" class="copa-widget">
+    <div class="copa-header">
+      <div class="copa-header-left">
+        <span class="copa-trophy">🏆</span>
+        <span class="copa-title">Agenda <span>Copa do Mundo FIFA™</span> 2026</span>
+        <span class="copa-live-badge" id="copaLiveBadge" style="display:none;">AO VIVO</span>
+      </div>
+      <a class="copa-see-all" href="https://www.thesportsdb.com/league/4429" target="_blank">Ver agenda completa ›</a>
+    </div>
+    <div class="copa-tabs">
+      <div class="copa-tab active" onclick="copaSetTab('todos',this)">Todos</div>
+      <div class="copa-tab" onclick="copaSetTab('live',this)">🔴 Ao Vivo</div>
+      <div class="copa-tab" onclick="copaSetTab('hoje',this)">Hoje</div>
+      <div class="copa-tab" onclick="copaSetTab('proximos',this)">Próximos</div>
+      <div class="copa-tab" onclick="copaSetTab('encerrados',this)">Encerrados</div>
+    </div>
+    <div class="copa-refresh" id="copaRefreshTime"></div>
+    <div class="copa-scroll-wrapper">
+      <div class="copa-track" id="copaTrack">
+        <div class="copa-loading"><div class="copa-spinner"></div>Carregando jogos...</div>
+      </div>
+    </div>
+  </div>
 
   <!-- CONTENT GRID -->
   <div class="content-grid">
@@ -311,6 +383,7 @@ ul{list-style:none;}
 </footer>
 
 <script>
+/* ===== PORTAL: NOTÍCIAS ===== */
 const SUPABASE_URL = 'https://zdzktlqycxyqbqsskmuq.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_e4WQ7V1EjIjH2d4n6T0djQ_4NOhZlV1';
 const { createClient } = supabase;
@@ -321,33 +394,27 @@ let filtroAtivo = null;
 
 const PH = ['ph1','ph2','ph3','ph4','ph5','ph6','ph7','ph8'];
 function ph(i){ return PH[i % PH.length]; }
-
 function urlNoticia(n){ return `noticia.html?id=${n.id}`; }
-
 function formatarData(str){
   if(!str) return '';
   return new Date(str).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
 }
-
 function imgEl(url, cls, alt){
   if(url) return `<img src="${url}" class="${cls}" alt="${alt||''}" onerror="this.className='${cls} ${ph(Math.floor(Math.random()*8))}'">`;
   return `<div class="${cls} ${ph(Math.floor(Math.random()*8))}"></div>`;
 }
-
 function renderBreaking(n){
   if(n && n.titulo){
     document.getElementById('breakingText').textContent = n.titulo;
     document.getElementById('breakingBar').style.display = 'flex';
   }
 }
-
 function renderHero(noticias){
   if(!noticias.length){ document.getElementById('heroSection').innerHTML = ''; return; }
   const p = noticias[0];
   const s1 = noticias[1];
   const s2 = noticias[2];
   const minis = noticias.slice(3,6);
-
   let html = `<div class="hero-section">
     <div class="hero-big" onclick="window.location='${urlNoticia(p)}'">
       ${p.url_imagem ? `<img src="${p.url_imagem}" class="hero-big-bg" alt="${p.titulo||''}" onerror="this.className='hero-big-bg ph1'">` : `<div class="hero-big-bg ph1"></div>`}
@@ -358,7 +425,6 @@ function renderHero(noticias){
       </div>
     </div>
     <div class="hero-right">`;
-
   [s1,s2].forEach((n,i) => {
     if(!n) return;
     const bg = n.url_imagem ? `<img src="${n.url_imagem}" class="hero-card-bg" alt="${n.titulo||''}" onerror="this.className='hero-card-bg ${ph(i+2)}'">` : `<div class="hero-card-bg ${ph(i+2)}"></div>`;
@@ -370,9 +436,7 @@ function renderHero(noticias){
       </div>
     </div>`;
   });
-
   html += `</div></div>`;
-
   if(minis.length){
     html += `<div class="section-row">`;
     minis.forEach((n,i) => {
@@ -389,10 +453,8 @@ function renderHero(noticias){
     });
     html += `</div>`;
   }
-
   document.getElementById('heroSection').innerHTML = html;
 }
-
 function renderList(noticias){
   const start = filtroAtivo ? 3 : 6;
   const items = noticias.slice(start, start+8);
@@ -410,7 +472,6 @@ function renderList(noticias){
   });
   document.getElementById('listSection').innerHTML = html;
 }
-
 function renderMaisLidas(noticias){
   let html = '';
   noticias.slice(0,7).forEach((n,i) => {
@@ -424,16 +485,13 @@ function renderMaisLidas(noticias){
   });
   document.getElementById('maisLidas').innerHTML = html;
 }
-
 function renderTrending(noticias){
   const tags = ['#Brasil','#Política','#Economia','#Esportes','#Tecnologia','#Entretenimento','#Segurança','#Saúde','#Mundo'];
   document.getElementById('trendingTags').innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
 }
-
 function normalizarTexto(str){
   return (str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 }
-
 function aplicarFiltro(){
   let filtradas = todas;
   if(filtroAtivo){
@@ -443,23 +501,19 @@ function aplicarFiltro(){
   renderHero(filtradas);
   renderList(filtradas);
 }
-
 function filtrar(cat, el){
   filtroAtivo = cat;
   document.querySelectorAll('.nav-cat').forEach(a => a.classList.remove('active'));
   if(el) el.classList.add('active');
   aplicarFiltro();
 }
-
 function buscar(){
   const t = document.getElementById('searchInput').value.toLowerCase().trim();
   if(!t){ aplicarFiltro(); return; }
   const f = todas.filter(n => (n.titulo||'').toLowerCase().includes(t) || (n.conteudo||'').toLowerCase().includes(t));
   renderHero(f); renderList(f);
 }
-
 document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key==='Enter') buscar(); });
-
 async function carregar(){
   try{
     const { data, error } = await db.from('hora').select('*').order('criado_em',{ascending:false}).limit(60);
@@ -478,9 +532,173 @@ async function carregar(){
     document.getElementById('heroSection').innerHTML = '<div style="text-align:center;padding:40px;color:#999;">Erro ao carregar notícias.</div>';
   }
 }
-
 carregar();
 db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'},()=>carregar()).subscribe();
+
+/* ===== AGENDA COPA DO MUNDO 2026 ===== */
+(function() {
+  const LEAGUE_ID = '4429';
+  const SEASON    = '2026';
+  const API_BASE  = 'https://www.thesportsdb.com/api/v1/json/3';
+
+  let copaAllEvents = [];
+  let copaTab = 'todos';
+  let copaTimer = null;
+
+  const STATUS_MAP = {
+    'NS':  { label:'Não iniciado', badge:'badge-ns',   text:'NS'  },
+    '1H':  { label:'1º Tempo',     badge:'badge-live', text:'1T'  },
+    '2H':  { label:'2º Tempo',     badge:'badge-live', text:'2T'  },
+    'HT':  { label:'Intervalo',    badge:'badge-ht',   text:'INT' },
+    'FT':  { label:'Encerrado',    badge:'badge-ft',   text:'FT'  },
+    'AET': { label:'Prorrogação',  badge:'badge-ft',   text:'AET' },
+    'PEN': { label:'Pênaltis',     badge:'badge-live', text:'PEN' },
+    'ET':  { label:'Prorrogação',  badge:'badge-live', text:'ET'  },
+    'BT':  { label:'Intervalo ET', badge:'badge-ht',   text:'IET' },
+    'PST': { label:'Adiado',       badge:'badge-ft',   text:'ADIADO'},
+    'CANC':{ label:'Cancelado',    badge:'badge-ft',   text:'CANC'},
+  };
+
+  function isLive(s){ return ['1H','2H','HT','ET','BT','PEN'].includes(s); }
+  function isFinal(s){ return ['FT','AET','PEN','PST','CANC'].includes(s); }
+
+  function fmtDate(d){
+    if(!d) return '';
+    const today = new Date().toISOString().split('T')[0];
+    if(d === today) return 'Hoje';
+    const diff = (new Date(d+'T12:00:00') - new Date(today+'T12:00:00')) / 86400000;
+    if(diff === 1) return 'Amanhã';
+    if(diff === -1) return 'Ontem';
+    return new Date(d+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  }
+
+  function fmtTime(t){
+    if(!t) return '';
+    const [h,m] = t.split(':');
+    const d = new Date();
+    d.setUTCHours(+h,+m,0,0);
+    return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  }
+
+  const FLAGS = {
+    'Brazil':'🇧🇷','Argentina':'🇦🇷','France':'🇫🇷','Germany':'🇩🇪','Spain':'🇪🇸',
+    'England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Portugal':'🇵🇹','Netherlands':'🇳🇱','Italy':'🇮🇹','Belgium':'🇧🇪',
+    'Uruguay':'🇺🇾','Croatia':'🇭🇷','Denmark':'🇩🇰','Switzerland':'🇨🇭','USA':'🇺🇸',
+    'United States':'🇺🇸','Mexico':'🇲🇽','Canada':'🇨🇦','Japan':'🇯🇵','South Korea':'🇰🇷',
+    'Australia':'🇦🇺','Morocco':'🇲🇦','Senegal':'🇸🇳','Ghana':'🇬🇭','Nigeria':'🇳🇬',
+    'Cameroon':'🇨🇲','Egypt':'🇪🇬','Tunisia':'🇹🇳','Algeria':'🇩🇿','South Africa':'🇿🇦',
+    'Colombia':'🇨🇴','Chile':'🇨🇱','Ecuador':'🇪🇨','Peru':'🇵🇪','Paraguay':'🇵🇾',
+    'Bolivia':'🇧🇴','Venezuela':'🇻🇪','Panama':'🇵🇦','Costa Rica':'🇨🇷','Honduras':'🇭🇳',
+    'El Salvador':'🇸🇻','Jamaica':'🇯🇲','Haiti':'🇭🇹','Serbia':'🇷🇸','Poland':'🇵🇱',
+    'Ukraine':'🇺🇦','Hungary':'🇭🇺','Czech Republic':'🇨🇿','Slovakia':'🇸🇰','Austria':'🇦🇹',
+    'Sweden':'🇸🇪','Norway':'🇳🇴','Finland':'🇫🇮','Turkey':'🇹🇷','Greece':'🇬🇷',
+    'Romania':'🇷🇴','Slovenia':'🇸🇮','Albania':'🇦🇱','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Wales':'🏴󠁧󠁢󠁷󠁬󠁳󠁿',
+    'Ireland':'🇮🇪','North Macedonia':'🇲🇰','Saudi Arabia':'🇸🇦','Iran':'🇮🇷','Qatar':'🇶🇦',
+    'Iraq':'🇮🇶','Jordan':'🇯🇴','UAE':'🇦🇪','Uzbekistan':'🇺🇿','Indonesia':'🇮🇩',
+    'Vietnam':'🇻🇳','Thailand':'🇹🇭','China':'🇨🇳','India':'🇮🇳','New Zealand':'🇳🇿',
+    'Congo DR':'🇨🇩','Zimbabwe':'🇿🇼','Ivory Coast':'🇨🇮','Mali':'🇲🇱','Guinea':'🇬🇳',
+    'Tanzania':'🇹🇿','Bahrain':'🇧🇭','Kuwait':'🇰🇼','Oman':'🇴🇲','Syria':'🇸🇾',
+    'Bosnia-Herzegovina':'🇧🇦','Montenegro':'🇲🇪','Kosovo':'🇽🇰','Bulgaria':'🇧🇬',
+    'Belarus':'🇧🇾','Kazakhstan':'🇰🇿','Azerbaijan':'🇦🇿','Georgia':'🇬🇪','Armenia':'🇦🇲',
+    'Latvia':'🇱🇻','Lithuania':'🇱🇹','Estonia':'🇪🇪','Iceland':'🇮🇸','Israel':'🇮🇱',
+    'Cyprus':'🇨🇾','Luxembourg':'🇱🇺','Malta':'🇲🇹','Andorra':'🇦🇩','San Marino':'🇸🇲',
+    'Faroe Islands':'🇫🇴','Gibraltar':'🇬🇮','Liechtenstein':'🇱🇮',
+  };
+
+  function flagEl(name, badge){
+    if(badge) return `<img src="${badge}/tiny" class="copa-flag" alt="${name}" onerror="this.outerHTML='<div class=\\'copa-flag-placeholder\\'>${FLAGS[name]||'🏳️'}</div>'">`;
+    return `<div class="copa-flag-placeholder">${FLAGS[name]||'🏳️'}</div>`;
+  }
+
+  function renderCard(ev){
+    const s = ev.strStatus || 'NS';
+    const si = STATUS_MAP[s] || {badge:'badge-ft', text: s};
+    const live = isLive(s);
+    const hs = ev.intHomeScore != null && ev.intHomeScore !== '' ? ev.intHomeScore : null;
+    const as_ = ev.intAwayScore != null && ev.intAwayScore !== '' ? ev.intAwayScore : null;
+    const hasScore = hs !== null && as_ !== null;
+    const scoreHtml = hasScore
+      ? `<div class="copa-score-block"><div class="copa-score${live?' live-score':''}">${hs} – ${as_}</div>${live&&ev.strProgress?`<div class="copa-minute">${ev.strProgress}'</div>`:''}</div>`
+      : `<div class="copa-score-block"><div class="copa-vs">VS</div></div>`;
+    const cls = live ? 'copa-card is-live' : isFinal(s) ? 'copa-card is-done' : 'copa-card is-next';
+    const round = ev.strRound || (ev.intRound ? 'Rodada '+ev.intRound : '');
+    return `<div class="${cls}" onclick="copaOpenEvent('${ev.idEvent}')">
+      <div class="copa-meta"><span class="copa-status-badge ${si.badge}">${si.text}</span><br>${fmtDate(ev.dateEvent)}${ev.strTime?' · '+fmtTime(ev.strTime):''}</div>
+      <div class="copa-teams">
+        <div class="copa-team">${flagEl(ev.strHomeTeam,ev.strHomeTeamBadge)}<span class="copa-team-name">${ev.strHomeTeam||'—'}</span></div>
+        ${scoreHtml}
+        <div class="copa-team">${flagEl(ev.strAwayTeam,ev.strAwayTeamBadge)}<span class="copa-team-name">${ev.strAwayTeam||'—'}</span></div>
+      </div>
+      <div class="copa-round">${round}</div>
+    </div>`;
+  }
+
+  window.copaOpenEvent = function(id){ window.open('https://www.thesportsdb.com/event/'+id,'_blank'); };
+
+  function filterEvs(evs, tab){
+    const today = new Date().toISOString().split('T')[0];
+    if(tab==='live')      return evs.filter(e=>isLive(e.strStatus));
+    if(tab==='hoje')      return evs.filter(e=>e.dateEvent===today);
+    if(tab==='proximos')  return evs.filter(e=>e.dateEvent>today && !isFinal(e.strStatus));
+    if(tab==='encerrados')return evs.filter(e=>isFinal(e.strStatus));
+    return evs;
+  }
+
+  function renderTrack(evs){
+    const track = document.getElementById('copaTrack');
+    if(!track) return;
+    let filtered = filterEvs(evs, copaTab);
+    if(!filtered.length){ track.innerHTML='<div class="copa-error">Nenhum jogo nesta aba.</div>'; return; }
+    const sorted = [...filtered].sort((a,b)=>{
+      const la=isLive(a.strStatus)?0:1, lb=isLive(b.strStatus)?0:1;
+      if(la!==lb) return la-lb;
+      return ((a.dateEvent||'')+(a.strTime||'')).localeCompare((b.dateEvent||'')+(b.strTime||''));
+    });
+    if(copaTab==='todos'){
+      const today = new Date().toISOString().split('T')[0];
+      const d3 = new Date(); d3.setDate(d3.getDate()+3); const d3s=d3.toISOString().split('T')[0];
+      const d3p = new Date(); d3p.setDate(d3p.getDate()-3); const d3ps=d3p.toISOString().split('T')[0];
+      let nearby = sorted.filter(e=>isLive(e.strStatus)||(e.dateEvent>=d3ps&&e.dateEvent<=d3s));
+      if(!nearby.length) nearby = sorted.slice(0,12);
+      track.innerHTML = nearby.map(renderCard).join('');
+    } else {
+      track.innerHTML = sorted.map(renderCard).join('');
+    }
+    const badge = document.getElementById('copaLiveBadge');
+    if(badge) badge.style.display = evs.some(e=>isLive(e.strStatus)) ? 'inline-block' : 'none';
+    const ref = document.getElementById('copaRefreshTime');
+    if(ref) ref.textContent = 'Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  }
+
+  async function fetchCopa(){
+    try{
+      const r = await fetch(`${API_BASE}/eventsseason.php?id=${LEAGUE_ID}&s=${SEASON}`);
+      const d = await r.json();
+      const evs = d.events || [];
+      if(!evs.length){ document.getElementById('copaTrack').innerHTML='<div class="copa-error">Jogos não encontrados. Tente novamente em breve.</div>'; return; }
+      copaAllEvents = evs;
+      renderTrack(evs);
+    } catch(err){
+      console.error('[Copa]', err);
+      const t = document.getElementById('copaTrack');
+      if(t) t.innerHTML='<div class="copa-error">Erro ao carregar a agenda.</div>';
+    }
+  }
+
+  window.copaSetTab = function(tab, el){
+    copaTab = tab;
+    document.querySelectorAll('.copa-tab').forEach(t=>t.classList.remove('active'));
+    if(el) el.classList.add('active');
+    renderTrack(copaAllEvents);
+  };
+
+  function scheduleRefresh(){
+    clearTimeout(copaTimer);
+    copaTimer = setTimeout(()=>{ fetchCopa(); scheduleRefresh(); }, copaAllEvents.some(e=>isLive(e.strStatus)) ? 30000 : 120000);
+  }
+
+  fetchCopa().then(scheduleRefresh);
+})();
 </script>
 </body>
 </html>
