@@ -191,288 +191,133 @@ ul{list-style:none;}
 @media(max-width:768px){.hero-section{grid-template-columns:1fr;}.hero-right{display:none;}.section-row{grid-template-columns:1fr 1fr;}.footer-grid{grid-template-columns:1fr 1fr;}.header-top{padding:10px 16px;}.logo-main{font-size:22px;}.main{padding:12px 16px;}}
 @media(max-width:480px){.section-row{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}}
 
-/* =====================================================
-   WIDGET DE JOGOS — estilo Globo.com / fundo branco
-   ===================================================== */
-.fw-wrap{
-  background:#fff;
-  border-bottom:1px solid #e8e8e8;
-  padding:0;
-}
-.fw-inner{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 24px;
-}
-@media(max-width:768px){
-  .fw-inner{padding:0 12px;}
+/* ===== AGENDA COPA DO MUNDO ===== */
+.copa-widget-wrap{background:#f0f0f0;padding:12px 24px 0;}
+@media(max-width:768px){.copa-widget-wrap{padding:10px 16px 0;}}
+
+.copa-widget{
+  border-radius:8px;overflow:hidden;
+  font-family:'Source Sans 3','Helvetica Neue',sans-serif;
+  max-width:1200px;margin-left:auto;margin-right:auto;
+  box-shadow:0 2px 12px rgba(0,0,0,0.12);
 }
 
-/* Cabeçalho do widget */
-.fw-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 0 0;
-  border-bottom:1px solid #ebebeb;
+/* Header com gradiente escuro elegante */
+.copa-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 18px;
+  background:linear-gradient(135deg,#0a1f0a 0%,#1a3d0a 40%,#003d1a 100%);
   gap:12px;
+  border-bottom:2px solid #ffd700;
 }
-.fw-head-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
+.copa-header-left{display:flex;align-items:center;gap:10px;}
+.copa-logo-img{height:38px;width:auto;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5));}
+.copa-title-block{display:flex;flex-direction:column;gap:1px;}
+.copa-title{font-size:14px;font-weight:800;color:#fff;letter-spacing:0.3px;line-height:1.1;}
+.copa-title span{color:#ffd700;}
+.copa-subtitle{font-size:9px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;}
+.copa-live-badge{
+  background:#e8171f;color:#fff;font-size:9px;font-weight:800;
+  letter-spacing:1px;text-transform:uppercase;padding:3px 8px;
+  border-radius:3px;animation:pulse-badge 1.2s ease-in-out infinite;
 }
-.fw-icon{
-  font-size:18px;
-  line-height:1;
-}
-.fw-title{
-  font-size:13px;
-  font-weight:700;
-  color:#111;
-  letter-spacing:0.2px;
-}
-.fw-live-dot{
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
-  font-size:10px;
-  font-weight:700;
-  color:#e8171f;
-  text-transform:uppercase;
-  letter-spacing:0.5px;
-}
-.fw-live-dot::before{
-  content:'';
-  width:6px;height:6px;
-  border-radius:50%;
-  background:#e8171f;
-  animation:fw-blink 1s ease-in-out infinite;
-}
-@keyframes fw-blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+@keyframes pulse-badge{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.75;transform:scale(0.97);}}
+.copa-see-all{font-size:11px;color:rgba(255,255,255,0.6);white-space:nowrap;text-decoration:none;transition:color 0.15s;}
+.copa-see-all:hover{color:#ffd700;}
 
-.fw-refresh{
-  font-size:10px;
-  color:#bbb;
-  white-space:nowrap;
+/* Tabs */
+.copa-tabs{
+  display:flex;background:#1a1a1a;border-bottom:1px solid #2a2a2a;
+  overflow-x:auto;scrollbar-width:none;
+}
+.copa-tabs::-webkit-scrollbar{display:none;}
+.copa-tab{
+  padding:9px 16px;font-size:11px;font-weight:700;color:#888;
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:all 0.15s;white-space:nowrap;text-transform:uppercase;letter-spacing:0.5px;
+}
+.copa-tab.active{color:#ffd700;border-color:#ffd700;}
+.copa-tab:hover{color:#fff;}
+
+/* Refresh */
+.copa-refresh{
+  background:#111;text-align:right;padding:3px 14px;
+  font-size:10px;color:#444;
 }
 
-/* Tabs estilo Globo */
-.fw-tabs{
-  display:flex;
-  gap:0;
-  overflow-x:auto;
-  scrollbar-width:none;
-  margin-top:0;
+/* Scroll track */
+.copa-scroll-wrapper{
+  overflow-x:auto;background:#111;
+  scrollbar-width:thin;scrollbar-color:#333 #111;
 }
-.fw-tabs::-webkit-scrollbar{display:none;}
-.fw-tab{
-  padding:8px 14px;
-  font-size:11px;
-  font-weight:700;
-  color:#888;
-  cursor:pointer;
-  border-bottom:2px solid transparent;
-  transition:all 0.15s;
-  white-space:nowrap;
-  text-transform:uppercase;
-  letter-spacing:0.4px;
-  background:none;
-  border-top:none;border-left:none;border-right:none;
-  font-family:inherit;
-}
-.fw-tab.active{
-  color:#e8171f;
-  border-bottom-color:#e8171f;
-}
-.fw-tab:hover{color:#e8171f;}
+.copa-scroll-wrapper::-webkit-scrollbar{height:4px;}
+.copa-scroll-wrapper::-webkit-scrollbar-thumb{background:#333;border-radius:2px;}
+.copa-track{display:flex;min-width:max-content;}
 
-/* Scroll de cards */
-.fw-scroll{
-  overflow-x:auto;
-  padding:12px 0 10px;
-  scrollbar-width:thin;
-  scrollbar-color:#e8e8e8 #fff;
+/* Card */
+.copa-card{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:12px 16px;min-width:160px;cursor:pointer;
+  border-right:1px solid #1e1e1e;transition:background 0.15s;gap:7px;
+  background:#111;position:relative;
 }
-.fw-scroll::-webkit-scrollbar{height:3px;}
-.fw-scroll::-webkit-scrollbar-thumb{background:#e0e0e0;border-radius:2px;}
+.copa-card:hover{background:#1a1a1a;}
+.copa-card:last-child{border-right:none;}
 
-.fw-track{
-  display:flex;
-  gap:8px;
-  min-width:max-content;
-}
+/* Status de cada card */
+.copa-card.is-live{background:#1a0a0a;border-bottom:3px solid #e8171f;}
+.copa-card.is-next{background:#0a0f1a;border-bottom:3px solid #ffd700;}
+.copa-card.is-done{background:#0d0d0d;border-bottom:3px solid #333;}
 
-/* Card individual */
-.fw-card{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:8px;
-  padding:10px 14px;
-  min-width:168px;
-  background:#fff;
-  border:1px solid #ebebeb;
-  border-radius:6px;
-  cursor:pointer;
-  transition:box-shadow 0.15s, border-color 0.15s;
-  position:relative;
+/* Pulsação no card ao vivo */
+.copa-card.is-live::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,#e8171f,transparent);
+  animation:live-bar 2s linear infinite;
 }
-.fw-card:hover{
-  box-shadow:0 2px 10px rgba(0,0,0,0.09);
-  border-color:#ddd;
-}
+@keyframes live-bar{0%{background-position:-200px 0;}100%{background-position:200px 0;}}
 
-/* Estados do card */
-.fw-card.fw-live{
-  border-color:#ffd0d0;
-  border-top:2px solid #e8171f;
+/* Meta (data/hora/status) */
+.copa-meta{font-size:10px;color:#666;text-align:center;line-height:1.3;}
+.copa-status-badge{
+  display:inline-block;font-size:9px;font-weight:800;
+  text-transform:uppercase;letter-spacing:0.8px;
+  padding:2px 7px;border-radius:2px;margin-bottom:2px;
 }
-.fw-card.fw-next{
-  border-top:2px solid #f0a500;
-}
-.fw-card.fw-done{
-  opacity:0.85;
-  border-top:2px solid #e0e0e0;
-}
-
-/* Badge de status */
-.fw-status{
-  font-size:9px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:0.6px;
-  padding:2px 7px;
-  border-radius:3px;
-}
-.fw-status.live { background:#e8171f; color:#fff; }
-.fw-status.ht   { background:#ff6b00; color:#fff; }
-.fw-status.ft   { background:#f0f0f0; color:#888; }
-.fw-status.ns   { background:#fff3cd; color:#856404; border:1px solid #ffc107; }
-.fw-status.pen  { background:#7c3aed; color:#fff; }
-.fw-status.et   { background:#0284c7; color:#fff; }
+.badge-live{background:#e8171f;color:#fff;}
+.badge-ft{background:#222;color:#666;}
+.badge-ns{background:#ffd700;color:#000;}
+.badge-ht{background:#ff6b00;color:#fff;}
 
 /* Times */
-.fw-teams{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  width:100%;
-  justify-content:center;
-}
-.fw-team{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:5px;
-  flex:1;
-  min-width:0;
-}
-.fw-logo{
-  width:32px;
-  height:32px;
-  object-fit:contain;
-  display:block;
-  border-radius:3px;
-}
-.fw-logo-placeholder{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  background:#f5f5f5;
-  border:1px solid #e8e8e8;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-}
-.fw-team-name{
-  font-size:10px;
-  font-weight:700;
-  color:#333;
-  text-align:center;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:60px;
-  line-height:1.2;
-}
+.copa-teams{display:flex;align-items:center;gap:10px;width:100%;justify-content:center;}
+.copa-team{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;min-width:0;}
+.copa-flag{width:36px;height:24px;object-fit:cover;border-radius:3px;border:1px solid #333;flex-shrink:0;display:block;}
+.copa-flag-placeholder{width:36px;height:24px;border-radius:3px;background:#222;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.copa-team-name{font-size:10px;font-weight:700;color:#ccc;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px;}
 
 /* Placar */
-.fw-score-block{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:2px;
-  flex-shrink:0;
-}
-.fw-score{
-  font-size:20px;
-  font-weight:900;
-  color:#111;
-  letter-spacing:-0.5px;
-  line-height:1;
-  font-variant-numeric:tabular-nums;
-}
-.fw-score.live{ color:#e8171f; }
-.fw-vs{
-  font-size:12px;
-  font-weight:700;
-  color:#ccc;
-}
-.fw-minute{
-  font-size:9px;
-  color:#e8171f;
-  font-weight:800;
-  letter-spacing:0.3px;
-}
+.copa-score-block{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;}
+.copa-score{font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums;}
+.copa-score.live-score{color:#e8171f;}
+.copa-vs{font-size:13px;font-weight:900;color:#444;letter-spacing:-0.5px;}
+.copa-minute{font-size:9px;color:#e8171f;font-weight:800;letter-spacing:0.5px;}
 
-/* Meta info */
-.fw-meta{
-  font-size:10px;
-  color:#999;
-  text-align:center;
-  line-height:1.4;
-}
-.fw-league{
-  font-size:9px;
-  color:#bbb;
-  text-align:center;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:140px;
-}
+/* Rodada */
+.copa-round{font-size:9px;color:#444;text-align:center;text-transform:uppercase;letter-spacing:0.5px;}
 
-/* Loading / erro */
-.fw-loading{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  padding:24px 0;
-  color:#bbb;
-  font-size:12px;
-}
-.fw-spinner{
-  width:16px;height:16px;
-  border:2px solid #eee;
-  border-top-color:#e8171f;
-  border-radius:50%;
-  animation:spin 0.7s linear infinite;
-  flex-shrink:0;
-}
-.fw-empty{
-  padding:20px;
-  text-align:center;
-  color:#bbb;
-  font-size:12px;
-}
+/* Loading / Error */
+.copa-loading{display:flex;align-items:center;justify-content:center;padding:30px;gap:8px;color:#555;font-size:12px;background:#111;}
+.copa-spinner{width:18px;height:18px;border:2px solid #222;border-top-color:#ffd700;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
+.copa-error{padding:20px;text-align:center;color:#555;font-size:12px;background:#111;}
 
 @media(max-width:768px){
-  .fw-card{min-width:148px;padding:8px 10px;}
-  .fw-head{padding:8px 0 0;}
+  .copa-card{min-width:140px;padding:10px 12px;}
+  .copa-header{padding:8px 12px;}
+  .copa-title{font-size:12px;}
+  .copa-logo-img{height:30px;}
 }
+
 </style>
 </head>
 <body>
@@ -514,27 +359,34 @@ ul{list-style:none;}
   <div class="ad-box">Anúncio 728×90 — Google AdSense</div>
 </div>
 
-<!-- ===== WIDGET DE JOGOS ===== -->
-<div class="fw-wrap" id="fwWrap">
-  <div class="fw-inner">
-    <div class="fw-head">
-      <div class="fw-head-left">
-        <span class="fw-icon">⚽</span>
-        <span class="fw-title">Jogos de Futebol</span>
-        <span class="fw-live-dot" id="fwLiveDot" style="display:none;">Ao Vivo</span>
+<!-- AGENDA COPA DO MUNDO 2026 — sempre visivel, fora do main -->
+<div id="copa-agenda" class="copa-widget-wrap">
+  <div class="copa-widget">
+    <div class="copa-header">
+      <div class="copa-header-left">
+        <img class="copa-logo-img"
+          src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/2026_FIFA_World_Cup_emblem.svg/150px-2026_FIFA_World_Cup_emblem.svg.png"
+          alt="Copa do Mundo FIFA 2026"
+          onerror="this.style.display='none'">
+        <div class="copa-title-block">
+          <span class="copa-title">Copa do Mundo <span>FIFA 2026</span></span>
+          <span class="copa-subtitle">Canada &bull; Mexico &bull; USA</span>
+        </div>
+        <span class="copa-live-badge" id="copaLiveBadge" style="display:none;">AO VIVO</span>
       </div>
-      <span class="fw-refresh" id="fwRefresh"></span>
+      <a class="copa-see-all" href="https://www.fifa.com/fifaplus/pt/tournaments/mens/worldcup/canadamexicousa2026/match-centre" target="_blank">Ver agenda completa &rsaquo;</a>
     </div>
-    <div class="fw-tabs">
-      <button class="fw-tab active" onclick="fwSetTab('todos',this)">Todos</button>
-      <button class="fw-tab" onclick="fwSetTab('live',this)">🔴 Ao Vivo</button>
-      <button class="fw-tab" onclick="fwSetTab('hoje',this)">Hoje</button>
-      <button class="fw-tab" onclick="fwSetTab('proximos',this)">Próximos</button>
-      <button class="fw-tab" onclick="fwSetTab('encerrados',this)">Encerrados</button>
+    <div class="copa-tabs">
+      <div class="copa-tab active" onclick="copaSetTab('todos',this)">Todos</div>
+      <div class="copa-tab" onclick="copaSetTab('live',this)">&#128308; Ao Vivo</div>
+      <div class="copa-tab" onclick="copaSetTab('hoje',this)">Hoje</div>
+      <div class="copa-tab" onclick="copaSetTab('proximos',this)">Proximos</div>
+      <div class="copa-tab" onclick="copaSetTab('encerrados',this)">Encerrados</div>
     </div>
-    <div class="fw-scroll">
-      <div class="fw-track" id="fwTrack">
-        <div class="fw-loading"><div class="fw-spinner"></div>Carregando jogos...</div>
+    <div class="copa-refresh" id="copaRefreshTime"></div>
+    <div class="copa-scroll-wrapper">
+      <div class="copa-track" id="copaTrack">
+        <div class="copa-loading"><div class="copa-spinner"></div>Carregando jogos...</div>
       </div>
     </div>
   </div>
@@ -648,7 +500,10 @@ function renderBreaking(n){
 }
 function renderHero(noticias){
   if(!noticias.length){ document.getElementById('heroSection').innerHTML = ''; return; }
-  const p = noticias[0], s1 = noticias[1], s2 = noticias[2], minis = noticias.slice(3,6);
+  const p = noticias[0];
+  const s1 = noticias[1];
+  const s2 = noticias[2];
+  const minis = noticias.slice(3,6);
   let html = `<div class="hero-section">
     <div class="hero-big" onclick="window.location='${urlNoticia(p)}'">
       ${p.url_imagem ? `<img src="${p.url_imagem}" class="hero-big-bg" alt="${p.titulo||''}" onerror="this.className='hero-big-bg ph1'">` : `<div class="hero-big-bg ph1"></div>`}
@@ -694,7 +549,7 @@ function renderList(noticias){
   const items = noticias.slice(start, start+8);
   if(!items.length){ document.getElementById('listSection').innerHTML = ''; return; }
   let html = '';
-  items.forEach(n => {
+  items.forEach((n,i) => {
     html += `<div class="list-item" onclick="window.location='${urlNoticia(n)}'">
       ${imgEl(n.url_imagem,'li-img',n.titulo)}
       <div class="li-body">
@@ -719,32 +574,87 @@ function renderMaisLidas(noticias){
   });
   document.getElementById('maisLidas').innerHTML = html;
 }
-function renderTrending(){
+function renderTrending(noticias){
   const tags = ['#Brasil','#Política','#Economia','#Esportes','#Tecnologia','#Entretenimento','#Segurança','#Saúde','#Mundo'];
   document.getElementById('trendingTags').innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
 }
 function normalizarTexto(str){
   return (str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
 }
+
+// Mapa de aliases: qualquer variação do RSS é mapeada para a chave canônica do filtro
 const CATEGORIA_MAP = {
-  'esportes':'Esportes','esporte':'Esportes','sports':'Esportes','futebol':'Esportes','football':'Esportes',
-  'politica':'Politica','política':'Politica','politics':'Politica','poder':'Politica',
-  'brasil':'Brasil','brazil':'Brasil','nacional':'Brasil',
-  'economia':'Economia','economy':'Economia','financas':'Economia','mercado':'Economia',
-  'mundo':'Mundo','world':'Mundo','internacional':'Mundo',
-  'entretenimento':'Entretenimento','entertainment':'Entretenimento','cultura':'Entretenimento',
-  'tecnologia':'Tecnologia','technology':'Tecnologia','tech':'Tecnologia','ciencia':'Tecnologia',
-  'literatura':'Literatura','livros':'Literatura','books':'Literatura'
+  // Esportes — todas as variações possíveis do RSS
+  'esportes':      'Esportes',
+  'esporte':       'Esportes',
+  'sports':        'Esportes',
+  'sport':         'Esportes',
+  'futebol':       'Esportes',
+  'football':      'Esportes',
+  'soccer':        'Esportes',
+  'f1':            'Esportes',
+  'formula 1':     'Esportes',
+  'formula1':      'Esportes',
+  'olimpiadas':    'Esportes',
+  'olimpíadas':    'Esportes',
+  // Política
+  'politica':      'Politica',
+  'política':      'Politica',
+  'politics':      'Politica',
+  'poder':         'Politica',
+  // Brasil
+  'brasil':        'Brasil',
+  'brazil':        'Brasil',
+  'nacional':      'Brasil',
+  // Economia
+  'economia':      'Economia',
+  'economy':       'Economia',
+  'financas':      'Economia',
+  'finanças':      'Economia',
+  'mercado':       'Economia',
+  'negocios':      'Economia',
+  'negócios':      'Economia',
+  // Mundo
+  'mundo':         'Mundo',
+  'world':         'Mundo',
+  'internacional': 'Mundo',
+  'exterior':      'Mundo',
+  // Entretenimento
+  'entretenimento':'Entretenimento',
+  'entertainment': 'Entretenimento',
+  'cultura':       'Entretenimento',
+  'celebridades':  'Entretenimento',
+  'famosos':       'Entretenimento',
+  'cinema':        'Entretenimento',
+  'musica':        'Entretenimento',
+  'música':        'Entretenimento',
+  // Tecnologia
+  'tecnologia':    'Tecnologia',
+  'technology':    'Tecnologia',
+  'tech':          'Tecnologia',
+  'ciencia':       'Tecnologia',
+  'ciência':       'Tecnologia',
+  'inovacao':      'Tecnologia',
+  'inovação':      'Tecnologia',
+  // Literatura
+  'literatura':    'Literatura',
+  'livros':        'Literatura',
+  'books':         'Literatura',
 };
+
 function categoriaCanonica(cat){
   if(!cat) return '';
   const norm = normalizarTexto(cat);
+  // Busca exata no mapa
   if(CATEGORIA_MAP[norm]) return CATEGORIA_MAP[norm];
+  // Busca parcial (ex: "esportes/futebol" ainda bate em "esportes")
   for(const [alias, canonica] of Object.entries(CATEGORIA_MAP)){
     if(norm.includes(alias)) return canonica;
   }
+  // fallback: devolve com primeira letra maiúscula
   return cat.trim();
 }
+
 function aplicarFiltro(){
   let filtradas = todas;
   if(filtroAtivo){
@@ -783,7 +693,7 @@ async function carregar(){
     if(todas[0]) renderBreaking(todas[0]);
     aplicarFiltro();
     renderMaisLidas(todas);
-    renderTrending();
+    renderTrending(todas);
     setTimeout(carregar, 60000);
   }catch(e){
     console.error(e);
@@ -793,331 +703,282 @@ async function carregar(){
 carregar();
 db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'},()=>carregar()).subscribe();
 
-/* =====================================================
-   WIDGET DE JOGOS — RapidAPI / API-Football
-   ===================================================== */
-(function(){
-  const API_KEY  = '5fbcd8796ee08b5467555175324df4c3';
-  const API_HOST = 'v3.football.api-sports.io';
-  const BASE_URL = 'https://v3.football.api-sports.io';
+/* ===== AGENDA COPA DO MUNDO 2026 ===== */
+(function () {
+  var LEAGUE = '4429';
+  var BASE   = 'https://www.thesportsdb.com/api/v1/json/3';
 
-  // Ligas prioritárias para exibir (Copa do Mundo 2026 = 1, Brasileirão A = 71, etc.)
-  const LEAGUES = [1, 71, 72, 73, 2, 3, 848];
-  // 1=World Cup, 2=Champions, 3=Europa, 71=Brasileirao A, 72=Copa do Brasil, 73=Brasileirao B, 848=Copa America
+  var allEvs = [];
+  var activeTab = 'todos';
+  var timer = null;
 
-  const SEASON = 2026;
-
-  // Cache
-  const cache = {};
-  const CACHE_TTL = {
-    live:     15 * 1000,        // 15s
-    future:   10 * 60 * 1000,   // 10min
-    finished: 30 * 60 * 1000    // 30min
+  var STATUS = {
+    'NS':   {badge:'badge-ns',   text:'NS'    },
+    '1H':   {badge:'badge-live', text:'1T'    },
+    '2H':   {badge:'badge-live', text:'2T'    },
+    'HT':   {badge:'badge-ht',   text:'INT'   },
+    'FT':   {badge:'badge-ft',   text:'FT'    },
+    'AET':  {badge:'badge-ft',   text:'AET'   },
+    'PEN':  {badge:'badge-live', text:'PEN'   },
+    'ET':   {badge:'badge-live', text:'ET'    },
+    'BT':   {badge:'badge-ht',   text:'IET'   },
+    'PST':  {badge:'badge-ft',   text:'ADIADO'},
+    'CANC': {badge:'badge-ft',   text:'CANC'  }
   };
 
-  let allGames = [];
-  let activeTab = 'todos';
-  let refreshTimer = null;
+  function isLiveStatus(s) {
+    return s === '1H' || s === '2H' || s === 'HT' || s === 'ET' || s === 'BT' || s === 'PEN';
+  }
+  function isFinalStatus(s) {
+    return s === 'FT' || s === 'AET' || s === 'PST' || s === 'CANC';
+  }
 
-  // STATUS map
-  const STATUS_MAP = {
-    '1H':  { cls:'live', label:'1T' },
-    '2H':  { cls:'live', label:'2T' },
-    'HT':  { cls:'ht',   label:'INT' },
-    'ET':  { cls:'et',   label:'ET' },
-    'BT':  { cls:'ht',   label:'IET' },
-    'P':   { cls:'pen',  label:'PEN' },
-    'FT':  { cls:'ft',   label:'FT' },
-    'AET': { cls:'ft',   label:'AET' },
-    'PEN': { cls:'ft',   label:'PEN' },
-    'PST': { cls:'ft',   label:'ADIADO' },
-    'CANC':{ cls:'ft',   label:'CANC' },
-    'NS':  { cls:'ns',   label:'—' },
-    'TBD': { cls:'ns',   label:'TBD' }
+  /* Data local do browser (nunca UTC) — corrige bug de fuso Brasilia */
+  function localDate(offsetDays) {
+    var d = new Date();
+    if (offsetDays) { d.setDate(d.getDate() + offsetDays); }
+    var y  = d.getFullYear();
+    var mo = ('0' + (d.getMonth() + 1)).slice(-2);
+    var dy = ('0' + d.getDate()).slice(-2);
+    return y + '-' + mo + '-' + dy;
+  }
+
+  /* strTime da API e UTC — converte para hora local */
+  function toLocalTime(t) {
+    if (!t) { return ''; }
+    var parts = t.split(':');
+    var d = new Date();
+    d.setUTCHours(+parts[0], +parts[1], 0, 0);
+    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+  }
+
+  /* Label de data relativo */
+  function dateLabel(dateStr) {
+    if (!dateStr) { return ''; }
+    var today = localDate();
+    if (dateStr === today) { return 'Hoje'; }
+    var evMs  = new Date(dateStr  + 'T12:00:00').getTime();
+    var todMs = new Date(today    + 'T12:00:00').getTime();
+    var diff  = Math.round((evMs - todMs) / 86400000);
+    if (diff ===  1) { return 'Amanha'; }
+    if (diff === -1) { return 'Ontem'; }
+    var p = dateStr.split('-');
+    return p[2] + '/' + p[1];
+  }
+
+  /* Detecta jogo ao vivo pelo horario real (API free nao atualiza status) */
+  function liveNow(ev) {
+    if (isLiveStatus(ev.strStatus)) { return true; }
+    if (!ev.dateEvent || !ev.strTime) { return false; }
+    var parts = ev.strTime.split(':');
+    var kickoff = new Date(ev.dateEvent + 'T' + ('0'+parts[0]).slice(-2) + ':' + ('0'+parts[1]).slice(-2) + ':00Z');
+    var elapsed = (Date.now() - kickoff.getTime()) / 60000;
+    return elapsed >= 0 && elapsed <= 115;
+  }
+
+  /* Bandeiras via flagcdn.com — codigo ISO2 */
+  var ISO2 = {
+    'Brazil':'br','Argentina':'ar','France':'fr','Germany':'de','Spain':'es',
+    'England':'gb-eng','Portugal':'pt','Netherlands':'nl','Italy':'it','Belgium':'be',
+    'Uruguay':'uy','Croatia':'hr','Denmark':'dk','Switzerland':'ch','USA':'us',
+    'United States':'us','Mexico':'mx','Canada':'ca','Japan':'jp','South Korea':'kr',
+    'Australia':'au','Morocco':'ma','Senegal':'sn','Ghana':'gh','Nigeria':'ng',
+    'Cameroon':'cm','Egypt':'eg','Tunisia':'tn','Algeria':'dz','South Africa':'za',
+    'Colombia':'co','Chile':'cl','Ecuador':'ec','Peru':'pe','Paraguay':'py',
+    'Bolivia':'bo','Venezuela':'ve','Panama':'pa','Costa Rica':'cr','Honduras':'hn',
+    'El Salvador':'sv','Jamaica':'jm','Haiti':'ht','Serbia':'rs','Poland':'pl',
+    'Ukraine':'ua','Hungary':'hu','Czech Republic':'cz','Slovakia':'sk','Austria':'at',
+    'Sweden':'se','Norway':'no','Finland':'fi','Turkey':'tr','Greece':'gr',
+    'Romania':'ro','Slovenia':'si','Albania':'al','Scotland':'gb-sct','Wales':'gb-wls',
+    'Ireland':'ie','North Macedonia':'mk','Saudi Arabia':'sa','Iran':'ir','Qatar':'qa',
+    'Iraq':'iq','Jordan':'jo','UAE':'ae','Uzbekistan':'uz','Indonesia':'id',
+    'Vietnam':'vn','China':'cn','New Zealand':'nz','Ivory Coast':'ci','Mali':'ml',
+    'Congo DR':'cd','Guinea':'gn','Tanzania':'tz','Bosnia-Herzegovina':'ba',
+    'Montenegro':'me','Kosovo':'xk','Bulgaria':'bg','Belarus':'by',
+    'Kazakhstan':'kz','Azerbaijan':'az','Georgia':'ge','Armenia':'am',
+    'Latvia':'lv','Lithuania':'lt','Estonia':'ee','Iceland':'is','Israel':'il'
   };
 
-  function isLive(g){
-    const s = g?.fixture?.status?.short || '';
-    return ['1H','2H','HT','ET','BT','P'].includes(s);
-  }
-  function isFinished(g){
-    const s = g?.fixture?.status?.short || '';
-    return ['FT','AET','PEN','PST','CANC'].includes(s);
-  }
+  function flagImg(name, badgeUrl) {
+    var iso = ISO2[name] || '';
+    var cdnUrl = iso ? 'https://flagcdn.com/w40/' + iso + '.png' : '';
 
-  // Horário UTC → Brasília (UTC-3)
-  function toBRT(utcStr){
-    if(!utcStr) return '';
-    try {
-      const d = new Date(utcStr);
-      d.setHours(d.getHours() - 3);
-      return ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2);
-    } catch(e){ return ''; }
-  }
-
-  function dateStrBRT(utcStr){
-    if(!utcStr) return '';
-    try {
-      const d = new Date(utcStr);
-      d.setHours(d.getHours() - 3);
-      return d.toISOString().slice(0,10);
-    } catch(e){ return ''; }
-  }
-
-  function todayBRT(){
-    const d = new Date();
-    d.setHours(d.getHours() - 3);
-    return d.toISOString().slice(0,10);
-  }
-
-  function localDateOffset(days){
-    const d = new Date();
-    d.setHours(d.getHours() - 3);
-    d.setDate(d.getDate() + days);
-    return d.toISOString().slice(0,10);
-  }
-
-  // Logo do time (escudo)
-  function teamLogo(team){
-    const url = team?.logo || '';
-    const name = (team?.name || '').charAt(0);
-    if(url){
-      return `<img class="fw-logo" src="${url}" alt="${team?.name||''}" onerror="this.outerHTML='<div class=\\'fw-logo-placeholder\\'>${name}</div>'">`;
+    /* Tenta badge do time primeiro, fallback para bandeira do pais */
+    if (badgeUrl) {
+      if (cdnUrl) {
+        return '<img src="' + badgeUrl + '/tiny" class="copa-flag" alt="' + name + '" ' +
+               'onerror="this.src=\'' + cdnUrl + '\';this.onerror=null;">';
+      }
+      return '<img src="' + badgeUrl + '/tiny" class="copa-flag" alt="' + name + '" ' +
+             'onerror="this.outerHTML=\'<div class=&quot;copa-flag-placeholder&quot;>?</div>\';">';
     }
-    return `<div class="fw-logo-placeholder">${name}</div>`;
+    if (cdnUrl) {
+      return '<img src="' + cdnUrl + '" class="copa-flag" alt="' + name + '">';
+    }
+    return '<div class="copa-flag-placeholder">?</div>';
   }
 
-  // Render de um card
-  function buildCard(g){
-    const fix    = g.fixture || {};
-    const home   = g.teams?.home || {};
-    const away   = g.teams?.away || {};
-    const goals  = g.goals || {};
-    const status = fix.status?.short || 'NS';
-    const si     = STATUS_MAP[status] || { cls:'ft', label: status };
-    const live   = isLive(g);
-    const fin    = isFinished(g);
-    const league = g.league?.name || '';
-    const round  = (g.league?.round || '').replace('Regular Season - ','Rd ').replace('Group Stage - ','Grp ');
+  function buildCard(ev) {
+    var live = liveNow(ev);
+    var s    = ev.strStatus || 'NS';
+    var si   = STATUS[s] || {badge:'badge-ft', text: s};
+    var fin  = isFinalStatus(s) && !live;
 
-    // Placar
-    let scoreHtml;
-    if(goals.home !== null && goals.home !== undefined && goals.away !== null && goals.away !== undefined){
-      const min = live && fix.status?.elapsed ? `<div class="fw-minute">${fix.status.elapsed}'</div>` : '';
-      scoreHtml = `<div class="fw-score-block">
-        <div class="fw-score${live?' live':''}">${goals.home} – ${goals.away}</div>
-        ${min}
-      </div>`;
+    var hs  = (ev.intHomeScore !== null && ev.intHomeScore !== '' && ev.intHomeScore !== undefined) ? ev.intHomeScore : null;
+    var as_ = (ev.intAwayScore !== null && ev.intAwayScore !== '' && ev.intAwayScore !== undefined) ? ev.intAwayScore : null;
+
+    var scoreHtml;
+    if (hs !== null && as_ !== null) {
+      var min = (live && ev.strProgress) ? '<div class="copa-minute">' + ev.strProgress + '\'</div>' : '';
+      scoreHtml = '<div class="copa-score-block"><div class="copa-score' + (live ? ' live-score' : '') + '">' + hs + ' \u2013 ' + as_ + '</div>' + min + '</div>';
     } else {
-      const hora = toBRT(fix.date);
-      scoreHtml = `<div class="fw-score-block"><div class="fw-vs">${hora||'VS'}</div></div>`;
+      scoreHtml = '<div class="copa-score-block"><div class="copa-vs">VS</div></div>';
     }
 
-    const cardCls = live ? 'fw-card fw-live' : fin ? 'fw-card fw-done' : 'fw-card fw-next';
-    const dateBRT = dateStrBRT(fix.date);
-    const today   = todayBRT();
-    const hora    = toBRT(fix.date);
+    var cls   = live ? 'copa-card is-live' : (fin ? 'copa-card is-done' : 'copa-card is-next');
+    var round = ev.strRound || (ev.intRound ? 'Rodada ' + ev.intRound : '');
+    var t     = toLocalTime(ev.strTime);
+    var meta  = dateLabel(ev.dateEvent) + (t ? ' \u00b7 ' + t : '');
 
-    let metaLine = '';
-    if(dateBRT === today) metaLine = `Hoje · ${hora}`;
-    else {
-      const p = dateBRT.split('-');
-      metaLine = `${p[2]}/${p[1]} · ${hora}`;
-    }
-
-    // Badge status
-    const badgeHtml = live
-      ? `<span class="fw-status live">${fix.status?.elapsed ? fix.status.elapsed+"'" : si.label}</span>`
-      : status === 'HT'
-        ? `<span class="fw-status ht">Intervalo</span>`
-        : `<span class="fw-status ${si.cls}">${si.label}</span>`;
-
-    return `<div class="${cardCls}">
-      ${badgeHtml}
-      <div class="fw-teams">
-        <div class="fw-team">
-          ${teamLogo(home)}
-          <span class="fw-team-name">${home.name||'—'}</span>
-        </div>
-        ${scoreHtml}
-        <div class="fw-team">
-          ${teamLogo(away)}
-          <span class="fw-team-name">${away.name||'—'}</span>
-        </div>
-      </div>
-      <div class="fw-meta">${metaLine}</div>
-      <div class="fw-league">${league}${round ? ' · '+round : ''}</div>
-    </div>`;
+    return '<div class="' + cls + '" onclick="copaOpen(\'' + ev.idEvent + '\')">' +
+      '<div class="copa-meta"><span class="copa-status-badge ' + si.badge + '">' + si.text + '</span><br>' + meta + '</div>' +
+      '<div class="copa-teams">' +
+        '<div class="copa-team">' + flagImg(ev.strHomeTeam || '', ev.strHomeTeamBadge || '') +
+          '<span class="copa-team-name">' + (ev.strHomeTeam || '\u2014') + '</span></div>' +
+        scoreHtml +
+        '<div class="copa-team">' + flagImg(ev.strAwayTeam || '', ev.strAwayTeamBadge || '') +
+          '<span class="copa-team-name">' + (ev.strAwayTeam || '\u2014') + '</span></div>' +
+      '</div>' +
+      '<div class="copa-round">' + round + '</div>' +
+    '</div>';
   }
 
-  function sortGames(list){
-    return list.slice().sort((a,b) => {
-      const da = a.fixture?.date || '';
-      const db_ = b.fixture?.date || '';
-      return da.localeCompare(db_);
+  window.copaOpen = function (id) {
+    window.open('https://www.thesportsdb.com/event/' + id, '_blank');
+  };
+
+  function getToday() { return localDate(); }
+
+  function filterList(evs, tab) {
+    var today = getToday();
+    if (tab === 'live')       { return evs.filter(function(e){ return liveNow(e); }); }
+    if (tab === 'hoje')       { return evs.filter(function(e){ return e.dateEvent === today; }); }
+    if (tab === 'proximos')   { return evs.filter(function(e){ return e.dateEvent > today && !isFinalStatus(e.strStatus); }); }
+    if (tab === 'encerrados') { return evs.filter(function(e){ return isFinalStatus(e.strStatus) && !liveNow(e); }); }
+    return evs;
+  }
+
+  function sortByTime(list) {
+    return list.slice().sort(function(a,b){
+      return ((a.dateEvent||'')+(a.strTime||'')).localeCompare((b.dateEvent||'')+(b.strTime||''));
     });
   }
 
-  function filterGames(games, tab){
-    const today = todayBRT();
-    const past3 = localDateOffset(-3);
-    const next5 = localDateOffset(5);
+  function render(evs) {
+    var track = document.getElementById('copaTrack');
+    if (!track) { return; }
 
-    if(tab === 'live'){
-      return games.filter(g => isLive(g));
+    var list;
+
+    if (activeTab === 'todos') {
+      var today = getToday();
+      var past3 = localDate(-3);
+      var next3 = localDate(3);
+
+      var live     = evs.filter(function(e){ return liveNow(e); });
+      var hoje     = evs.filter(function(e){ return !liveNow(e) && e.dateEvent === today; });
+      var proximos = evs.filter(function(e){ return !liveNow(e) && e.dateEvent > today  && e.dateEvent <= next3; });
+      var recentes = evs.filter(function(e){ return !liveNow(e) && e.dateEvent >= past3 && e.dateEvent < today; });
+
+      list = sortByTime(live)
+        .concat(sortByTime(hoje))
+        .concat(sortByTime(proximos))
+        .concat(sortByTime(recentes).reverse());
+
+      if (!list.length) { list = sortByTime(evs); }
+    } else {
+      list = sortByTime(filterList(evs, activeTab));
     }
-    if(tab === 'hoje'){
-      return games.filter(g => dateStrBRT(g.fixture?.date) === today);
-    }
-    if(tab === 'proximos'){
-      return games.filter(g => {
-        const d = dateStrBRT(g.fixture?.date);
-        return !isLive(g) && !isFinished(g) && d > today && d <= next5;
-      });
-    }
-    if(tab === 'encerrados'){
-      return games.filter(g => isFinished(g) && !isLive(g));
-    }
 
-    // "todos" — ordem: ao vivo → hoje → próximos → encerrados
-    const live   = games.filter(g => isLive(g));
-    const hoje   = games.filter(g => !isLive(g) && dateStrBRT(g.fixture?.date) === today && !isFinished(g));
-    const prox   = games.filter(g => {
-      const d = dateStrBRT(g.fixture?.date);
-      return !isLive(g) && !isFinished(g) && d > today;
-    });
-    const enc    = games.filter(g => isFinished(g) && !isLive(g));
-
-    return [
-      ...sortGames(live),
-      ...sortGames(hoje),
-      ...sortGames(prox),
-      ...sortGames(enc).reverse()
-    ];
-  }
-
-  function render(){
-    const track = document.getElementById('fwTrack');
-    if(!track) return;
-
-    const list = filterGames(allGames, activeTab);
-
-    if(!list.length){
-      track.innerHTML = `<div class="fw-empty">Nenhum jogo nesta aba.</div>`;
+    if (!list.length) {
+      track.innerHTML = '<div class="copa-error">Nenhum jogo nesta aba.</div>';
     } else {
       track.innerHTML = list.map(buildCard).join('');
     }
 
-    // Dot ao vivo
-    const dot = document.getElementById('fwLiveDot');
-    if(dot) dot.style.display = allGames.some(g => isLive(g)) ? 'inline-flex' : 'none';
+    /* Badge AO VIVO */
+    var badge = document.getElementById('copaLiveBadge');
+    if (badge) { badge.style.display = evs.some(function(e){ return liveNow(e); }) ? 'inline-block' : 'none'; }
 
-    // Refresh time
-    const ref = document.getElementById('fwRefresh');
-    const now = new Date();
-    if(ref) ref.textContent = `Atualizado ${('0'+now.getHours()).slice(-2)}:${('0'+now.getMinutes()).slice(-2)}`;
+    /* Timestamp */
+    var ref = document.getElementById('copaRefreshTime');
+    var now = new Date();
+    if (ref) { ref.textContent = 'Atualizado as ' + ('0'+now.getHours()).slice(-2) + ':' + ('0'+now.getMinutes()).slice(-2); }
   }
 
-  // Chave de cache
-  function cacheKey(type, id){ return `${type}_${id}`; }
-
-  function getCached(key){
-    const c = cache[key];
-    if(!c) return null;
-    if(Date.now() - c.ts > c.ttl) return null;
-    return c.data;
-  }
-
-  function setCached(key, data, ttl){
-    cache[key] = { data, ts: Date.now(), ttl };
-  }
-
-  async function fetchAPI(endpoint){
-    try {
-      const res = await fetch(`${BASE_URL}${endpoint}`, {
-        headers: {
-          'x-rapidapi-key':  API_KEY,
-          'x-rapidapi-host': API_HOST
-        }
-      });
-      const json = await res.json();
-      return json.response || [];
-    } catch(e){
-      console.warn('[FW] fetch error:', endpoint, e);
-      return [];
-    }
-  }
-
-  async function fetchLive(){
-    // Busca todos os jogos ao vivo agora (sem filtro de liga — mostra o que existir)
-    const key = cacheKey('live', 'all');
-    const cached = getCached(key);
-    if(cached) return cached;
-    const data = await fetchAPI('/fixtures?live=all');
-    setCached(key, data, CACHE_TTL.live);
-    return data;
-  }
-
-  async function fetchByDate(date){
-    const key = cacheKey('date', date);
-    const cached = getCached(key);
-    if(cached) return cached;
-    // Busca todas as ligas prioritárias para a data
-    const promises = LEAGUES.map(lid =>
-      fetchAPI(`/fixtures?league=${lid}&season=${SEASON}&date=${date}`)
-    );
-    const results = await Promise.all(promises);
-    const merged = dedup(results.flat());
-    const ttl = date <= todayBRT() ? CACHE_TTL.finished : CACHE_TTL.future;
-    setCached(key, merged, ttl);
-    return merged;
-  }
-
-  function dedup(list){
-    const map = {};
-    list.forEach(g => {
-      if(g?.fixture?.id) map[g.fixture.id] = g;
+  function merge(lists) {
+    var map = {};
+    lists.forEach(function(list){
+      (list || []).forEach(function(e){ if (e && e.idEvent) { map[e.idEvent] = e; } });
     });
     return Object.values(map);
   }
 
-  async function fetchAll(){
-    const track = document.getElementById('fwTrack');
-    if(!track) return;
-
-    const today  = todayBRT();
-    const dates  = [-3,-2,-1,0,1,2,3,4,5].map(d => localDateOffset(d));
-
-    // Paralelo: ao vivo + todos os dias
-    const [liveGames, ...dayResults] = await Promise.all([
-      fetchLive(),
-      ...dates.map(d => fetchByDate(d))
-    ]);
-
-    const combined = dedup([...liveGames, ...dayResults.flat()]);
-
-    // Filtra apenas ligas que nos interessam (se vier dado ao vivo de outra liga, inclui)
-    allGames = combined;
-
-    render();
-    scheduleRefresh();
+  function safeFetch(url) {
+    return fetch(url).then(function(r){ return r.json(); }).catch(function(){ return {}; });
   }
 
-  function scheduleRefresh(){
-    clearTimeout(refreshTimer);
-    const hasLive = allGames.some(g => isLive(g));
-    refreshTimer = setTimeout(fetchAll, hasLive ? 15000 : 5 * 60 * 1000);
+  function fetchAll() {
+    var track = document.getElementById('copaTrack');
+    var today = localDate();
+    var tmrw  = localDate(1);
+    var yest  = localDate(-1);
+
+    Promise.all([
+      safeFetch(BASE + '/eventspastleague.php?id=' + LEAGUE),
+      safeFetch(BASE + '/eventsnextleague.php?id='  + LEAGUE),
+      safeFetch(BASE + '/eventsday.php?d=' + today + '&l=' + LEAGUE),
+      safeFetch(BASE + '/eventsday.php?d=' + tmrw  + '&l=' + LEAGUE),
+      safeFetch(BASE + '/eventsday.php?d=' + yest  + '&l=' + LEAGUE)
+    ]).then(function(results) {
+      var evs = merge([
+        results[0].events,
+        results[1].events,
+        results[2].events,
+        results[3].events,
+        results[4].events
+      ]);
+
+      if (!evs.length) {
+        if (track) { track.innerHTML = '<div class="copa-error">Nenhum jogo encontrado. Tente em breve.</div>'; }
+        return;
+      }
+
+      allEvs = evs;
+      render(evs);
+      schedule();
+    }).catch(function(err) {
+      console.error('[Copa]', err);
+      if (track) { track.innerHTML = '<div class="copa-error">Erro ao carregar a agenda.</div>'; }
+    });
   }
 
-  window.fwSetTab = function(tab, el){
+  function schedule() {
+    clearTimeout(timer);
+    var hasLive = allEvs.some(function(e){ return liveNow(e); });
+    timer = setTimeout(fetchAll, hasLive ? 30000 : 180000);
+  }
+
+  window.copaSetTab = function(tab, el) {
     activeTab = tab;
-    document.querySelectorAll('.fw-tab').forEach(t => t.classList.remove('active'));
-    if(el) el.classList.add('active');
-    render();
+    document.querySelectorAll('.copa-tab').forEach(function(t){ t.classList.remove('active'); });
+    if (el) { el.classList.add('active'); }
+    render(allEvs);
   };
 
   fetchAll();
 })();
+
 </script>
 </body>
 </html>
