@@ -192,7 +192,9 @@ ul{list-style:none;}
 @media(max-width:480px){.section-row{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}}
 
 /* ===== AGENDA COPA DO MUNDO ===== */
-.copa-widget{background:#fff;border-radius:4px;overflow:hidden;margin-bottom:20px;font-family:'Source Sans 3','Helvetica Neue',sans-serif;}
+.copa-widget-wrap{background:#f0f0f0;padding:12px 24px 0;}
+@media(max-width:768px){.copa-widget-wrap{padding:10px 16px 0;}}
+.copa-widget{background:#fff;border-radius:4px;overflow:hidden;margin-bottom:0;font-family:'Source Sans 3','Helvetica Neue',sans-serif;max-width:1200px;margin-left:auto;margin-right:auto;}
 .copa-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#003d1a;gap:12px;}
 .copa-header-left{display:flex;align-items:center;gap:10px;}
 .copa-trophy{font-size:18px;}
@@ -278,16 +280,9 @@ ul{list-style:none;}
   <div class="ad-box">Anúncio 728×90 — Google AdSense</div>
 </div>
 
-<!-- MAIN -->
-<main class="main">
-
-  <!-- HERO -->
-  <section id="heroSection">
-    <div class="loading"><div class="spinner"></div><span>Carregando notícias...</span></div>
-  </section>
-
-  <!-- AGENDA COPA DO MUNDO 2026 -->
-  <div id="copa-agenda" class="copa-widget">
+<!-- AGENDA COPA DO MUNDO 2026 — fora do main, sempre visível -->
+<div id="copa-agenda" class="copa-widget-wrap">
+  <div class="copa-widget">
     <div class="copa-header">
       <div class="copa-header-left">
         <span class="copa-trophy">🏆</span>
@@ -310,6 +305,15 @@ ul{list-style:none;}
       </div>
     </div>
   </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <section id="heroSection">
+    <div class="loading"><div class="spinner"></div><span>Carregando notícias...</span></div>
+  </section>
 
   <!-- CONTENT GRID -->
   <div class="content-grid">
@@ -490,13 +494,91 @@ function renderTrending(noticias){
   document.getElementById('trendingTags').innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
 }
 function normalizarTexto(str){
-  return (str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  return (str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
 }
+
+// Mapa de aliases: qualquer variação do RSS é mapeada para a chave canônica do filtro
+const CATEGORIA_MAP = {
+  // Esportes — todas as variações possíveis do RSS
+  'esportes':      'Esportes',
+  'esporte':       'Esportes',
+  'sports':        'Esportes',
+  'sport':         'Esportes',
+  'futebol':       'Esportes',
+  'football':      'Esportes',
+  'soccer':        'Esportes',
+  'f1':            'Esportes',
+  'formula 1':     'Esportes',
+  'formula1':      'Esportes',
+  'olimpiadas':    'Esportes',
+  'olimpíadas':    'Esportes',
+  // Política
+  'politica':      'Politica',
+  'política':      'Politica',
+  'politics':      'Politica',
+  'poder':         'Politica',
+  // Brasil
+  'brasil':        'Brasil',
+  'brazil':        'Brasil',
+  'nacional':      'Brasil',
+  // Economia
+  'economia':      'Economia',
+  'economy':       'Economia',
+  'financas':      'Economia',
+  'finanças':      'Economia',
+  'mercado':       'Economia',
+  'negocios':      'Economia',
+  'negócios':      'Economia',
+  // Mundo
+  'mundo':         'Mundo',
+  'world':         'Mundo',
+  'internacional': 'Mundo',
+  'exterior':      'Mundo',
+  // Entretenimento
+  'entretenimento':'Entretenimento',
+  'entertainment': 'Entretenimento',
+  'cultura':       'Entretenimento',
+  'celebridades':  'Entretenimento',
+  'famosos':       'Entretenimento',
+  'cinema':        'Entretenimento',
+  'musica':        'Entretenimento',
+  'música':        'Entretenimento',
+  // Tecnologia
+  'tecnologia':    'Tecnologia',
+  'technology':    'Tecnologia',
+  'tech':          'Tecnologia',
+  'ciencia':       'Tecnologia',
+  'ciência':       'Tecnologia',
+  'inovacao':      'Tecnologia',
+  'inovação':      'Tecnologia',
+  // Literatura
+  'literatura':    'Literatura',
+  'livros':        'Literatura',
+  'books':         'Literatura',
+};
+
+function categoriaCanonica(cat){
+  if(!cat) return '';
+  const norm = normalizarTexto(cat);
+  // Busca exata no mapa
+  if(CATEGORIA_MAP[norm]) return CATEGORIA_MAP[norm];
+  // Busca parcial (ex: "esportes/futebol" ainda bate em "esportes")
+  for(const [alias, canonica] of Object.entries(CATEGORIA_MAP)){
+    if(norm.includes(alias)) return canonica;
+  }
+  // fallback: devolve com primeira letra maiúscula
+  return cat.trim();
+}
+
 function aplicarFiltro(){
   let filtradas = todas;
   if(filtroAtivo){
-    const f = normalizarTexto(filtroAtivo);
-    filtradas = todas.filter(n => normalizarTexto(n.categoria) === f || normalizarTexto(n.categoria).includes(f));
+    const alvo = normalizarTexto(filtroAtivo);
+    filtradas = todas.filter(n => {
+      const canon = normalizarTexto(categoriaCanonica(n.categoria));
+      const raw   = normalizarTexto(n.categoria);
+      return canon === alvo || raw === alvo || raw.includes(alvo);
+    });
   }
   renderHero(filtradas);
   renderList(filtradas);
@@ -520,7 +602,8 @@ async function carregar(){
     if(error) throw error;
     todas = (data || []).map(n => ({
       ...n,
-      titulo: (n.titulo||'').replace(/\*\*/g,'').trim()
+      titulo:    (n.titulo||'').replace(/\*\*/g,'').trim(),
+      categoria: categoriaCanonica(n.categoria)
     }));
     if(todas[0]) renderBreaking(todas[0]);
     aplicarFiltro();
