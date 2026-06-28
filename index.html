@@ -727,45 +727,104 @@ db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'
     return evs;
   }
 
+  // Deduplica por idEvent
+  function mergeEvs(lists){
+    const map = new Map();
+    lists.forEach(list => (list||[]).forEach(e => { if(e && e.idEvent) map.set(e.idEvent, e); }));
+    return [...map.values()];
+  }
+
+  async function fetchCopa(){
+    const track = document.getElementById('copaTrack');
+    try{
+      const today = new Date().toISOString().split('T')[0];
+
+      // 3 chamadas em paralelo: recentes, próximos e jogos de hoje
+      const [rPast, rNext, rToday] = await Promise.all([
+        fetch(`${API_BASE}/eventspastleague.php?id=${LEAGUE_ID}`).then(r=>r.json()).catch(()=>({})),
+        fetch(`${API_BASE}/eventsnextleague.php?id=${LEAGUE_ID}`).then(r=>r.json()).catch(()=>({})),
+        fetch(`${API_BASE}/eventsday.php?d=${today}&l=${LEAGUE_ID}`).then(r=>r.json()).catch(()=>({})),
+      ]);
+
+      const evs = mergeEvs([
+        rPast.events  || [],
+        rNext.events  || [],
+        rToday.events || [],
+      ]);
+
+      if(!evs.length){
+        if(track) track.innerHTML='<div class="copa-error">Nenhum jogo encontrado. Tente novamente em breve.</div>';
+        return;
+      }
+
+      // Ordena por data+hora crescente
+      evs.sort((a,b)=>((a.dateEvent||'')+(a.strTime||'')).localeCompare((b.dateEvent||'')+(b.strTime||'')));
+
+      copaAllEvents = evs;
+      renderTrack(evs);
+
+    } catch(err){
+      console.error('[Copa]', err);
+      if(track) track.innerHTML='<div class="copa-error">Erro ao carregar a agenda.</div>';
+    }
+  }
+
+  // Na aba "todos": mostra jogos de hoje + próximos + últimos 2 dias
+  // Prioridade: ao vivo > hoje > próximos > recentes
   function renderTrack(evs){
     const track = document.getElementById('copaTrack');
     if(!track) return;
+
     let filtered = filterEvs(evs, copaTab);
-    if(!filtered.length){ track.innerHTML='<div class="copa-error">Nenhum jogo nesta aba.</div>'; return; }
+
+    if(!filtered.length){
+      track.innerHTML='<div class="copa-error">Nenhum jogo nesta aba.</div>';
+      updateLiveBadge(evs);
+      updateRefreshTime();
+      return;
+    }
+
+    // Ordena: ao vivo primeiro, depois por data/hora
     const sorted = [...filtered].sort((a,b)=>{
       const la=isLive(a.strStatus)?0:1, lb=isLive(b.strStatus)?0:1;
       if(la!==lb) return la-lb;
       return ((a.dateEvent||'')+(a.strTime||'')).localeCompare((b.dateEvent||'')+(b.strTime||''));
     });
+
     if(copaTab==='todos'){
       const today = new Date().toISOString().split('T')[0];
-      const d3 = new Date(); d3.setDate(d3.getDate()+3); const d3s=d3.toISOString().split('T')[0];
-      const d3p = new Date(); d3p.setDate(d3p.getDate()-3); const d3ps=d3p.toISOString().split('T')[0];
-      let nearby = sorted.filter(e=>isLive(e.strStatus)||(e.dateEvent>=d3ps&&e.dateEvent<=d3s));
-      if(!nearby.length) nearby = sorted.slice(0,12);
-      track.innerHTML = nearby.map(renderCard).join('');
+      const past2 = new Date(); past2.setDate(past2.getDate()-2);
+      const past2s = past2.toISOString().split('T')[0];
+      const next5 = new Date(); next5.setDate(next5.getDate()+5);
+      const next5s = next5.toISOString().split('T')[0];
+
+      // Ao vivo primeiro, depois hoje, depois próximos 5 dias, depois últimos 2 dias
+      let live    = sorted.filter(e=>isLive(e.strStatus));
+      let hoje    = sorted.filter(e=>!isLive(e.strStatus) && e.dateEvent===today);
+      let proximos= sorted.filter(e=>!isLive(e.strStatus) && e.dateEvent>today && e.dateEvent<=next5s);
+      let recentes= sorted.filter(e=>!isLive(e.strStatus) && e.dateEvent>=past2s && e.dateEvent<today);
+
+      let display = [...live, ...hoje, ...proximos, ...recentes];
+      // Se não tem nada relevante no range, mostra tudo que veio
+      if(!display.length) display = sorted;
+
+      track.innerHTML = display.map(renderCard).join('');
     } else {
       track.innerHTML = sorted.map(renderCard).join('');
     }
-    const badge = document.getElementById('copaLiveBadge');
-    if(badge) badge.style.display = evs.some(e=>isLive(e.strStatus)) ? 'inline-block' : 'none';
-    const ref = document.getElementById('copaRefreshTime');
-    if(ref) ref.textContent = 'Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+
+    updateLiveBadge(evs);
+    updateRefreshTime();
   }
 
-  async function fetchCopa(){
-    try{
-      const r = await fetch(`${API_BASE}/eventsseason.php?id=${LEAGUE_ID}&s=${SEASON}`);
-      const d = await r.json();
-      const evs = d.events || [];
-      if(!evs.length){ document.getElementById('copaTrack').innerHTML='<div class="copa-error">Jogos não encontrados. Tente novamente em breve.</div>'; return; }
-      copaAllEvents = evs;
-      renderTrack(evs);
-    } catch(err){
-      console.error('[Copa]', err);
-      const t = document.getElementById('copaTrack');
-      if(t) t.innerHTML='<div class="copa-error">Erro ao carregar a agenda.</div>';
-    }
+  function updateLiveBadge(evs){
+    const badge = document.getElementById('copaLiveBadge');
+    if(badge) badge.style.display = evs.some(e=>isLive(e.strStatus)) ? 'inline-block' : 'none';
+  }
+
+  function updateRefreshTime(){
+    const ref = document.getElementById('copaRefreshTime');
+    if(ref) ref.textContent = 'Atualizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
   }
 
   window.copaSetTab = function(tab, el){
@@ -777,7 +836,9 @@ db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'
 
   function scheduleRefresh(){
     clearTimeout(copaTimer);
-    copaTimer = setTimeout(()=>{ fetchCopa(); scheduleRefresh(); }, copaAllEvents.some(e=>isLive(e.strStatus)) ? 30000 : 120000);
+    // Com jogo ao vivo: atualiza a cada 30s; sem: a cada 3min
+    const delay = copaAllEvents.some(e=>isLive(e.strStatus)) ? 30000 : 180000;
+    copaTimer = setTimeout(()=>{ fetchCopa().then(scheduleRefresh); }, delay);
   }
 
   fetchCopa().then(scheduleRefresh);
