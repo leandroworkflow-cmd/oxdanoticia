@@ -194,51 +194,130 @@ ul{list-style:none;}
 /* ===== AGENDA COPA DO MUNDO ===== */
 .copa-widget-wrap{background:#f0f0f0;padding:12px 24px 0;}
 @media(max-width:768px){.copa-widget-wrap{padding:10px 16px 0;}}
-.copa-widget{background:#fff;border-radius:4px;overflow:hidden;margin-bottom:0;font-family:'Source Sans 3','Helvetica Neue',sans-serif;max-width:1200px;margin-left:auto;margin-right:auto;}
-.copa-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#003d1a;gap:12px;}
+
+.copa-widget{
+  border-radius:8px;overflow:hidden;
+  font-family:'Source Sans 3','Helvetica Neue',sans-serif;
+  max-width:1200px;margin-left:auto;margin-right:auto;
+  box-shadow:0 2px 12px rgba(0,0,0,0.12);
+}
+
+/* Header com gradiente escuro elegante */
+.copa-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 18px;
+  background:linear-gradient(135deg,#0a1f0a 0%,#1a3d0a 40%,#003d1a 100%);
+  gap:12px;
+  border-bottom:2px solid #ffd700;
+}
 .copa-header-left{display:flex;align-items:center;gap:10px;}
-.copa-trophy{font-size:18px;}
-.copa-title{font-size:13px;font-weight:700;color:#fff;letter-spacing:0.3px;}
+.copa-logo-img{height:38px;width:auto;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5));}
+.copa-title-block{display:flex;flex-direction:column;gap:1px;}
+.copa-title{font-size:14px;font-weight:800;color:#fff;letter-spacing:0.3px;line-height:1.1;}
 .copa-title span{color:#ffd700;}
-.copa-live-badge{background:#e8171f;color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;animation:pulse-badge 1.5s ease-in-out infinite;}
-@keyframes pulse-badge{0%,100%{opacity:1;}50%{opacity:0.6;}}
-.copa-see-all{font-size:11px;color:#a8d5a2;cursor:pointer;white-space:nowrap;text-decoration:none;}
+.copa-subtitle{font-size:9px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;}
+.copa-live-badge{
+  background:#e8171f;color:#fff;font-size:9px;font-weight:800;
+  letter-spacing:1px;text-transform:uppercase;padding:3px 8px;
+  border-radius:3px;animation:pulse-badge 1.2s ease-in-out infinite;
+}
+@keyframes pulse-badge{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.75;transform:scale(0.97);}}
+.copa-see-all{font-size:11px;color:rgba(255,255,255,0.6);white-space:nowrap;text-decoration:none;transition:color 0.15s;}
 .copa-see-all:hover{color:#ffd700;}
-.copa-scroll-wrapper{overflow-x:auto;scrollbar-width:thin;scrollbar-color:#e0e0e0 transparent;border-bottom:2px solid #003d1a;}
-.copa-scroll-wrapper::-webkit-scrollbar{height:3px;}
-.copa-scroll-wrapper::-webkit-scrollbar-thumb{background:#003d1a;border-radius:2px;}
-.copa-track{display:flex;gap:0;min-width:max-content;}
-.copa-card{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 14px;min-width:148px;cursor:pointer;border-right:1px solid #f0f0f0;transition:background 0.15s;position:relative;gap:6px;}
-.copa-card:hover{background:#fafaf8;}
+
+/* Tabs */
+.copa-tabs{
+  display:flex;background:#1a1a1a;border-bottom:1px solid #2a2a2a;
+  overflow-x:auto;scrollbar-width:none;
+}
+.copa-tabs::-webkit-scrollbar{display:none;}
+.copa-tab{
+  padding:9px 16px;font-size:11px;font-weight:700;color:#888;
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:all 0.15s;white-space:nowrap;text-transform:uppercase;letter-spacing:0.5px;
+}
+.copa-tab.active{color:#ffd700;border-color:#ffd700;}
+.copa-tab:hover{color:#fff;}
+
+/* Refresh */
+.copa-refresh{
+  background:#111;text-align:right;padding:3px 14px;
+  font-size:10px;color:#444;
+}
+
+/* Scroll track */
+.copa-scroll-wrapper{
+  overflow-x:auto;background:#111;
+  scrollbar-width:thin;scrollbar-color:#333 #111;
+}
+.copa-scroll-wrapper::-webkit-scrollbar{height:4px;}
+.copa-scroll-wrapper::-webkit-scrollbar-thumb{background:#333;border-radius:2px;}
+.copa-track{display:flex;min-width:max-content;}
+
+/* Card */
+.copa-card{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:12px 16px;min-width:160px;cursor:pointer;
+  border-right:1px solid #1e1e1e;transition:background 0.15s;gap:7px;
+  background:#111;position:relative;
+}
+.copa-card:hover{background:#1a1a1a;}
 .copa-card:last-child{border-right:none;}
-.copa-card.is-live{background:#fff8f8;border-bottom:3px solid #e8171f;}
-.copa-card.is-next{background:#f8fbff;border-bottom:3px solid #0066cc;}
-.copa-card.is-done{border-bottom:3px solid #ccc;}
-.copa-meta{font-size:10px;color:#999;text-align:center;line-height:1.2;}
-.copa-status-badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:1px 6px;border-radius:2px;margin-bottom:1px;}
+
+/* Status de cada card */
+.copa-card.is-live{background:#1a0a0a;border-bottom:3px solid #e8171f;}
+.copa-card.is-next{background:#0a0f1a;border-bottom:3px solid #ffd700;}
+.copa-card.is-done{background:#0d0d0d;border-bottom:3px solid #333;}
+
+/* Pulsação no card ao vivo */
+.copa-card.is-live::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,#e8171f,transparent);
+  animation:live-bar 2s linear infinite;
+}
+@keyframes live-bar{0%{background-position:-200px 0;}100%{background-position:200px 0;}}
+
+/* Meta (data/hora/status) */
+.copa-meta{font-size:10px;color:#666;text-align:center;line-height:1.3;}
+.copa-status-badge{
+  display:inline-block;font-size:9px;font-weight:800;
+  text-transform:uppercase;letter-spacing:0.8px;
+  padding:2px 7px;border-radius:2px;margin-bottom:2px;
+}
 .badge-live{background:#e8171f;color:#fff;}
-.badge-ft{background:#eee;color:#777;}
-.badge-ns{background:#0066cc;color:#fff;}
+.badge-ft{background:#222;color:#666;}
+.badge-ns{background:#ffd700;color:#000;}
 .badge-ht{background:#ff6b00;color:#fff;}
-.copa-teams{display:flex;align-items:center;gap:8px;width:100%;justify-content:center;}
-.copa-team{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:0;}
-.copa-flag{width:32px;height:22px;object-fit:cover;border-radius:2px;border:1px solid #eee;flex-shrink:0;}
-.copa-flag-placeholder{width:32px;height:22px;border-radius:2px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
-.copa-team-name{font-size:11px;font-weight:600;color:#111;text-align:center;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52px;}
+
+/* Times */
+.copa-teams{display:flex;align-items:center;gap:10px;width:100%;justify-content:center;}
+.copa-team{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;min-width:0;}
+.copa-flag{width:36px;height:24px;object-fit:cover;border-radius:3px;border:1px solid #333;flex-shrink:0;display:block;}
+.copa-flag-placeholder{width:36px;height:24px;border-radius:3px;background:#222;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.copa-team-name{font-size:10px;font-weight:700;color:#ccc;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px;}
+
+/* Placar */
 .copa-score-block{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;}
-.copa-score{font-size:18px;font-weight:900;color:#111;letter-spacing:-0.5px;line-height:1;}
+.copa-score{font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums;}
 .copa-score.live-score{color:#e8171f;}
-.copa-vs{font-size:11px;font-weight:700;color:#ccc;}
-.copa-minute{font-size:9px;color:#e8171f;font-weight:700;}
-.copa-round{font-size:10px;color:#aaa;text-align:center;}
-.copa-loading{display:flex;align-items:center;justify-content:center;padding:30px;gap:8px;color:#999;font-size:12px;}
-.copa-spinner{width:18px;height:18px;border:2px solid #eee;border-top-color:#003d1a;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
-.copa-error{padding:16px;text-align:center;color:#999;font-size:12px;}
-.copa-tabs{display:flex;border-bottom:1px solid #f0f0f0;background:#fafafa;}
-.copa-tab{padding:8px 14px;font-size:12px;font-weight:600;color:#888;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
-.copa-tab.active,.copa-tab:hover{color:#003d1a;border-color:#003d1a;}
-.copa-refresh{text-align:right;padding:4px 12px 0;font-size:10px;color:#ccc;}
-@media(max-width:768px){.copa-card{min-width:130px;padding:8px 10px;}.copa-header{padding:8px 12px;}.copa-title{font-size:12px;}}
+.copa-vs{font-size:13px;font-weight:900;color:#444;letter-spacing:-0.5px;}
+.copa-minute{font-size:9px;color:#e8171f;font-weight:800;letter-spacing:0.5px;}
+
+/* Rodada */
+.copa-round{font-size:9px;color:#444;text-align:center;text-transform:uppercase;letter-spacing:0.5px;}
+
+/* Loading / Error */
+.copa-loading{display:flex;align-items:center;justify-content:center;padding:30px;gap:8px;color:#555;font-size:12px;background:#111;}
+.copa-spinner{width:18px;height:18px;border:2px solid #222;border-top-color:#ffd700;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
+.copa-error{padding:20px;text-align:center;color:#555;font-size:12px;background:#111;}
+
+@media(max-width:768px){
+  .copa-card{min-width:140px;padding:10px 12px;}
+  .copa-header{padding:8px 12px;}
+  .copa-title{font-size:12px;}
+  .copa-logo-img{height:30px;}
+}
+
 </style>
 </head>
 <body>
@@ -280,22 +359,28 @@ ul{list-style:none;}
   <div class="ad-box">Anúncio 728×90 — Google AdSense</div>
 </div>
 
-<!-- AGENDA COPA DO MUNDO 2026 — fora do main, sempre visível -->
+<!-- AGENDA COPA DO MUNDO 2026 — sempre visivel, fora do main -->
 <div id="copa-agenda" class="copa-widget-wrap">
   <div class="copa-widget">
     <div class="copa-header">
       <div class="copa-header-left">
-        <span class="copa-trophy">🏆</span>
-        <span class="copa-title">Agenda <span>Copa do Mundo FIFA™</span> 2026</span>
+        <img class="copa-logo-img"
+          src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/2026_FIFA_World_Cup_emblem.svg/150px-2026_FIFA_World_Cup_emblem.svg.png"
+          alt="Copa do Mundo FIFA 2026"
+          onerror="this.style.display='none'">
+        <div class="copa-title-block">
+          <span class="copa-title">Copa do Mundo <span>FIFA 2026</span></span>
+          <span class="copa-subtitle">Canada &bull; Mexico &bull; USA</span>
+        </div>
         <span class="copa-live-badge" id="copaLiveBadge" style="display:none;">AO VIVO</span>
       </div>
-      <a class="copa-see-all" href="https://www.thesportsdb.com/league/4429" target="_blank">Ver agenda completa ›</a>
+      <a class="copa-see-all" href="https://www.fifa.com/fifaplus/pt/tournaments/mens/worldcup/canadamexicousa2026/match-centre" target="_blank">Ver agenda completa &rsaquo;</a>
     </div>
     <div class="copa-tabs">
       <div class="copa-tab active" onclick="copaSetTab('todos',this)">Todos</div>
-      <div class="copa-tab" onclick="copaSetTab('live',this)">🔴 Ao Vivo</div>
+      <div class="copa-tab" onclick="copaSetTab('live',this)">&#128308; Ao Vivo</div>
       <div class="copa-tab" onclick="copaSetTab('hoje',this)">Hoje</div>
-      <div class="copa-tab" onclick="copaSetTab('proximos',this)">Próximos</div>
+      <div class="copa-tab" onclick="copaSetTab('proximos',this)">Proximos</div>
       <div class="copa-tab" onclick="copaSetTab('encerrados',this)">Encerrados</div>
     </div>
     <div class="copa-refresh" id="copaRefreshTime"></div>
@@ -619,272 +704,281 @@ carregar();
 db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'},()=>carregar()).subscribe();
 
 /* ===== AGENDA COPA DO MUNDO 2026 ===== */
-(function() {
-  const LEAGUE_ID = '4429';
-  const API_BASE  = 'https://www.thesportsdb.com/api/v1/json/3';
+(function () {
+  var LEAGUE = '4429';
+  var BASE   = 'https://www.thesportsdb.com/api/v1/json/3';
 
-  let allEvs  = [];   // todos os eventos carregados
-  let copaTab = 'todos';
-  let copaTimer = null;
+  var allEvs = [];
+  var activeTab = 'todos';
+  var timer = null;
 
-  /* ---------- STATUS ---------- */
-  const STATUS_MAP = {
-    'NS':  {badge:'badge-ns',   text:'NS'     },
-    '1H':  {badge:'badge-live', text:'1T'     },
-    '2H':  {badge:'badge-live', text:'2T'     },
-    'HT':  {badge:'badge-ht',   text:'INT'    },
-    'FT':  {badge:'badge-ft',   text:'FT'     },
-    'AET': {badge:'badge-ft',   text:'AET'    },
-    'PEN': {badge:'badge-live', text:'PEN'    },
-    'ET':  {badge:'badge-live', text:'ET'     },
-    'BT':  {badge:'badge-ht',   text:'IET'    },
-    'PST': {badge:'badge-ft',   text:'ADIADO' },
-    'CANC':{badge:'badge-ft',   text:'CANC'   },
+  var STATUS = {
+    'NS':   {badge:'badge-ns',   text:'NS'    },
+    '1H':   {badge:'badge-live', text:'1T'    },
+    '2H':   {badge:'badge-live', text:'2T'    },
+    'HT':   {badge:'badge-ht',   text:'INT'   },
+    'FT':   {badge:'badge-ft',   text:'FT'    },
+    'AET':  {badge:'badge-ft',   text:'AET'   },
+    'PEN':  {badge:'badge-live', text:'PEN'   },
+    'ET':   {badge:'badge-live', text:'ET'    },
+    'BT':   {badge:'badge-ht',   text:'IET'   },
+    'PST':  {badge:'badge-ft',   text:'ADIADO'},
+    'CANC': {badge:'badge-ft',   text:'CANC'  }
   };
-  function isLive(s)  { return ['1H','2H','HT','ET','BT','PEN'].includes(s); }
-  function isFinal(s) { return ['FT','AET','PST','CANC'].includes(s); }
 
-  /* ---------- DATAS: SEMPRE FUSO LOCAL ----------
-     new Date().toISOString() retorna UTC — em Brasilia (UTC-3)
-     meia-noite local = 03:00 UTC do dia seguinte, causando erro de "Hoje".
-     localToday() usa getFullYear/Month/Date que respeitam o fuso do browser. */
-  function localToday(offsetDays) {
-    const d = new Date();
-    if (offsetDays) d.setDate(d.getDate() + offsetDays);
-    const y  = d.getFullYear();
-    const mo = String(d.getMonth() + 1).padStart(2, '0');
-    const dy = String(d.getDate()).padStart(2, '0');
+  function isLiveStatus(s) {
+    return s === '1H' || s === '2H' || s === 'HT' || s === 'ET' || s === 'BT' || s === 'PEN';
+  }
+  function isFinalStatus(s) {
+    return s === 'FT' || s === 'AET' || s === 'PST' || s === 'CANC';
+  }
+
+  /* Data local do browser (nunca UTC) — corrige bug de fuso Brasilia */
+  function localDate(offsetDays) {
+    var d = new Date();
+    if (offsetDays) { d.setDate(d.getDate() + offsetDays); }
+    var y  = d.getFullYear();
+    var mo = ('0' + (d.getMonth() + 1)).slice(-2);
+    var dy = ('0' + d.getDate()).slice(-2);
     return y + '-' + mo + '-' + dy;
   }
 
-  /* strTime da API vem em UTC — converte para horario local do browser */
-  function fmtTime(t) {
-    if (!t) return '';
-    const parts = t.split(':');
-    const d = new Date();
+  /* strTime da API e UTC — converte para hora local */
+  function toLocalTime(t) {
+    if (!t) { return ''; }
+    var parts = t.split(':');
+    var d = new Date();
     d.setUTCHours(+parts[0], +parts[1], 0, 0);
-    return d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
   }
 
-  /* Label de data relativo (Hoje / Ontem / Amanha / DD/MM) */
-  function fmtDate(dateStr) {
-    if (!dateStr) return '';
-    const today = localToday();
-    if (dateStr === today) return 'Hoje';
-    // Usa meio-dia local para evitar problemas de DST
-    const evD  = new Date(dateStr  + 'T12:00:00');
-    const todD = new Date(today    + 'T12:00:00');
-    const diff = Math.round((evD - todD) / 86400000);
-    if (diff ===  1) return 'Amanha';
-    if (diff === -1) return 'Ontem';
-    return evD.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+  /* Label de data relativo */
+  function dateLabel(dateStr) {
+    if (!dateStr) { return ''; }
+    var today = localDate();
+    if (dateStr === today) { return 'Hoje'; }
+    var evMs  = new Date(dateStr  + 'T12:00:00').getTime();
+    var todMs = new Date(today    + 'T12:00:00').getTime();
+    var diff  = Math.round((evMs - todMs) / 86400000);
+    if (diff ===  1) { return 'Amanha'; }
+    if (diff === -1) { return 'Ontem'; }
+    var p = dateStr.split('-');
+    return p[2] + '/' + p[1];
   }
 
-  /* Determina se jogo esta ao vivo AGORA pelo horario real (API free nao atualiza status) */
-  function isReallyLive(ev) {
-    if (isLive(ev.strStatus)) return true;          // API confirmou
-    if (!ev.dateEvent || !ev.strTime) return false;
-    const t = ev.strTime.split(':');
-    const kickoff = new Date(ev.dateEvent + 'T' + t[0].padStart(2,'0') + ':' + t[1].padStart(2,'0') + ':00Z');
-    const elapsed = (Date.now() - kickoff) / 60000; // minutos
+  /* Detecta jogo ao vivo pelo horario real (API free nao atualiza status) */
+  function liveNow(ev) {
+    if (isLiveStatus(ev.strStatus)) { return true; }
+    if (!ev.dateEvent || !ev.strTime) { return false; }
+    var parts = ev.strTime.split(':');
+    var kickoff = new Date(ev.dateEvent + 'T' + ('0'+parts[0]).slice(-2) + ':' + ('0'+parts[1]).slice(-2) + ':00Z');
+    var elapsed = (Date.now() - kickoff.getTime()) / 60000;
     return elapsed >= 0 && elapsed <= 115;
   }
 
-  /* ---------- FLAGS ---------- */
-  const FLAGS = {
-    'Brazil':'BR','Argentina':'AR','France':'FR','Germany':'DE','Spain':'ES',
-    'England':'GB','Portugal':'PT','Netherlands':'NL','Italy':'IT','Belgium':'BE',
-    'Uruguay':'UY','Croatia':'HR','Denmark':'DK','Switzerland':'CH','USA':'US',
-    'United States':'US','Mexico':'MX','Canada':'CA','Japan':'JP','South Korea':'KR',
-    'Australia':'AU','Morocco':'MA','Senegal':'SN','Ghana':'GH','Nigeria':'NG',
-    'Cameroon':'CM','Egypt':'EG','Tunisia':'TN','Algeria':'DZ','South Africa':'ZA',
-    'Colombia':'CO','Chile':'CL','Ecuador':'EC','Peru':'PE','Paraguay':'PY',
-    'Bolivia':'BO','Venezuela':'VE','Panama':'PA','Costa Rica':'CR','Honduras':'HN',
-    'El Salvador':'SV','Jamaica':'JM','Haiti':'HT','Serbia':'RS','Poland':'PL',
-    'Ukraine':'UA','Hungary':'HU','Czech Republic':'CZ','Slovakia':'SK','Austria':'AT',
-    'Sweden':'SE','Norway':'NO','Finland':'FI','Turkey':'TR','Greece':'GR',
-    'Romania':'RO','Slovenia':'SI','Albania':'AL','Scotland':'GB','Wales':'GB',
-    'Ireland':'IE','North Macedonia':'MK','Saudi Arabia':'SA','Iran':'IR','Qatar':'QA',
-    'Iraq':'IQ','Jordan':'JO','UAE':'AE','Uzbekistan':'UZ','Indonesia':'ID',
-    'Vietnam':'VN','China':'CN','New Zealand':'NZ','Ivory Coast':'CI','Mali':'ML',
-    'Congo DR':'CD','Guinea':'GN','Tanzania':'TZ',
+  /* Bandeiras via flagcdn.com — codigo ISO2 */
+  var ISO2 = {
+    'Brazil':'br','Argentina':'ar','France':'fr','Germany':'de','Spain':'es',
+    'England':'gb-eng','Portugal':'pt','Netherlands':'nl','Italy':'it','Belgium':'be',
+    'Uruguay':'uy','Croatia':'hr','Denmark':'dk','Switzerland':'ch','USA':'us',
+    'United States':'us','Mexico':'mx','Canada':'ca','Japan':'jp','South Korea':'kr',
+    'Australia':'au','Morocco':'ma','Senegal':'sn','Ghana':'gh','Nigeria':'ng',
+    'Cameroon':'cm','Egypt':'eg','Tunisia':'tn','Algeria':'dz','South Africa':'za',
+    'Colombia':'co','Chile':'cl','Ecuador':'ec','Peru':'pe','Paraguay':'py',
+    'Bolivia':'bo','Venezuela':'ve','Panama':'pa','Costa Rica':'cr','Honduras':'hn',
+    'El Salvador':'sv','Jamaica':'jm','Haiti':'ht','Serbia':'rs','Poland':'pl',
+    'Ukraine':'ua','Hungary':'hu','Czech Republic':'cz','Slovakia':'sk','Austria':'at',
+    'Sweden':'se','Norway':'no','Finland':'fi','Turkey':'tr','Greece':'gr',
+    'Romania':'ro','Slovenia':'si','Albania':'al','Scotland':'gb-sct','Wales':'gb-wls',
+    'Ireland':'ie','North Macedonia':'mk','Saudi Arabia':'sa','Iran':'ir','Qatar':'qa',
+    'Iraq':'iq','Jordan':'jo','UAE':'ae','Uzbekistan':'uz','Indonesia':'id',
+    'Vietnam':'vn','China':'cn','New Zealand':'nz','Ivory Coast':'ci','Mali':'ml',
+    'Congo DR':'cd','Guinea':'gn','Tanzania':'tz','Bosnia-Herzegovina':'ba',
+    'Montenegro':'me','Kosovo':'xk','Bulgaria':'bg','Belarus':'by',
+    'Kazakhstan':'kz','Azerbaijan':'az','Georgia':'ge','Armenia':'am',
+    'Latvia':'lv','Lithuania':'lt','Estonia':'ee','Iceland':'is','Israel':'il'
   };
 
-  function flagEl(name, badgeUrl) {
-    // Prefere badge da API (escudo do time); fallback para emoji via flagcdn
+  function flagImg(name, badgeUrl) {
+    var iso = ISO2[name] || '';
+    var cdnUrl = iso ? 'https://flagcdn.com/w40/' + iso + '.png' : '';
+
+    /* Tenta badge do time primeiro, fallback para bandeira do pais */
     if (badgeUrl) {
-      const cc = FLAGS[name];
-      const fallback = cc
-        ? '<img src=\'https://flagcdn.com/w40/'+cc.toLowerCase()+'.png\' class=\'copa-flag\' alt=\''+name+'\'>'
-        : '<div class=\'copa-flag-placeholder\'>🏳</div>';
-      return '<img src="'+badgeUrl+'/tiny" class="copa-flag" alt="'+name+'" onerror="this.outerHTML=\''+fallback+'\'">';
+      if (cdnUrl) {
+        return '<img src="' + badgeUrl + '/tiny" class="copa-flag" alt="' + name + '" ' +
+               'onerror="this.src=\'' + cdnUrl + '\';this.onerror=null;">';
+      }
+      return '<img src="' + badgeUrl + '/tiny" class="copa-flag" alt="' + name + '" ' +
+             'onerror="this.outerHTML=\'<div class=&quot;copa-flag-placeholder&quot;>?</div>\';">';
     }
-    const cc = FLAGS[name];
-    if (cc) return '<img src="https://flagcdn.com/w40/'+cc.toLowerCase()+'.png" class="copa-flag" alt="'+name+'">';
-    return '<div class="copa-flag-placeholder">🏳</div>';
+    if (cdnUrl) {
+      return '<img src="' + cdnUrl + '" class="copa-flag" alt="' + name + '">';
+    }
+    return '<div class="copa-flag-placeholder">?</div>';
   }
 
-  /* ---------- CARD ---------- */
-  function renderCard(ev) {
-    const live = isReallyLive(ev);
-    const s    = live && !isLive(ev.strStatus) ? '1H' : (ev.strStatus || 'NS');
-    const si   = STATUS_MAP[s] || {badge:'badge-ft', text: s};
-    const fin  = isFinal(ev.strStatus) && !live;
+  function buildCard(ev) {
+    var live = liveNow(ev);
+    var s    = ev.strStatus || 'NS';
+    var si   = STATUS[s] || {badge:'badge-ft', text: s};
+    var fin  = isFinalStatus(s) && !live;
 
-    const hs   = (ev.intHomeScore !== null && ev.intHomeScore !== '') ? ev.intHomeScore : null;
-    const as_  = (ev.intAwayScore !== null && ev.intAwayScore !== '') ? ev.intAwayScore : null;
-    const hasScore = hs !== null && as_ !== null;
+    var hs  = (ev.intHomeScore !== null && ev.intHomeScore !== '' && ev.intHomeScore !== undefined) ? ev.intHomeScore : null;
+    var as_ = (ev.intAwayScore !== null && ev.intAwayScore !== '' && ev.intAwayScore !== undefined) ? ev.intAwayScore : null;
 
-    const scoreHtml = hasScore
-      ? '<div class="copa-score-block"><div class="copa-score' + (live ? ' live-score' : '') + '">' + hs + ' – ' + as_ + '</div>' +
-        (live && ev.strProgress ? '<div class="copa-minute">' + ev.strProgress + ''</div>' : '') + '</div>'
-      : '<div class="copa-score-block"><div class="copa-vs">VS</div></div>';
+    var scoreHtml;
+    if (hs !== null && as_ !== null) {
+      var min = (live && ev.strProgress) ? '<div class="copa-minute">' + ev.strProgress + '\'</div>' : '';
+      scoreHtml = '<div class="copa-score-block"><div class="copa-score' + (live ? ' live-score' : '') + '">' + hs + ' \u2013 ' + as_ + '</div>' + min + '</div>';
+    } else {
+      scoreHtml = '<div class="copa-score-block"><div class="copa-vs">VS</div></div>';
+    }
 
-    const cls   = live ? 'copa-card is-live' : fin ? 'copa-card is-done' : 'copa-card is-next';
-    const round = ev.strRound || (ev.intRound ? 'Rodada ' + ev.intRound : '');
-    const meta  = fmtDate(ev.dateEvent) + (ev.strTime ? ' · ' + fmtTime(ev.strTime) : '');
+    var cls   = live ? 'copa-card is-live' : (fin ? 'copa-card is-done' : 'copa-card is-next');
+    var round = ev.strRound || (ev.intRound ? 'Rodada ' + ev.intRound : '');
+    var t     = toLocalTime(ev.strTime);
+    var meta  = dateLabel(ev.dateEvent) + (t ? ' \u00b7 ' + t : '');
 
-    return '<div class="' + cls + '" onclick="copaOpenEvent('' + ev.idEvent + '')">' +
+    return '<div class="' + cls + '" onclick="copaOpen(\'' + ev.idEvent + '\')">' +
       '<div class="copa-meta"><span class="copa-status-badge ' + si.badge + '">' + si.text + '</span><br>' + meta + '</div>' +
       '<div class="copa-teams">' +
-        '<div class="copa-team">' + flagEl(ev.strHomeTeam, ev.strHomeTeamBadge) + '<span class="copa-team-name">' + (ev.strHomeTeam||'—') + '</span></div>' +
+        '<div class="copa-team">' + flagImg(ev.strHomeTeam || '', ev.strHomeTeamBadge || '') +
+          '<span class="copa-team-name">' + (ev.strHomeTeam || '\u2014') + '</span></div>' +
         scoreHtml +
-        '<div class="copa-team">' + flagEl(ev.strAwayTeam, ev.strAwayTeamBadge) + '<span class="copa-team-name">' + (ev.strAwayTeam||'—') + '</span></div>' +
+        '<div class="copa-team">' + flagImg(ev.strAwayTeam || '', ev.strAwayTeamBadge || '') +
+          '<span class="copa-team-name">' + (ev.strAwayTeam || '\u2014') + '</span></div>' +
       '</div>' +
       '<div class="copa-round">' + round + '</div>' +
     '</div>';
   }
 
-  window.copaOpenEvent = function(id) {
+  window.copaOpen = function (id) {
     window.open('https://www.thesportsdb.com/event/' + id, '_blank');
   };
 
-  /* ---------- FILTROS DAS ABAS ---------- */
-  function filterEvs(evs, tab) {
-    const today = localToday();
-    switch(tab) {
-      case 'live':
-        return evs.filter(e => isReallyLive(e));
-      case 'hoje':
-        return evs.filter(e => e.dateEvent === today);
-      case 'proximos':
-        return evs.filter(e => e.dateEvent > today && !isFinal(e.strStatus));
-      case 'encerrados':
-        return evs.filter(e => isFinal(e.strStatus) && !isReallyLive(e));
-      default:
-        return evs;
-    }
+  function getToday() { return localDate(); }
+
+  function filterList(evs, tab) {
+    var today = getToday();
+    if (tab === 'live')       { return evs.filter(function(e){ return liveNow(e); }); }
+    if (tab === 'hoje')       { return evs.filter(function(e){ return e.dateEvent === today; }); }
+    if (tab === 'proximos')   { return evs.filter(function(e){ return e.dateEvent > today && !isFinalStatus(e.strStatus); }); }
+    if (tab === 'encerrados') { return evs.filter(function(e){ return isFinalStatus(e.strStatus) && !liveNow(e); }); }
+    return evs;
   }
 
-  /* ---------- RENDER ---------- */
-  function renderTrack(evs) {
-    const track = document.getElementById('copaTrack');
-    if (!track) return;
+  function sortByTime(list) {
+    return list.slice().sort(function(a,b){
+      return ((a.dateEvent||'')+(a.strTime||'')).localeCompare((b.dateEvent||'')+(b.strTime||''));
+    });
+  }
 
-    let list = filterEvs(evs, copaTab);
+  function render(evs) {
+    var track = document.getElementById('copaTrack');
+    if (!track) { return; }
 
-    if (copaTab === 'todos') {
-      // Aba "Todos": ao vivo > hoje > proximos 3 dias > ultimos 3 dias
-      const today  = localToday();
-      const past3  = localToday(-3);
-      const next3  = localToday(3);
+    var list;
 
-      const live     = evs.filter(e => isReallyLive(e));
-      const hoje     = evs.filter(e => !isReallyLive(e) && e.dateEvent === today);
-      const proximos = evs.filter(e => !isReallyLive(e) && e.dateEvent > today  && e.dateEvent <= next3);
-      const recentes = evs.filter(e => !isReallyLive(e) && e.dateEvent >= past3 && e.dateEvent < today);
+    if (activeTab === 'todos') {
+      var today = getToday();
+      var past3 = localDate(-3);
+      var next3 = localDate(3);
 
-      // Ordena cada grupo por horario
-      const byTime = (a,b) => ((a.dateEvent||'')+(a.strTime||'')).localeCompare((b.dateEvent||'')+(b.strTime||''));
-      list = [
-        ...live.sort(byTime),
-        ...hoje.sort(byTime),
-        ...proximos.sort(byTime),
-        ...recentes.sort(byTime).reverse(), // mais recente primeiro
-      ];
+      var live     = evs.filter(function(e){ return liveNow(e); });
+      var hoje     = evs.filter(function(e){ return !liveNow(e) && e.dateEvent === today; });
+      var proximos = evs.filter(function(e){ return !liveNow(e) && e.dateEvent > today  && e.dateEvent <= next3; });
+      var recentes = evs.filter(function(e){ return !liveNow(e) && e.dateEvent >= past3 && e.dateEvent < today; });
+
+      list = sortByTime(live)
+        .concat(sortByTime(hoje))
+        .concat(sortByTime(proximos))
+        .concat(sortByTime(recentes).reverse());
+
+      if (!list.length) { list = sortByTime(evs); }
     } else {
-      list = list.sort((a,b) => ((a.dateEvent||'')+(a.strTime||'')).localeCompare((b.dateEvent||'')+(b.strTime||'')));
+      list = sortByTime(filterList(evs, activeTab));
     }
 
     if (!list.length) {
       track.innerHTML = '<div class="copa-error">Nenhum jogo nesta aba.</div>';
     } else {
-      track.innerHTML = list.map(renderCard).join('');
+      track.innerHTML = list.map(buildCard).join('');
     }
 
-    // Badge AO VIVO no header
-    const badge = document.getElementById('copaLiveBadge');
-    if (badge) badge.style.display = evs.some(e => isReallyLive(e)) ? 'inline-block' : 'none';
+    /* Badge AO VIVO */
+    var badge = document.getElementById('copaLiveBadge');
+    if (badge) { badge.style.display = evs.some(function(e){ return liveNow(e); }) ? 'inline-block' : 'none'; }
 
-    // Timestamp
-    const ref = document.getElementById('copaRefreshTime');
-    if (ref) ref.textContent = 'Atualizado as ' + new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    /* Timestamp */
+    var ref = document.getElementById('copaRefreshTime');
+    var now = new Date();
+    if (ref) { ref.textContent = 'Atualizado as ' + ('0'+now.getHours()).slice(-2) + ':' + ('0'+now.getMinutes()).slice(-2); }
   }
 
-  /* ---------- FETCH: 3 endpoints em paralelo ----------
-     pastleague  = ultimos jogos encerrados
-     nextleague  = proximos jogos agendados
-     eventsday   = jogos de hoje (pega ao vivo)
-     Busca tambem D-1 e D+1 em UTC para cobrir virada de fuso */
-  function mergeEvs(lists) {
-    const map = new Map();
-    lists.forEach(list => (list||[]).forEach(e => { if (e && e.idEvent) map.set(e.idEvent, e); }));
-    return [...map.values()];
+  function merge(lists) {
+    var map = {};
+    lists.forEach(function(list){
+      (list || []).forEach(function(e){ if (e && e.idEvent) { map[e.idEvent] = e; } });
+    });
+    return Object.values(map);
   }
 
-  async function fetchCopa() {
-    const track = document.getElementById('copaTrack');
-    try {
-      const today  = localToday();
-      const tmrw   = localToday(1);   // amanha local — pode ser hoje em UTC
-      const yest   = localToday(-1);  // ontem local — cobre virada meia-noite
+  function safeFetch(url) {
+    return fetch(url).then(function(r){ return r.json(); }).catch(function(){ return {}; });
+  }
 
-      const [rPast, rNext, rToday, rTmrw, rYest] = await Promise.all([
-        fetch(API_BASE+'/eventspastleague.php?id='+LEAGUE_ID).then(r=>r.json()).catch(()=>({})),
-        fetch(API_BASE+'/eventsnextleague.php?id='+LEAGUE_ID).then(r=>r.json()).catch(()=>({})),
-        fetch(API_BASE+'/eventsday.php?d='+today+'&l='+LEAGUE_ID).then(r=>r.json()).catch(()=>({})),
-        fetch(API_BASE+'/eventsday.php?d='+tmrw +'&l='+LEAGUE_ID).then(r=>r.json()).catch(()=>({})),
-        fetch(API_BASE+'/eventsday.php?d='+yest +'&l='+LEAGUE_ID).then(r=>r.json()).catch(()=>({})),
-      ]);
+  function fetchAll() {
+    var track = document.getElementById('copaTrack');
+    var today = localDate();
+    var tmrw  = localDate(1);
+    var yest  = localDate(-1);
 
-      const evs = mergeEvs([
-        rPast.events  || [],
-        rNext.events  || [],
-        rToday.events || [],
-        rTmrw.events  || [],
-        rYest.events  || [],
+    Promise.all([
+      safeFetch(BASE + '/eventspastleague.php?id=' + LEAGUE),
+      safeFetch(BASE + '/eventsnextleague.php?id='  + LEAGUE),
+      safeFetch(BASE + '/eventsday.php?d=' + today + '&l=' + LEAGUE),
+      safeFetch(BASE + '/eventsday.php?d=' + tmrw  + '&l=' + LEAGUE),
+      safeFetch(BASE + '/eventsday.php?d=' + yest  + '&l=' + LEAGUE)
+    ]).then(function(results) {
+      var evs = merge([
+        results[0].events,
+        results[1].events,
+        results[2].events,
+        results[3].events,
+        results[4].events
       ]);
 
       if (!evs.length) {
-        if (track) track.innerHTML = '<div class="copa-error">Nenhum jogo encontrado. Tente novamente em breve.</div>';
+        if (track) { track.innerHTML = '<div class="copa-error">Nenhum jogo encontrado. Tente em breve.</div>'; }
         return;
       }
 
       allEvs = evs;
-      renderTrack(evs);
-
-    } catch(err) {
+      render(evs);
+      schedule();
+    }).catch(function(err) {
       console.error('[Copa]', err);
-      if (track) track.innerHTML = '<div class="copa-error">Erro ao carregar a agenda da Copa.</div>';
-    }
+      if (track) { track.innerHTML = '<div class="copa-error">Erro ao carregar a agenda.</div>'; }
+    });
   }
 
-  /* ---------- TABS & REFRESH ---------- */
+  function schedule() {
+    clearTimeout(timer);
+    var hasLive = allEvs.some(function(e){ return liveNow(e); });
+    timer = setTimeout(fetchAll, hasLive ? 30000 : 180000);
+  }
+
   window.copaSetTab = function(tab, el) {
-    copaTab = tab;
-    document.querySelectorAll('.copa-tab').forEach(t => t.classList.remove('active'));
-    if (el) el.classList.add('active');
-    renderTrack(allEvs);
+    activeTab = tab;
+    document.querySelectorAll('.copa-tab').forEach(function(t){ t.classList.remove('active'); });
+    if (el) { el.classList.add('active'); }
+    render(allEvs);
   };
 
-  function scheduleRefresh() {
-    clearTimeout(copaTimer);
-    const hasLive = allEvs.some(e => isReallyLive(e));
-    copaTimer = setTimeout(() => fetchCopa().then(scheduleRefresh), hasLive ? 30000 : 180000);
-  }
-
-  fetchCopa().then(scheduleRefresh);
+  fetchAll();
 })();
+
 </script>
 </body>
 </html>
