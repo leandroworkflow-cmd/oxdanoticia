@@ -1,0 +1,30 @@
+name: RSS para Supabase
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'   # a cada 2 horas
+  workflow_dispatch:         # permite rodar manualmente pelo botão "Run workflow" no GitHub
+
+jobs:
+  rodar-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependências
+        working-directory: ./bot
+        run: npm install
+
+      - name: Rodar bot de notícias (RSS + Groq + Supabase)
+        working-directory: ./bot
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          GROQ_KEY: ${{ secrets.GROQ_KEY }}
+        run: node rss-para-supabase.js
