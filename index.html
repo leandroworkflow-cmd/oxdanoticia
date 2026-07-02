@@ -10,9 +10,9 @@
 <meta property="og:title" content="O X da Notícia - Informação em Tempo Real">
 <meta property="og:description" content="As principais notícias do Brasil e do mundo em tempo real.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://leandroworkflow-cmd.github.io/oxdanoticia">
+<meta property="og:url" content="https://oxdanoticia.vercel.app">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://leandroworkflow-cmd.github.io/oxdanoticia">
+<link rel="canonical" href="https://oxdanoticia.vercel.app">
 <title>O X da Notícia - Informação em Tempo Real</title>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7054499486507421" crossorigin="anonymous"></script>
@@ -311,7 +311,15 @@ ul{list-style:none;}
 
 <!-- AD TOP -->
 <div class="ad-top">
-  <div class="ad-box">Anúncio 728×90 — Google AdSense</div>
+  <div class="ad-box">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%;height:100%"
+         data-ad-client="ca-pub-7054499486507421"
+         data-ad-slot="SEU_SLOT_ID_AQUI"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 </div>
 
 <!-- ===== WIDGET COPA DO MUNDO — layout Globo.com ===== -->
@@ -450,7 +458,29 @@ function renderTrending(){const tags=['#Brasil','#Política','#Economia','#Espor
 function normalizarTexto(str){return(str||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();}
 const CATEGORIA_MAP={'esportes':'Esportes','esporte':'Esportes','sports':'Esportes','sport':'Esportes','futebol':'Esportes','football':'Esportes','soccer':'Esportes','f1':'Esportes','formula 1':'Esportes','formula1':'Esportes','olimpiadas':'Esportes','olimpíadas':'Esportes','politica':'Politica','política':'Politica','politics':'Politica','poder':'Politica','brasil':'Brasil','brazil':'Brasil','nacional':'Brasil','economia':'Economia','economy':'Economia','financas':'Economia','finanças':'Economia','mercado':'Economia','negocios':'Economia','negócios':'Economia','mundo':'Mundo','world':'Mundo','internacional':'Mundo','exterior':'Mundo','entretenimento':'Entretenimento','entertainment':'Entretenimento','cultura':'Entretenimento','celebridades':'Entretenimento','famosos':'Entretenimento','cinema':'Entretenimento','musica':'Entretenimento','música':'Entretenimento','tecnologia':'Tecnologia','technology':'Tecnologia','tech':'Tecnologia','ciencia':'Tecnologia','ciência':'Tecnologia','inovacao':'Tecnologia','inovação':'Tecnologia','literatura':'Literatura','livros':'Literatura','books':'Literatura'};
 function categoriaCanonica(cat){if(!cat)return'';const norm=normalizarTexto(cat);if(CATEGORIA_MAP[norm])return CATEGORIA_MAP[norm];for(const[alias,canonica]of Object.entries(CATEGORIA_MAP)){if(norm.includes(alias))return canonica;}return cat.trim();}
-function aplicarFiltro(){let filtradas=todas;if(filtroAtivo){const alvo=normalizarTexto(filtroAtivo);filtradas=todas.filter(n=>{const canon=normalizarTexto(categoriaCanonica(n.categoria)),raw=normalizarTexto(n.categoria);return canon===alvo||raw===alvo||raw.includes(alvo);});}renderHero(filtradas);renderList(filtradas);}
+const CATEGORIA_ALIASES=(()=>{const rev={};Object.entries(CATEGORIA_MAP).forEach(([alias,canon])=>{(rev[canon]=rev[canon]||[]).push(alias);});return rev;})();
+async function aplicarFiltro(){
+  if(!filtroAtivo){renderHero(todas);renderList(todas);return;}
+  const alvo=normalizarTexto(filtroAtivo);
+  let filtradas=todas.filter(n=>{const canon=normalizarTexto(categoriaCanonica(n.categoria)),raw=normalizarTexto(n.categoria);return canon===alvo||raw===alvo||raw.includes(alvo);});
+  if(filtradas.length){renderHero(filtradas);renderList(filtradas);return;}
+  /* Fallback: a categoria pode não estar entre as últimas 60 notícias carregadas.
+     Nesse caso, busca direto no Supabase por essa categoria específica. */
+  document.getElementById('heroSection').innerHTML=`<div style="text-align:center;padding:40px;color:#999;">Carregando notícias de ${filtroAtivo}...</div>`;
+  document.getElementById('listSection').innerHTML='';
+  try{
+    const aliases=CATEGORIA_ALIASES[filtroAtivo]||[alvo];
+    const orFiltro=aliases.map(a=>`categoria.ilike.%${a}%`).join(',');
+    const{data,error}=await db.from('hora').select('*').or(orFiltro).order('criado_em',{ascending:false}).limit(60);
+    if(error)throw error;
+    filtradas=(data||[]).map(n=>({...n,titulo:(n.titulo||'').replace(/\*\*/g,'').trim(),categoria:categoriaCanonica(n.categoria)}));
+  }catch(e){console.error(e);filtradas=[];}
+  if(!filtradas.length){
+    document.getElementById('heroSection').innerHTML=`<div style="text-align:center;padding:40px;color:#999;">Nenhuma notícia encontrada em ${filtroAtivo} no momento.</div>`;
+    return;
+  }
+  renderHero(filtradas);renderList(filtradas);
+}
 function filtrar(cat,el){filtroAtivo=cat;document.querySelectorAll('.nav-cat').forEach(a=>a.classList.remove('active'));if(el)el.classList.add('active');aplicarFiltro();}
 function buscar(){const t=document.getElementById('searchInput').value.toLowerCase().trim();if(!t){aplicarFiltro();return;}const f=todas.filter(n=>(n.titulo||'').toLowerCase().includes(t)||(n.conteudo||'').toLowerCase().includes(t));renderHero(f);renderList(f);}
 document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')buscar();});
