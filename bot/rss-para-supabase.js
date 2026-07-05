@@ -429,9 +429,26 @@ async function rodar() {
 }
 
 async function limparAntigas() {
-  const d = new Date(); d.setDate(d.getDate() - 7);
-  await db.from(TABELA).delete().lt('criado_em', d.toISOString());
-  console.log('🧹 Antigas removidas');
+  const MIN_POR_CATEGORIA = 7;
+  const categorias = [...new Set(FEEDS.map(f => f.categoria))];
+  for (const cat of categorias) {
+    try {
+      const { data, error } = await db.from(TABELA)
+        .select('id')
+        .eq('categoria', cat)
+        .order('criado_em', { ascending: false });
+      if (error) throw error;
+      if (data && data.length > MIN_POR_CATEGORIA) {
+        const idsParaRemover = data.slice(MIN_POR_CATEGORIA).map(n => n.id);
+        await db.from(TABELA).delete().in('id', idsParaRemover);
+        console.log(`🧹 ${cat}: removidas ${idsParaRemover.length}, mantidas ${MIN_POR_CATEGORIA} mais recentes`);
+      } else {
+        console.log(`🧹 ${cat}: ${data ? data.length : 0} notícia(s) no total, nada a remover`);
+      }
+    } catch (e) {
+      console.error(`  ⚠️ Erro ao limpar categoria ${cat}:`, e.message);
+    }
+  }
 }
 
 async function main() {
