@@ -45,10 +45,21 @@ const FEEDS = [
   { nome: 'BBC Brasil',      url: 'https://feeds.bbci.co.uk/portuguese/rss.xml',              categoria: 'Mundo'          },
   { nome: 'Infomoney',       url: 'https://www.infomoney.com.br/feed/',                       categoria: 'Economia'       },
   { nome: 'Bolavip Brasil', url: 'https://br.bolavip.com/rss/feed', categoria: 'Esportes' },
+  // ── Entretenimento: moda, famosos, festas, eventos e shows ──
   { nome: 'Rolling Stone BR',url: 'https://rollingstone.uol.com.br/feed/',                   categoria: 'Entretenimento' },
+  { nome: 'Hugo Gloss',      url: 'https://hugogloss.uol.com.br/feed/',                       categoria: 'Entretenimento' },
+  { nome: 'CARAS Brasil',    url: 'https://caras.uol.com.br/feed',                            categoria: 'Entretenimento' },
+  { nome: 'Purepeople',      url: 'https://www.purepeople.com.br/rss',                        categoria: 'Entretenimento' },
   { nome: 'Canaltech',       url: 'https://canaltech.com.br/rss/',                            categoria: 'Tecnologia'     },
   { nome: 'Tecmundo',        url: 'https://rss.tecmundo.com.br/feed',                         categoria: 'Tecnologia'     },
 ];
+
+// Quantas notícias cada categoria deve manter sempre disponíveis pro leitor
+const ALVO_POR_CATEGORIA = 7;
+// Quantas tenta salvar por feed numa rodada "normal" (categoria já cheia)
+const SALVOS_POR_FEED_NORMAL = 2;
+// Quantas tenta salvar por feed numa rodada de "preenchimento" (categoria abaixo da meta)
+const SALVOS_POR_FEED_BACKFILL = 4;
 
 const AUTORES = [
   'Lionor VS2', 'Carlos Mendonca', 'Ana Paula Figueiredo',
@@ -376,15 +387,21 @@ async function salvar(item, categoria) {
 }
 
 // ─── PROCESSAR FEED ──────────────────────────────────────────────────────────
-async function processar(feed) {
-  console.log(`\n📰 ${feed.nome} [${feed.categoria}]`);
+// limiteSalvos: quantas notícias esse feed pode salvar nesta rodada
+// (maior quando a categoria ainda está abaixo da meta de 7, pra preencher rápido)
+async function processar(feed, limiteSalvos = SALVOS_POR_FEED_NORMAL) {
+  console.log(`\n📰 ${feed.nome} [${feed.categoria}] (limite: ${limiteSalvos})`);
+  if (limiteSalvos <= 0) {
+    console.log('   ⏭  Categoria já cheia, pulando feed nesta rodada');
+    return 0;
+  }
   try {
     let r;
     try {
       r = await parser.parseURL(feed.url);
     } catch(e) {
       console.log(`  ❌ Erro ao buscar feed: ${e.message.substring(0,80)}`);
-      return;
+      return 0;
     }
 
     const itens = r.items || [];
@@ -392,35 +409,68 @@ async function processar(feed) {
 
     let salvos = 0;
     let tentados = 0;
+    const maxTentativas = Math.max(10, limiteSalvos * 5);
 
     for (const item of itens) {
-      if (salvos >= 2) break;
-      if (tentados >= 10) break;
+      if (salvos >= limiteSalvos) break;
+      if (tentados >= maxTentativas) break;
       tentados++;
 
       if (await salvar(item, feed.categoria)) {
         salvos++;
-        if (salvos < 2) {
+        if (salvos < limiteSalvos) {
           console.log('  ⏳ 8s...');
           await sleep(8000);
         }
       }
     }
     console.log(`   📊 ${salvos} publicado(s)`);
+    return salvos;
   } catch(e) {
     console.error(`  ❌ Erro: ${e.message}`);
+    return 0;
   }
+}
+
+// ─── CONTAGEM ATUAL POR CATEGORIA ────────────────────────────────────────────
+async function contarPorCategoria() {
+  const contagem = {};
+  const categorias = [...new Set(FEEDS.map(f => f.categoria))];
+  for (const cat of categorias) {
+    try {
+      const { count, error } = await db.from(TABELA)
+        .select('id', { count: 'exact', head: true })
+        .eq('categoria', cat);
+      if (error) throw error;
+      contagem[cat] = count || 0;
+    } catch (e) {
+      console.error(`  ⚠️ Erro ao contar categoria ${cat}:`, e.message);
+      contagem[cat] = ALVO_POR_CATEGORIA; // em dúvida, não força backfill
+    }
+  }
+  return contagem;
 }
 
 // ─── PRINCIPAL ────────────────────────────────────────────────────────────────
 async function rodar() {
   console.log('\n========================================');
-  console.log('O X da Notícia - RSS + Groq IA v4.1');
+  console.log('O X da Notícia - RSS + Groq IA v4.2');
   console.log(new Date().toLocaleString('pt-BR'));
   console.log('========================================');
 
+  const contagem = await contarPorCategoria();
+  console.log('📊 Contagem atual por categoria:', contagem);
+
   for (const feed of FEEDS) {
-    await processar(feed);
+    const atual = contagem[feed.categoria] || 0;
+    const faltam = ALVO_POR_CATEGORIA - atual;
+    const limite = faltam > 0
+      ? Math.min(SALVOS_POR_FEED_BACKFILL, faltam)
+      : SALVOS_POR_FEED_NORMAL;
+
+    const salvos = await processar(feed, limite);
+    contagem[feed.categoria] = atual + salvos;
+
     console.log('  ⏳ 5s próximo feed...');
     await sleep(5000);
   }
@@ -429,7 +479,7 @@ async function rodar() {
 }
 
 async function limparAntigas() {
-  const MIN_POR_CATEGORIA = 7;
+  const MIN_POR_CATEGORIA = ALVO_POR_CATEGORIA;
   const categorias = [...new Set(FEEDS.map(f => f.categoria))];
   for (const cat of categorias) {
     try {
