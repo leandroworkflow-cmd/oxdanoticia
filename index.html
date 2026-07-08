@@ -431,7 +431,7 @@ const PH=['ph1','ph2','ph3','ph4','ph5','ph6','ph7','ph8'];
 function ph(i){return PH[i%PH.length];}
 function urlNoticia(n){return`noticia.html?id=${n.id}`;}
 function formatarData(str){if(!str)return'';return new Date(str).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});}
-function imgEl(url,cls,alt){if(url)return`<img src="${url}" class="${cls}" alt="${alt||''}" onerror="this.className='${cls} ${ph(Math.floor(Math.random()*8))}'">`;return`<div class="${cls} ${ph(Math.floor(Math.random()*8))}"></div>`;}
+function imgEl(url,cls,alt){if(url)return`<img src="${url}" class="${cls}" alt="${alt||''}" loading="lazy" onerror="this.className='${cls} ${ph(Math.floor(Math.random()*8))}'">`;return`<div class="${cls} ${ph(Math.floor(Math.random()*8))}"></div>`;}
 function renderBreaking(n){if(n&&n.titulo){document.getElementById('breakingText').textContent=n.titulo;document.getElementById('breakingBar').style.display='flex';}}
 function renderHero(noticias){
   if(!noticias.length){document.getElementById('heroSection').innerHTML='';return;}
@@ -442,9 +442,9 @@ function renderHero(noticias){
       <div class="hero-cat-badge hero-badge">${p.categoria||'Notícia'}</div>
       <div class="hero-overlay"><div class="hero-title">${p.titulo||''}</div><div class="hero-meta">Por Redação · ${formatarData(p.criado_em)}</div></div>
     </div><div class="hero-right">`;
-  [s1,s2].forEach((n,i)=>{if(!n)return;const bg=n.url_imagem?`<img src="${n.url_imagem}" class="hero-card-bg" alt="${n.titulo||''}" onerror="this.className='hero-card-bg ${ph(i+2)}'">`:`<div class="hero-card-bg ${ph(i+2)}"></div>`;html+=`<div class="hero-card" onclick="window.location='${urlNoticia(n)}'"> ${bg}<div class="hero-card-over"><div class="hero-card-cat">${n.categoria||''}</div><div class="hero-card-title">${n.titulo||''}</div></div></div>`;});
+  [s1,s2].forEach((n,i)=>{if(!n)return;const bg=n.url_imagem?`<img src="${n.url_imagem}" class="hero-card-bg" alt="${n.titulo||''}" loading="lazy" onerror="this.className='hero-card-bg ${ph(i+2)}'">`:`<div class="hero-card-bg ${ph(i+2)}"></div>`;html+=`<div class="hero-card" onclick="window.location='${urlNoticia(n)}'"> ${bg}<div class="hero-card-over"><div class="hero-card-cat">${n.categoria||''}</div><div class="hero-card-title">${n.titulo||''}</div></div></div>`;});
   html+=`</div></div>`;
-  if(minis.length){const catColors={'Brasil':'#e8171f','Politica':'#0066cc','Economia':'#1a8a34','Esportes':'#e67e00','Entretenimento':'#c0246e','Tecnologia':'#6b2fa0','Seguranca':'#007a7a'};html+=`<div class="section-row">`;minis.forEach((n,i)=>{const bg=n.url_imagem?`<img src="${n.url_imagem}" class="mini-bg" alt="${n.titulo||''}" onerror="this.className='mini-bg ${ph(i+5)}'">`:`<div class="mini-bg ${ph(i+5)}"></div>`;html+=`<div class="mini-card" onclick="window.location='${urlNoticia(n)}'"> ${bg}<div class="mini-over"><div class="mini-cat" style="color:${catColors[n.categoria]||'#fff'};">${n.categoria||''}</div><div class="mini-title">${n.titulo||''}</div></div></div>`;});html+=`</div>`;}
+  if(minis.length){const catColors={'Brasil':'#e8171f','Politica':'#0066cc','Economia':'#1a8a34','Esportes':'#e67e00','Entretenimento':'#c0246e','Tecnologia':'#6b2fa0','Seguranca':'#007a7a'};html+=`<div class="section-row">`;minis.forEach((n,i)=>{const bg=n.url_imagem?`<img src="${n.url_imagem}" class="mini-bg" alt="${n.titulo||''}" loading="lazy" onerror="this.className='mini-bg ${ph(i+5)}'">`:`<div class="mini-bg ${ph(i+5)}"></div>`;html+=`<div class="mini-card" onclick="window.location='${urlNoticia(n)}'"> ${bg}<div class="mini-over"><div class="mini-cat" style="color:${catColors[n.categoria]||'#fff'};">${n.categoria||''}</div><div class="mini-title">${n.titulo||''}</div></div></div>`;});html+=`</div>`;}
   document.getElementById('heroSection').innerHTML=html;
 }
 function renderList(noticias){
@@ -463,18 +463,22 @@ async function aplicarFiltro(){
   if(!filtroAtivo){renderHero(todas);renderList(todas);return;}
   const alvo=normalizarTexto(filtroAtivo);
   let filtradas=todas.filter(n=>{const canon=normalizarTexto(categoriaCanonica(n.categoria)),raw=normalizarTexto(n.categoria);return canon===alvo||raw===alvo||raw.includes(alvo);});
-  if(filtradas.length){renderHero(filtradas);renderList(filtradas);return;}
-  /* Fallback: a categoria pode não estar entre as últimas 60 notícias carregadas.
-     Nesse caso, busca direto no Supabase por essa categoria específica. */
-  document.getElementById('heroSection').innerHTML=`<div style="text-align:center;padding:40px;color:#999;">Carregando notícias de ${filtroAtivo}...</div>`;
-  document.getElementById('listSection').innerHTML='';
+  if(filtradas.length>=7){renderHero(filtradas);renderList(filtradas);return;}
+  /* Cache local (últimas 60 do site inteiro) não tem as 7 dessa categoria —
+     isso acontece quando outras categorias publicam mais rápido e "empurram"
+     essa categoria pra fora da janela dos 60 mais recentes. Busca direto. */
+  if(!filtradas.length){
+    document.getElementById('heroSection').innerHTML=`<div style="text-align:center;padding:40px;color:#999;">Carregando notícias de ${filtroAtivo}...</div>`;
+    document.getElementById('listSection').innerHTML='';
+  }
   try{
     const aliases=CATEGORIA_ALIASES[filtroAtivo]||[alvo];
     const orFiltro=aliases.map(a=>`categoria.ilike.%${a}%`).join(',');
-    const{data,error}=await db.from('hora').select('*').or(orFiltro).order('criado_em',{ascending:false}).limit(60);
+    const{data,error}=await db.from('hora').select('id,titulo,categoria,url_imagem,criado_em').or(orFiltro).order('criado_em',{ascending:false}).limit(20);
     if(error)throw error;
-    filtradas=(data||[]).map(n=>({...n,titulo:(n.titulo||'').replace(/\*\*/g,'').trim(),categoria:categoriaCanonica(n.categoria)}));
-  }catch(e){console.error(e);filtradas=[];}
+    const buscadas=(data||[]).map(n=>({...n,titulo:(n.titulo||'').replace(/\*\*/g,'').trim(),categoria:categoriaCanonica(n.categoria)}));
+    if(buscadas.length)filtradas=buscadas;
+  }catch(e){console.error(e);}
   if(!filtradas.length){
     document.getElementById('heroSection').innerHTML=`<div style="text-align:center;padding:40px;color:#999;">Nenhuma notícia encontrada em ${filtroAtivo} no momento.</div>`;
     return;
@@ -482,10 +486,10 @@ async function aplicarFiltro(){
   renderHero(filtradas);renderList(filtradas);
 }
 function filtrar(cat,el){filtroAtivo=cat;document.querySelectorAll('.nav-cat').forEach(a=>a.classList.remove('active'));if(el)el.classList.add('active');aplicarFiltro();}
-function buscar(){const t=document.getElementById('searchInput').value.toLowerCase().trim();if(!t){aplicarFiltro();return;}const f=todas.filter(n=>(n.titulo||'').toLowerCase().includes(t)||(n.conteudo||'').toLowerCase().includes(t));renderHero(f);renderList(f);}
+async function buscar(){const t=document.getElementById('searchInput').value.toLowerCase().trim();if(!t){aplicarFiltro();return;}document.getElementById('heroSection').innerHTML=`<div style="text-align:center;padding:40px;color:#999;">Buscando "${t}"...</div>`;document.getElementById('listSection').innerHTML='';const safe=t.replace(/[,()%"']/g,' ').trim();try{const{data,error}=await db.from('hora').select('id,titulo,categoria,url_imagem,criado_em').or(`titulo.ilike.%${safe}%,conteudo.ilike.%${safe}%`).order('criado_em',{ascending:false}).limit(30);if(error)throw error;const f=(data||[]).map(n=>({...n,titulo:(n.titulo||'').replace(/\*\*/g,'').trim(),categoria:categoriaCanonica(n.categoria)}));if(!f.length){document.getElementById('heroSection').innerHTML=`<div style="text-align:center;padding:40px;color:#999;">Nada encontrado para "${t}".</div>`;return;}renderHero(f);renderList(f);}catch(e){console.error(e);renderHero(todas.filter(n=>(n.titulo||'').toLowerCase().includes(t)));renderList(todas.filter(n=>(n.titulo||'').toLowerCase().includes(t)));}}
 document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')buscar();});
 let ultimaAssinatura='';
-async function carregar(){try{const{data,error}=await db.from('hora').select('*').order('criado_em',{ascending:false}).limit(60);if(error)throw error;const novas=(data||[]).map(n=>({...n,titulo:(n.titulo||'').replace(/\*\*/g,'').trim(),categoria:categoriaCanonica(n.categoria)}));const assinatura=novas.map(n=>n.id).join(',');if(assinatura!==ultimaAssinatura){ultimaAssinatura=assinatura;todas=novas;if(todas[0])renderBreaking(todas[0]);aplicarFiltro();renderMaisLidas(todas);renderTrending();}setTimeout(carregar,60000);}catch(e){console.error(e);if(!todas.length)document.getElementById('heroSection').innerHTML='<div style="text-align:center;padding:40px;color:#999;">Erro ao carregar notícias.</div>';setTimeout(carregar,60000);}}
+async function carregar(){try{const{data,error}=await db.from('hora').select('id,titulo,categoria,url_imagem,criado_em').order('criado_em',{ascending:false}).limit(60);if(error)throw error;const novas=(data||[]).map(n=>({...n,titulo:(n.titulo||'').replace(/\*\*/g,'').trim(),categoria:categoriaCanonica(n.categoria)}));const assinatura=novas.map(n=>n.id).join(',');if(assinatura!==ultimaAssinatura){ultimaAssinatura=assinatura;todas=novas;if(todas[0])renderBreaking(todas[0]);aplicarFiltro();renderMaisLidas(todas);renderTrending();}setTimeout(carregar,60000);}catch(e){console.error(e);if(!todas.length)document.getElementById('heroSection').innerHTML='<div style="text-align:center;padding:40px;color:#999;">Erro ao carregar notícias.</div>';setTimeout(carregar,60000);}}
 carregar();
 db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'},()=>carregar()).subscribe();
 
