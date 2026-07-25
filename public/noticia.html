@@ -6,9 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="Portal X">
+<meta property="og:site_name" content="O X da Notícia">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="author" content="Portal X">
+<meta name="author" content="O X da Notícia">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7054499486507421" crossorigin="anonymous"></script>
 <link rel="canonical" id="canonical" href="">
 <title id="pageTitle">Carregando... | O X da Notícia</title>
 <meta name="description" id="metaDesc" content="">
@@ -276,7 +278,7 @@ img{max-width:100%;display:block;}
               <div class="author-avatar" id="artAuthorAvatar"></div>
               <div class="author-info">
                 <div class="author-name" id="artAuthor" itemprop="author"></div>
-                <div class="author-role">Jornalista | Portal X</div>
+                <div class="author-role">Jornalista | O X da Notícia</div>
               </div>
             </div>
             <div class="meta-divider"></div>
@@ -366,7 +368,7 @@ img{max-width:100%;display:block;}
         <div class="footer-col"><h4>Esportes</h4><ul><li><a href="#">Futebol</a></li><li><a href="#">Fórmula 1</a></li><li><a href="#">Olimpíadas</a></li><li><a href="#">Tênis</a></li><li><a href="#">Basquete</a></li></ul></div>
         <div class="footer-col"><h4>Entretenimento</h4><ul><li><a href="#">Cinema</a></li><li><a href="#">Música</a></li><li><a href="#">Streaming</a></li><li><a href="#">Famosos</a></li><li><a href="#">Games</a></li></ul></div>
         <div class="footer-col"><h4>Serviços</h4><ul><li><a href="#">Clima</a></li><li><a href="#">Câmbio</a></li><li><a href="#">Bolsa</a></li><li><a href="#">Concursos</a></li></ul></div>
-        <div class="footer-col"><h4>Portal X</h4><ul>
+        <div class="footer-col"><h4>O X da Notícia</h4><ul>
           <li><a href="/sobre.html">Sobre nós</a></li>
           <li><a href="/anuncie.html">Anuncie</a></li>
           <li><a href="/privacidade.html">Privacidade</a></li>
@@ -380,7 +382,7 @@ img{max-width:100%;display:block;}
     <div class="container">
       <div class="footer-bottom-inner">
         <div class="footer-logo"><span style="color:#e8171f;">O X</span> da Notícia</div>
-        <div class="footer-copy">© 2026 Portal X · CNPJ: XX.XXX.XXX/0001-XX · Todos os direitos reservados</div>
+        <div class="footer-copy">© 2026 O X da Notícia · CNPJ: XX.XXX.XXX/0001-XX · Todos os direitos reservados</div>
         <div class="footer-social">
           <a href="#" class="social-btn" aria-label="Facebook">f</a>
           <a href="#" class="social-btn" aria-label="Twitter">𝕏</a>
@@ -402,14 +404,14 @@ const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 const AUTORES_BIO = {
   'Lionor VS2':           { bio: 'Jornalista sênior com mais de 10 anos de experiência em cobertura política e econômica. Especialista em análise de conjuntura nacional.', genero: 'M', cor: '#C0392B' },
   'Carlos Mendonca':      { bio: 'Repórter de economia e mercado financeiro. Formado em Jornalismo, cobre o setor há 8 anos.', genero: 'M', cor: '#2980B9' },
-  'Ana Paula Figueiredo': { bio: 'Editora de política e relações institucionais. Atuou em grandes veículos nacionais antes de integrar o Portal X.', genero: 'F', cor: '#8E44AD' },
+  'Ana Paula Figueiredo': { bio: 'Editora de política e relações institucionais. Atuou em grandes veículos nacionais antes de integrar o O X da Notícia.', genero: 'F', cor: '#8E44AD' },
   'Roberto Dias':         { bio: 'Correspondente e analista de cenário internacional. Especialista em geopolítica e relações exteriores.', genero: 'M', cor: '#16A085' },
   'Mariana Souza':        { bio: 'Jornalista cultural e de entretenimento. Cobre cinema, música e comportamento com olhar crítico e aprofundado.', genero: 'F', cor: '#D35400' },
   'Felipe Cardoso':       { bio: 'Repórter de tecnologia e inovação. Acompanha startups, inteligência artificial e o universo digital.', genero: 'M', cor: '#27AE60' },
   'Juliana Moreira':      { bio: 'Jornalista esportiva com passagem pela cobertura de Copa do Mundo e Jogos Olímpicos.', genero: 'F', cor: '#E91E63' },
-  'Redacao Portal X':     { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
+  'Redação O X da Notícia':     { bio: 'Equipe de jornalismo do O X da Notícia, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
   'Escritor Lecao':       { bio: 'Escritor apaixonado por literatura, cultura e pelo poder transformador da informação.', genero: 'M', cor: '#C0392B' },
-  'Redação Portal X':     { bio: 'Equipe de jornalismo do Portal X, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
+  'Redação O X da Notícia':     { bio: 'Equipe de jornalismo do O X da Notícia, comprometida com informação rápida, precisa e de qualidade.', genero: 'N', cor: '#E8171F' },
   'Carlos Mendonça':      { bio: 'Repórter de economia e mercado financeiro. Cobre o setor há 8 anos.', genero: 'M', cor: '#2980B9' }
 };
 
@@ -423,8 +425,8 @@ const FOTOS_AUTORES = {
   'Mariana Souza':        'autor-mariana.jpeg',
   'Felipe Cardoso':       'autor-felipe.jpeg',
   'Juliana Moreira':      'autor-juliana.jpeg',
-  'Redacao Portal X':     'autor-redacao.jpeg',
-  'Redação Portal X':     'autor-redacao.jpeg',
+  'Redação O X da Notícia':     'autor-redacao.jpeg',
+  'Redação O X da Notícia':     'autor-redacao.jpeg',
   'Escritor Lecao':       'autor-lecao.jpeg'
 };
 
@@ -524,13 +526,13 @@ function renderTags(categoria) {
 }
 
 function renderAuthorBio(autor) {
-  const bio = AUTORES_BIO[autor] || AUTORES_BIO['Redacao Portal X'] || { bio: 'Jornalista do Portal X.', genero: 'N', cor: '#E8171F' };
+  const bio = AUTORES_BIO[autor] || AUTORES_BIO['Redação O X da Notícia'] || { bio: 'Jornalista do O X da Notícia.', genero: 'N', cor: '#E8171F' };
   const svgAvatar = gerarAvatarBioSVG(bio.genero, bio.cor, autor);
   document.getElementById('artAuthorBio').innerHTML = `
     <div class="author-bio-avatar" style="background:none;padding:0;">${svgAvatar}</div>
     <div class="author-bio-info">
       <h4>${autor}</h4>
-      <span>Jornalista | Portal X</span>
+      <span>Jornalista | O X da Notícia</span>
       <p>${bio.bio}</p>
     </div>`;
 }
@@ -550,7 +552,7 @@ async function carregarNoticia() {
 
     // SEO dinâmico
     const desc = data.conteudo ? data.conteudo.replace(/<[^>]*>/g,'').substring(0,160) : '';
-    document.title = `${data.titulo} | Portal X`;
+    document.title = `${data.titulo} | O X da Notícia`;
     document.getElementById('metaDesc').content = desc;
     document.getElementById('ogTitle').content  = data.titulo;
     document.getElementById('ogDesc').content   = desc;
@@ -566,7 +568,7 @@ async function carregarNoticia() {
       "description": desc,
       "image": data.url_imagem || '',
       "author": { "@type": "Person", "name": autor },
-      "publisher": { "@type": "Organization", "name": "Portal X", "logo": { "@type": "ImageObject", "url": "https://oxdanoticia.vercel.app/logo.png" } },
+      "publisher": { "@type": "Organization", "name": "O X da Notícia", "logo": { "@type": "ImageObject", "url": "https://oxdanoticia.vercel.app/logo.png" } },
       "datePublished": data.criado_em,
       "dateModified": data.criado_em,
       "mainEntityOfPage": window.location.href
@@ -581,7 +583,7 @@ async function carregarNoticia() {
     document.getElementById('artReadTime').textContent = calcularLeitura(data.conteudo||'');
     document.getElementById('artAuthor').textContent  = autor;
 
-    const bioData = AUTORES_BIO[autor] || AUTORES_BIO['Redacao Portal X'] || { genero: 'N', cor: '#E8171F' };
+    const bioData = AUTORES_BIO[autor] || AUTORES_BIO['Redação O X da Notícia'] || { genero: 'N', cor: '#E8171F' };
     const avatarEl = document.getElementById('artAuthorAvatar');
     if (avatarEl) {
       avatarEl.innerHTML = gerarAvatarSVG(bioData.genero, bioData.cor, autor);
@@ -602,7 +604,7 @@ async function carregarNoticia() {
     if (data.url_imagem) {
       document.getElementById('artImgWrap').innerHTML = `
         <img class="article-img" src="${data.url_imagem}" alt="${data.titulo||''}" itemprop="image">
-        <div class="article-img-caption">Foto: Portal X | ${data.categoria||''}</div>`;
+        <div class="article-img-caption">Foto: O X da Notícia | ${data.categoria||''}</div>`;
     }
 
     // Corpo — HTML ou texto
@@ -639,12 +641,12 @@ async function carregarNoticia() {
 
 function extrairAutor(conteudo, categoria) {
   if (categoria === 'Literatura') return 'Escritor Lecao';
-  if (!conteudo) return 'Redacao Portal X';
+  if (!conteudo) return 'Redação O X da Notícia';
   const match = conteudo.match(/—\s*<strong>([^<]+)<\/strong>/);
   if (match) return match[1].trim();
   const match2 = conteudo.match(/—\s*([^|<\n]+)\s*\|/);
   if (match2) return match2[1].trim();
-  return 'Redacao Portal X';
+  return 'Redação O X da Notícia';
 }
 
 function mostrarErro() {
@@ -654,6 +656,176 @@ function mostrarErro() {
 
 carregarNoticia();
 </script>
+  <!-- ==========================================================
+     BANNER DE CONSENTIMENTO DE COOKIES (LGPD + Google AdSense)
+     Cole este bloco inteiro LOGO ANTES da tag </body>snippet
+     em TODAS as páginas do site (index.html, privacidade.html,
+     termos.html, sobre.html, contato.html, anuncie.html, noticia.html...)
+     ========================================================== -->
+<style>
+#cookieBanner{
+  position:fixed;left:0;right:0;bottom:0;z-index:9999;
+  background:#1a1a1a;color:#eee; 
+  padding:16px 20px;
+  display:none;
+  box-shadow:0 -2px 12px rgba(0,0,0,0.25);
+  font-family:'Source Sans 3','Helvetica Neue',sans-serif;
+}
+#cookieBanner.show{display:flex;}
+.cb-inner{
+  max-width:1200px;margin:0 auto;width:100%;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;
+}
+.cb-text{flex:1;min-width:240px;font-size:13px;line-height:1.5;color:#ccc;}
+.cb-text a{color:#ff6b6b;text-decoration:underline;}
+.cb-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.cb-btn{
+  border:none;border-radius:3px;padding:9px 16px;font-size:13px;font-weight:600;
+  cursor:pointer;font-family:inherit;white-space:nowrap;transition:opacity .15s;
+}
+.cb-btn:hover{opacity:0.85;}
+.cb-accept{background:#e8171f;color:#fff;}
+.cb-reject{background:transparent;color:#ccc;border:1px solid #555;}
+.cb-settings{background:transparent;color:#999;text-decoration:underline;padding:9px 4px;}
+
+/* Painel de preferências detalhado */
+#cookieSettings{
+  position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.6);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+#cookieSettings.show{display:flex;}
+.cs-box{background:#fff;border-radius:6px;max-width:480px;width:100%;padding:24px;max-height:85vh;overflow:auto;}
+.cs-box h3{font-family:'Merriweather',Georgia,serif;font-size:18px;margin-bottom:12px;color:#111;}
+.cs-box p{font-size:13px;color:#555;margin-bottom:16px;line-height:1.5;}
+.cs-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #eee;}
+.cs-row:last-of-type{border-bottom:none;}
+.cs-row-title{font-size:14px;font-weight:700;color:#111;margin-bottom:3px;}
+.cs-row-desc{font-size:12px;color:#888;}
+.cs-switch{position:relative;width:40px;height:22px;flex-shrink:0;}
+.cs-switch input{opacity:0;width:0;height:0;}
+.cs-slider{position:absolute;inset:0;background:#ccc;border-radius:22px;cursor:pointer;transition:.2s;}
+.cs-slider:before{content:"";position:absolute;height:16px;width:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;}
+input:checked + .cs-slider{background:#e8171f;}
+input:checked + .cs-slider:before{transform:translateX(18px);}
+input:disabled + .cs-slider{opacity:0.5;cursor:not-allowed;}
+.cs-actions{display:flex;gap:8px;margin-top:20px;}
+.cs-save{flex:1;background:#e8171f;color:#fff;border:none;border-radius:3px;padding:10px;font-weight:600;cursor:pointer;font-size:13px;}
+.cs-cancel{background:transparent;color:#888;border:1px solid #ddd;border-radius:3px;padding:10px 14px;cursor:pointer;font-size:13px;}
+</style>
+
+<div id="cookieBanner">
+  <div class="cb-inner">
+    <div class="cb-text">
+      Usamos cookies para melhorar sua experiência, analisar o tráfego e exibir anúncios personalizados (Google AdSense). Você pode aceitar todos, recusar os não essenciais, ou personalizar suas preferências. Saiba mais na nossa <a href="privacidade.html">Política de Privacidade</a>.
+    </div>
+    <div class="cb-actions">
+      <button class="cb-btn cb-settings" onclick="cookieOpenSettings()">Personalizar</button>
+      <button class="cb-btn cb-reject" onclick="cookieSetConsent(false)">Recusar</button>
+      <button class="cb-btn cb-accept" onclick="cookieSetConsent(true)">Aceitar todos</button>
+    </div>
+  </div>
+</div>
+
+<div id="cookieSettings">
+  <div class="cs-box">
+    <h3>Preferências de cookies</h3>
+    <p>Escolha quais categorias de cookies você permite. Cookies essenciais não podem ser desativados, pois são necessários para o funcionamento do site.</p>
+
+    <div class="cs-row">
+      <div>
+        <div class="cs-row-title">Essenciais</div>
+        <div class="cs-row-desc">Necessários para o funcionamento básico do site.</div>
+      </div>
+      <label class="cs-switch"><input type="checkbox" checked disabled><span class="cs-slider"></span></label>
+    </div>
+
+    <div class="cs-row">
+      <div>
+        <div class="cs-row-title">Analíticos</div>
+        <div class="cs-row-desc">Nos ajudam a entender como você usa o site.</div>
+      </div>
+      <label class="cs-switch"><input type="checkbox" id="csAnalytics"><span class="cs-slider"></span></label>
+    </div>
+
+    <div class="cs-row">
+      <div>
+        <div class="cs-row-title">Publicidade (Google AdSense)</div>
+        <div class="cs-row-desc">Usados para exibir anúncios relevantes com base na sua navegação.</div>
+      </div>
+      <label class="cs-switch"><input type="checkbox" id="csAds"><span class="cs-slider"></span></label>
+    </div>
+
+    <div class="cs-actions">
+      <button class="cs-cancel" onclick="cookieCloseSettings()">Cancelar</button>
+      <button class="cs-save" onclick="cookieSavePreferences()">Salvar preferências</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var CONSENT_KEY='oxdanoticia_cookie_consent';
+
+  function getConsent(){
+    try{
+      var raw=document.cookie.split('; ').find(function(r){return r.indexOf(CONSENT_KEY+'=')===0;});
+      if(!raw)return null;
+      return JSON.parse(decodeURIComponent(raw.split('=')[1]));
+    }catch(e){return null;}
+  }
+  function saveConsent(obj){
+    var d=new Date();d.setFullYear(d.getFullYear()+1);
+    document.cookie=CONSENT_KEY+'='+encodeURIComponent(JSON.stringify(obj))+';expires='+d.toUTCString()+';path=/;SameSite=Lax';
+  }
+  function applyConsent(consent){
+    // Google Consent Mode v2 — ajusta o comportamento do AdSense conforme a escolha do usuário
+    if(typeof gtag==='function'){
+      gtag('consent','update',{
+        'ad_storage':consent.ads?'granted':'denied',
+        'ad_user_data':consent.ads?'granted':'denied',
+        'ad_personalization':consent.ads?'granted':'denied',
+        'analytics_storage':consent.analytics?'granted':'denied'
+      });
+    }
+    window.__cookieConsent=consent;
+  }
+
+  window.cookieSetConsent=function(acceptAll){
+    var consent={essential:true,analytics:acceptAll,ads:acceptAll,timestamp:Date.now()};
+    saveConsent(consent);applyConsent(consent);
+    document.getElementById('cookieBanner').classList.remove('show');
+  };
+  window.cookieOpenSettings=function(){
+    document.getElementById('cookieSettings').classList.add('show');
+  };
+  window.cookieCloseSettings=function(){
+    document.getElementById('cookieSettings').classList.remove('show');
+  };
+  window.cookieSavePreferences=function(){
+    var consent={
+      essential:true,
+      analytics:document.getElementById('csAnalytics').checked,
+      ads:document.getElementById('csAds').checked,
+      timestamp:Date.now()
+    };
+    saveConsent(consent);applyConsent(consent);
+    document.getElementById('cookieSettings').classList.remove('show');
+    document.getElementById('cookieBanner').classList.remove('show');
+  };
+
+  document.addEventListener('DOMContentLoaded',function(){
+    var existing=getConsent();
+    if(existing){
+      applyConsent(existing);
+    } else {
+      // Consentimento padrão: nega ads/analytics até o usuário decidir (Consent Mode v2)
+      applyConsent({essential:true,analytics:false,ads:false});
+      document.getElementById('cookieBanner').classList.add('show');
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
-"fix: remover prefixo /oxdanoticia/ dos links"
