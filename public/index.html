@@ -263,9 +263,124 @@ ul{list-style:none;}
   .bras-card{min-width:142px;padding:8px 10px;}
   .bras-emblem{height:24px;}
 }
+
+/* ==============================================
+   FAIXA DA BOLSA — ticker rolante no topo
+   ============================================== */
+.fin-ticker-wrap{
+  background:#0b0e14;border-bottom:1px solid #1c2230;
+  overflow:hidden;white-space:nowrap;position:relative;
+}
+.fin-ticker-track{
+  display:inline-flex;align-items:center;width:max-content;
+  animation:fin-scroll 40s linear infinite;
+}
+.fin-ticker-wrap:hover .fin-ticker-track{animation-play-state:paused;}
+@keyframes fin-scroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+.fin-item{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 22px;border-right:1px solid #1c2230;
+  font-family:'Source Sans 3','Helvetica Neue',sans-serif;
+  flex-shrink:0;
+}
+.fin-name{color:#8a93a6;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;}
+.fin-price{color:#fff;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;}
+.fin-change{font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:2px;font-variant-numeric:tabular-nums;}
+.fin-change.up{color:#1dd75b;}
+.fin-change.down{color:#ff4d4d;}
+.fin-change.flat{color:#8a93a6;}
+.fin-loading{color:#8a93a6;font-size:11px;padding:8px 20px;display:inline-block;}
+@media(max-width:768px){
+  .fin-item{padding:6px 14px;}
+  .fin-name{font-size:10px;}
+  .fin-price{font-size:11px;}
+  .fin-change{font-size:10px;}
+}
 </style>
 </head>
 <body>
+
+<!-- ===== FAIXA DA BOLSA — cotações reais ===== -->
+<div class="fin-ticker-wrap" id="finTickerWrap">
+  <div class="fin-ticker-track" id="finTickerTrack">
+    <span class="fin-loading">Carregando cotações...</span>
+  </div>
+</div>
+<script>
+(function(){
+  var itemsData=[];
+  var track=document.getElementById('finTickerTrack');
+
+  function fmtMoney(v,dec){
+    dec=dec===undefined?2:dec;
+    var n=parseFloat(v);
+    if(isNaN(n))return'—';
+    return n.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+  }
+  function changeHtml(pct){
+    var n=parseFloat(pct);
+    if(isNaN(n))return'<span class="fin-change flat">—</span>';
+    var cls=n>0?'up':n<0?'down':'flat';
+    var arrow=n>0?'▲':n<0?'▼':'•';
+    return'<span class="fin-change '+cls+'">'+arrow+' '+(n>0?'+':'')+n.toFixed(2)+'%</span>';
+  }
+  function buildItem(name,price,pct,prefix){
+    return'<span class="fin-item"><span class="fin-name">'+name+'</span><span class="fin-price">'+(prefix||'')+price+'</span>'+changeHtml(pct)+'</span>';
+  }
+  function safeFetchJson(url){
+    return fetch(url).then(function(r){return r.json();}).catch(function(){return null;});
+  }
+
+  function render(){
+    if(!itemsData.length){
+      track.innerHTML='<span class="fin-loading">Não foi possível carregar as cotações.</span>';
+      return;
+    }
+    var html=itemsData.join('')+itemsData.join(''); // duplicado p/ loop contínuo
+    track.innerHTML=html;
+  }
+
+  function loadAll(){
+    var items=[];
+
+    var pMoedas=safeFetchJson('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL').then(function(d){
+      if(!d)return;
+      if(d.USDBRL)items.push(buildItem('Dólar',fmtMoney(d.USDBRL.bid),d.USDBRL.pctChange,'R$ '));
+      if(d.EURBRL)items.push(buildItem('Euro',fmtMoney(d.EURBRL.bid),d.EURBRL.pctChange,'R$ '));
+      if(d.BTCBRL)items.push(buildItem('Bitcoin',fmtMoney(d.BTCBRL.bid,0),d.BTCBRL.pctChange,'R$ '));
+    });
+
+    var pIbov=safeFetchJson('https://api.hgbrasil.com/finance?format=json-cors').then(function(d){
+      if(!d||!d.results||!d.results.stocks||!d.results.stocks.IBOVESPA)return;
+      var ib=d.results.stocks.IBOVESPA;
+      items.push(buildItem('Ibovespa',fmtMoney(ib.points,0),ib.variation,''));
+    });
+
+    var pAcoes=safeFetchJson('https://brapi.dev/api/quote/PETR4,VALE3,ITUB4,MGLU3').then(function(d){
+      if(!d||!d.results)return;
+      d.results.forEach(function(r){
+        items.push(buildItem(r.symbol,fmtMoney(r.regularMarketPrice),r.regularMarketChangePercent,'R$ '));
+      });
+    });
+
+    Promise.all([pMoedas,pIbov,pAcoes]).then(function(){
+      // Reordena: Ibovespa primeiro, depois moedas, depois ações
+      items.sort(function(a,b){
+        function rank(s){if(s.indexOf('Ibovespa')>-1)return 0;if(s.indexOf('Dólar')>-1)return 1;if(s.indexOf('Euro')>-1)return 2;if(s.indexOf('Bitcoin')>-1)return 3;return 4;}
+        return rank(a)-rank(b);
+      });
+      itemsData=items;
+      render();
+    });
+  }
+
+  loadAll();
+  setInterval(loadAll,120000); // atualiza a cada 2 minutos
+})();
+</script>
 
 <!-- HEADER -->
 <div class="header">
