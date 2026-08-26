@@ -161,59 +161,64 @@ ul{list-style:none;}
 @media(max-width:480px){.section-row{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}}
 
 /* ==============================================
-   WIDGET BRASILEIRÃO — mesma estrutura, tema verde/amarelo
+   WIDGET COPA — Layout Globo.com (fundo branco)
    ============================================== */
-.bras-wrap{background:#fff;border-bottom:1px solid #e0e0e0;}
-.bras-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
+.copa-wrap{background:#fff;border-bottom:1px solid #e0e0e0;}
+.copa-inner{max-width:1200px;margin:0 auto;padding:0 24px;}
 
-.bras-head{
+/* Cabeçalho estilo Globo */
+.copa-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:12px 0 0;gap:12px;
 }
-.bras-head-left{display:flex;align-items:center;gap:10px;}
-.bras-emblem{height:32px;width:auto;object-fit:contain;}
-.bras-htitle{font-size:15px;font-weight:700;color:#111;}
-.bras-hsub{font-size:10px;color:#999;font-weight:400;}
-.bras-live-pill{
+.copa-head-left{display:flex;align-items:center;gap:10px;}
+.copa-emblem{height:32px;width:auto;object-fit:contain;}
+.copa-htitle{font-size:15px;font-weight:700;color:#111;}
+.copa-hsub{font-size:10px;color:#999;font-weight:400;}
+.copa-live-pill{
   display:none;align-items:center;gap:4px;
-  font-size:10px;font-weight:800;color:#009c3b;
+  font-size:10px;font-weight:800;color:#e8171f;
   text-transform:uppercase;letter-spacing:0.5px;
 }
-.bras-live-pill span{
-  width:7px;height:7px;border-radius:50%;background:#009c3b;
+.copa-live-pill span{
+  width:7px;height:7px;border-radius:50%;background:#e8171f;
   animation:livepulse 1s ease-in-out infinite;
 }
-.bras-agenda-link{
-  font-size:12px;color:#009c3b;font-weight:600;
-  border:1px solid #009c3b;border-radius:3px;
+@keyframes livepulse{0%,100%{opacity:1;}50%{opacity:0.2;}}
+.copa-agenda-link{
+  font-size:12px;color:#e8171f;font-weight:600;
+  border:1px solid #e8171f;border-radius:3px;
   padding:3px 10px;white-space:nowrap;
   transition:all 0.15s;text-decoration:none;
 }
-.bras-agenda-link:hover{background:#009c3b;color:#fff;}
+.copa-agenda-link:hover{background:#e8171f;color:#fff;}
 
-.bras-tabs-row{
+/* Tabs */
+.copa-tabs-row{
   display:flex;overflow-x:auto;scrollbar-width:none;
   border-bottom:2px solid #f0f0f0;margin-top:8px;
 }
-.bras-tabs-row::-webkit-scrollbar{display:none;}
-.bras-tab{
+.copa-tabs-row::-webkit-scrollbar{display:none;}
+.copa-tab{
   padding:7px 16px;font-size:11px;font-weight:700;color:#888;
   cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;
   transition:all 0.15s;white-space:nowrap;text-transform:uppercase;letter-spacing:0.4px;
 }
-.bras-tab.active{color:#009c3b;border-bottom-color:#009c3b;}
-.bras-tab:hover{color:#009c3b;}
+.copa-tab.active{color:#e8171f;border-bottom-color:#e8171f;}
+.copa-tab:hover{color:#e8171f;}
 
-.bras-scroll{
+/* Scroll de cards */
+.copa-scroll{
   overflow-x:auto;padding:12px 0 14px;
   scrollbar-width:thin;scrollbar-color:#ddd #fff;
   -webkit-overflow-scrolling:touch;
 }
-.bras-scroll::-webkit-scrollbar{height:3px;}
-.bras-scroll::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px;}
-.bras-track{display:flex;gap:0;min-width:max-content;}
+.copa-scroll::-webkit-scrollbar{height:3px;}
+.copa-scroll::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px;}
+.copa-track{display:flex;gap:0;min-width:max-content;}
 
-.bras-card{
+/* Card — estrutura EXATA da Globo */
+.copa-card{
   display:flex;flex-direction:column;
   min-width:158px;
   padding:10px 14px;
@@ -222,165 +227,55 @@ ul{list-style:none;}
   cursor:pointer;transition:background 0.13s;
   background:#fff;
 }
-.bras-card:first-child{border-left:1px solid #ebebeb;}
-.bras-card:hover{background:#fafafa;}
-.bras-card.is-live{border-top-color:#009c3b;}
-.bras-card.is-next{border-top-color:#f0a500;}
-.bras-card.is-done{border-top-color:#ddd;}
+.copa-card:first-child{border-left:1px solid #ebebeb;}
+.copa-card:hover{background:#fafafa;}
+.copa-card.is-live{border-top-color:#e8171f;}
+.copa-card.is-next{border-top-color:#f0a500;}
+.copa-card.is-done{border-top-color:#ddd;}
 
-.bras-card-top{
+/* Topo do card: data/hora · badge/seta */
+.copa-card-top{
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:9px;gap:6px;min-height:18px;
 }
-.bras-card-date{font-size:11px;color:#555;font-weight:600;white-space:nowrap;}
-.bras-arrow{color:#009c3b;font-size:13px;font-weight:700;}
+.copa-card-date{font-size:11px;color:#555;font-weight:600;white-space:nowrap;}
+.copa-arrow{color:#e8171f;font-size:13px;font-weight:700;}
 
-.bras-badge{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;padding:2px 7px;border-radius:2px;white-space:nowrap;flex-shrink:0;}
-.bras-badge.live    {background:#009c3b;color:#fff;}
-.bras-badge.ht      {background:#ff6b00;color:#fff;}
-.bras-badge.ft      {background:#f0f0f0;color:#888;}
-.bras-badge.pen     {background:#7c3aed;color:#fff;}
-.bras-badge.aet     {background:#0284c7;color:#fff;}
+/* Badges */
+.copa-badge{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;padding:2px 7px;border-radius:2px;white-space:nowrap;flex-shrink:0;}
+.copa-badge.live    {background:#e8171f;color:#fff;}
+.copa-badge.ht      {background:#ff6b00;color:#fff;}
+.copa-badge.ft      {background:#f0f0f0;color:#888;}
+.copa-badge.pen     {background:#7c3aed;color:#fff;}
+.copa-badge.aet     {background:#0284c7;color:#fff;}
 
-.bras-teams-col{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
-.bras-team-row{display:flex;align-items:center;gap:7px;}
-.bras-flag{width:22px;height:15px;object-fit:cover;border-radius:2px;border:1px solid rgba(0,0,0,0.08);flex-shrink:0;display:block;}
-.bras-flag-ph{width:22px;height:15px;border-radius:2px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aaa;flex-shrink:0;}
-.bras-tname{font-size:13px;font-weight:600;color:#222;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:88px;}
-.bras-tname.winner{font-weight:800;color:#111;}
-.bras-tgoal{font-size:14px;font-weight:800;color:#111;min-width:14px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;}
-.bras-tgoal.live-g{color:#009c3b;}
+/* Times: bandeira | nome | gol — um por linha */
+.copa-teams-col{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
+.copa-team-row{display:flex;align-items:center;gap:7px;}
+.copa-flag{width:22px;height:15px;object-fit:cover;border-radius:2px;border:1px solid rgba(0,0,0,0.08);flex-shrink:0;display:block;}
+.copa-flag-ph{width:22px;height:15px;border-radius:2px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#aaa;flex-shrink:0;}
+.copa-tname{font-size:13px;font-weight:600;color:#222;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:88px;}
+.copa-tname.winner{font-weight:800;color:#111;}
+.copa-tgoal{font-size:14px;font-weight:800;color:#111;min-width:14px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;}
+.copa-tgoal.live-g{color:#e8171f;}
 
-.bras-round-line{font-size:10px;color:#aaa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* Rodada */
+.copa-round-line{font-size:10px;color:#aaa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-.bras-loading-row{display:flex;align-items:center;gap:8px;padding:28px 20px;color:#bbb;font-size:12px;}
-.bras-spinner{width:14px;height:14px;border:2px solid #eee;border-top-color:#009c3b;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
-.bras-empty{padding:24px 20px;color:#bbb;font-size:12px;}
-.bras-refresh-line{font-size:10px;color:#ccc;padding:2px 0 8px;text-align:right;}
+/* Estados */
+.copa-loading-row{display:flex;align-items:center;gap:8px;padding:28px 20px;color:#bbb;font-size:12px;}
+.copa-spinner{width:14px;height:14px;border:2px solid #eee;border-top-color:#e8171f;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;}
+.copa-empty{padding:24px 20px;color:#bbb;font-size:12px;}
+.copa-refresh-line{font-size:10px;color:#ccc;padding:2px 0 8px;text-align:right;}
 
 @media(max-width:768px){
-  .bras-inner{padding:0 12px;}
-  .bras-card{min-width:142px;padding:8px 10px;}
-  .bras-emblem{height:24px;}
-}
-
-/* ==============================================
-   FAIXA DA BOLSA — ticker rolante no topo
-   ============================================== */
-.fin-ticker-wrap{
-  background:#0b0e14;border-bottom:1px solid #1c2230;
-  overflow:hidden;white-space:nowrap;position:relative;
-}
-.fin-ticker-track{
-  display:inline-flex;align-items:center;width:max-content;
-  animation:fin-scroll 40s linear infinite;
-}
-.fin-ticker-wrap:hover .fin-ticker-track{animation-play-state:paused;}
-@keyframes fin-scroll{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
-}
-.fin-item{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:7px 22px;border-right:1px solid #1c2230;
-  font-family:'Source Sans 3','Helvetica Neue',sans-serif;
-  flex-shrink:0;
-}
-.fin-name{color:#8a93a6;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;}
-.fin-price{color:#fff;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;}
-.fin-change{font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:2px;font-variant-numeric:tabular-nums;}
-.fin-change.up{color:#1dd75b;}
-.fin-change.down{color:#ff4d4d;}
-.fin-change.flat{color:#8a93a6;}
-.fin-loading{color:#8a93a6;font-size:11px;padding:8px 20px;display:inline-block;}
-@media(max-width:768px){
-  .fin-item{padding:6px 14px;}
-  .fin-name{font-size:10px;}
-  .fin-price{font-size:11px;}
-  .fin-change{font-size:10px;}
+  .copa-inner{padding:0 12px;}
+  .copa-card{min-width:142px;padding:8px 10px;}
+  .copa-emblem{height:24px;}
 }
 </style>
 </head>
 <body>
-
-<!-- ===== FAIXA DA BOLSA — cotações reais ===== -->
-<div class="fin-ticker-wrap" id="finTickerWrap">
-  <div class="fin-ticker-track" id="finTickerTrack">
-    <span class="fin-loading">Carregando cotações...</span>
-  </div>
-</div>
-<script>
-(function(){
-  var itemsData=[];
-  var track=document.getElementById('finTickerTrack');
-
-  function fmtMoney(v,dec){
-    dec=dec===undefined?2:dec;
-    var n=parseFloat(v);
-    if(isNaN(n))return'—';
-    return n.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec});
-  }
-  function changeHtml(pct){
-    var n=parseFloat(pct);
-    if(isNaN(n))return'<span class="fin-change flat">—</span>';
-    var cls=n>0?'up':n<0?'down':'flat';
-    var arrow=n>0?'▲':n<0?'▼':'•';
-    return'<span class="fin-change '+cls+'">'+arrow+' '+(n>0?'+':'')+n.toFixed(2)+'%</span>';
-  }
-  function buildItem(name,price,pct,prefix){
-    return'<span class="fin-item"><span class="fin-name">'+name+'</span><span class="fin-price">'+(prefix||'')+price+'</span>'+changeHtml(pct)+'</span>';
-  }
-  function safeFetchJson(url){
-    return fetch(url).then(function(r){return r.json();}).catch(function(){return null;});
-  }
-
-  function render(){
-    if(!itemsData.length){
-      track.innerHTML='<span class="fin-loading">Não foi possível carregar as cotações.</span>';
-      return;
-    }
-    var html=itemsData.join('')+itemsData.join(''); // duplicado p/ loop contínuo
-    track.innerHTML=html;
-  }
-
-  function loadAll(){
-    var items=[];
-
-    var pMoedas=safeFetchJson('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL').then(function(d){
-      if(!d)return;
-      if(d.USDBRL)items.push(buildItem('Dólar',fmtMoney(d.USDBRL.bid),d.USDBRL.pctChange,'R$ '));
-      if(d.EURBRL)items.push(buildItem('Euro',fmtMoney(d.EURBRL.bid),d.EURBRL.pctChange,'R$ '));
-      if(d.BTCBRL)items.push(buildItem('Bitcoin',fmtMoney(d.BTCBRL.bid,0),d.BTCBRL.pctChange,'R$ '));
-    });
-
-    var pIbov=safeFetchJson('https://api.hgbrasil.com/finance?format=json-cors').then(function(d){
-      if(!d||!d.results||!d.results.stocks||!d.results.stocks.IBOVESPA)return;
-      var ib=d.results.stocks.IBOVESPA;
-      items.push(buildItem('Ibovespa',fmtMoney(ib.points,0),ib.variation,''));
-    });
-
-    var pAcoes=safeFetchJson('https://brapi.dev/api/quote/PETR4,VALE3,ITUB4,MGLU3').then(function(d){
-      if(!d||!d.results)return;
-      d.results.forEach(function(r){
-        items.push(buildItem(r.symbol,fmtMoney(r.regularMarketPrice),r.regularMarketChangePercent,'R$ '));
-      });
-    });
-
-    Promise.all([pMoedas,pIbov,pAcoes]).then(function(){
-      // Reordena: Ibovespa primeiro, depois moedas, depois ações
-      items.sort(function(a,b){
-        function rank(s){if(s.indexOf('Ibovespa')>-1)return 0;if(s.indexOf('Dólar')>-1)return 1;if(s.indexOf('Euro')>-1)return 2;if(s.indexOf('Bitcoin')>-1)return 3;return 4;}
-        return rank(a)-rank(b);
-      });
-      itemsData=items;
-      render();
-    });
-  }
-
-  loadAll();
-  setInterval(loadAll,120000); // atualiza a cada 2 minutos
-})();
-</script>
 
 <!-- HEADER -->
 <div class="header">
@@ -435,41 +330,41 @@ ul{list-style:none;}
 -->
 
 
-<!-- ===== WIDGET BRASILEIRÃO SÉRIE A — layout Globo.com ===== -->
-<div class="bras-wrap">
-  <div class="bras-inner">
+<!-- ===== WIDGET COPA DO MUNDO — layout Globo.com ===== -->
+<div class="copa-wrap">
+  <div class="copa-inner">
 
-    <div class="bras-head">
-      <div class="bras-head-left">
-        <img class="bras-emblem"
-          src="https://commons.wikimedia.org/wiki/Special:FilePath/Campeonato_Brasileiro_S%C3%A9rie_A_logo_(2024).svg?width=150"
-          alt="Brasileirão Série A" onerror="this.style.display='none'">
+    <div class="copa-head">
+      <div class="copa-head-left">
+        <img class="copa-emblem"
+          src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/2026_FIFA_World_Cup_emblem.svg/150px-2026_FIFA_World_Cup_emblem.svg.png"
+          alt="Copa do Mundo FIFA 2026" onerror="this.style.display='none'">
         <div>
-          <div class="bras-htitle">Brasileirão Série A 2026</div>
-          <div class="bras-hsub">Campeonato Brasileiro</div>
+          <div class="copa-htitle">Copa do Mundo FIFA 2026</div>
+          <div class="copa-hsub">Canadá · México · EUA</div>
         </div>
-        <span class="bras-live-pill" id="brasLiveBadge"><span></span>Ao Vivo</span>
+        <span class="copa-live-pill" id="copaLiveBadge"><span></span>Ao Vivo</span>
       </div>
-      <a class="bras-agenda-link"
-        href="https://www.cbf.com.br/futebol-brasileiro/competicoes/campeonato-brasileiro-serie-a"
-        target="_blank">Ver tabela completa</a>
+      <a class="copa-agenda-link"
+        href="https://www.fifa.com/fifaplus/pt/tournaments/mens/worldcup/canadamexicousa2026/match-centre"
+        target="_blank">Ver agenda completa</a>
     </div>
 
-    <div class="bras-tabs-row">
-      <div class="bras-tab active" onclick="brasSetTab('todos',this)">Todos</div>
-      <div class="bras-tab" onclick="brasSetTab('live',this)">🔴 Ao Vivo</div>
-      <div class="bras-tab" onclick="brasSetTab('hoje',this)">Hoje</div>
-      <div class="bras-tab" onclick="brasSetTab('proximos',this)">Próximos</div>
-      <div class="bras-tab" onclick="brasSetTab('encerrados',this)">Encerrados</div>
+    <div class="copa-tabs-row">
+      <div class="copa-tab active" onclick="copaSetTab('todos',this)">Todos</div>
+      <div class="copa-tab" onclick="copaSetTab('live',this)">🔴 Ao Vivo</div>
+      <div class="copa-tab" onclick="copaSetTab('hoje',this)">Hoje</div>
+      <div class="copa-tab" onclick="copaSetTab('proximos',this)">Próximos</div>
+      <div class="copa-tab" onclick="copaSetTab('encerrados',this)">Encerrados</div>
     </div>
 
-    <div class="bras-scroll">
-      <div class="bras-track" id="brasTrack">
-        <div class="bras-loading-row"><div class="bras-spinner"></div>Carregando jogos...</div>
+    <div class="copa-scroll">
+      <div class="copa-track" id="copaTrack">
+        <div class="copa-loading-row"><div class="copa-spinner"></div>Carregando jogos...</div>
       </div>
     </div>
 
-    <div class="bras-refresh-line" id="brasRefreshTime"></div>
+    <div class="copa-refresh-line" id="copaRefreshTime"></div>
   </div>
 </div>
 
@@ -606,19 +501,27 @@ async function carregar(){try{const{data,error}=await db.from('hora').select('id
 carregar();
 db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'},()=>carregar()).subscribe();
 
-/* ===== WIDGET BRASILEIRÃO SÉRIE A — TheSportsDB (CORS livre) ===== */
+/* ===== WIDGET COPA DO MUNDO 2026 — TheSportsDB (CORS livre) ===== */
 (function(){
-  var LEAGUE='4351';
+  var LEAGUE='4429';
   var BASE='https://www.thesportsdb.com/api/v1/json/3';
   var allEvs=[],activeTab='todos',timer=null;
 
+  var ISO2={'Brazil':'br','Argentina':'ar','France':'fr','Germany':'de','Spain':'es','England':'gb-eng','Portugal':'pt','Netherlands':'nl','Italy':'it','Belgium':'be','Uruguay':'uy','Croatia':'hr','Denmark':'dk','Switzerland':'ch','USA':'us','United States':'us','Mexico':'mx','Canada':'ca','Japan':'jp','South Korea':'kr','Australia':'au','Morocco':'ma','Senegal':'sn','Ghana':'gh','Nigeria':'ng','Cameroon':'cm','Egypt':'eg','Tunisia':'tn','Algeria':'dz','South Africa':'za','Colombia':'co','Chile':'cl','Ecuador':'ec','Peru':'pe','Paraguay':'py','Bolivia':'bo','Venezuela':'ve','Panama':'pa','Costa Rica':'cr','Honduras':'hn','El Salvador':'sv','Serbia':'rs','Poland':'pl','Ukraine':'ua','Hungary':'hu','Czech Republic':'cz','Slovakia':'sk','Austria':'at','Sweden':'se','Norway':'no','Finland':'fi','Turkey':'tr','Greece':'gr','Romania':'ro','Slovenia':'si','Albania':'al','Scotland':'gb-sct','Wales':'gb-wls','Ireland':'ie','North Macedonia':'mk','Saudi Arabia':'sa','Iran':'ir','Qatar':'qa','Iraq':'iq','Jordan':'jo','UAE':'ae','Uzbekistan':'uz','Indonesia':'id','Vietnam':'vn','China':'cn','New Zealand':'nz','Ivory Coast':'ci','Mali':'ml','Congo DR':'cd','Guinea':'gn','Bosnia-Herzegovina':'ba','Montenegro':'me','Kosovo':'xk','Bulgaria':'bg','Belarus':'by','Kazakhstan':'kz','Azerbaijan':'az','Georgia':'ge','Armenia':'am','Latvia':'lv','Lithuania':'lt','Estonia':'ee','Iceland':'is','Israel':'il'};
+
   function flagImg(name,badgeUrl){
+    var iso=ISO2[name]||'';
+    var cdnUrl=iso?'https://flagcdn.com/w40/'+iso+'.png':'';
     var ini=(name||'?').charAt(0);
+    // Tenta badge do time (TheSportsDB), fallback bandeira país, fallback inicial
     if(badgeUrl){
-      var fb='this.outerHTML=\'<div class=\\\'bras-flag-ph\\\'>'+ini+'</div>\';';
-      return'<img src="'+badgeUrl+'/tiny" class="bras-flag" alt="'+name+'" onerror="'+fb+'">';
+      var fb=cdnUrl
+        ?'this.src=\''+cdnUrl+'\';this.className=\'copa-flag\';this.onerror=function(){this.outerHTML=\'<div class=\\\'copa-flag-ph\\\'>'+ini+'</div>\';};'
+        :'this.outerHTML=\'<div class=\\\'copa-flag-ph\\\'>'+ini+'</div>\';';
+      return'<img src="'+badgeUrl+'/tiny" class="copa-flag" alt="'+name+'" onerror="'+fb+'">';
     }
-    return'<div class="bras-flag-ph">'+ini+'</div>';
+    if(cdnUrl)return'<img class="copa-flag" src="'+cdnUrl+'" alt="'+name+'" onerror="this.outerHTML=\'<div class=\\\'copa-flag-ph\\\'>'+ini+'</div>\'">';
+    return'<div class="copa-flag-ph">'+ini+'</div>';
   }
 
   function localDate(off){
@@ -654,6 +557,7 @@ db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'
     var live=liveNow(ev);
     var s=ev.strStatus||'NS';
     var fin=isFinalStatus(s)&&!live;
+    var ns=!live&&!fin;
 
     var hs=(ev.intHomeScore!==null&&ev.intHomeScore!==''&&ev.intHomeScore!==undefined)?ev.intHomeScore:null;
     var as_=(ev.intAwayScore!==null&&ev.intAwayScore!==''&&ev.intAwayScore!==undefined)?ev.intAwayScore:null;
@@ -667,29 +571,30 @@ db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'
     var dateStr=dl+(hora?' · '+hora:'');
     var round=ev.strRound||(ev.intRound?'Rodada '+ev.intRound:'');
 
+    // Badge direito no topo
     var rightHtml='';
     if(live&&s!=='HT'){
       var min=(ev.strProgress?ev.strProgress+"'":s==='1H'?'1T':s==='2H'?'2T':'AO VIVO');
-      rightHtml='<span class="bras-badge live">'+min+'</span>';
+      rightHtml='<span class="copa-badge live">'+min+'</span>';
     } else if(s==='HT'){
-      rightHtml='<span class="bras-badge ht">Intervalo</span>';
+      rightHtml='<span class="copa-badge ht">Intervalo</span>';
     } else if(s==='AET'){
-      rightHtml='<span class="bras-badge aet">AET</span>';
+      rightHtml='<span class="copa-badge aet">AET</span>';
     } else if(fin){
-      rightHtml='<span class="bras-badge ft">FT</span>';
+      rightHtml='<span class="copa-badge ft">FT</span>';
     } else {
-      rightHtml='<span class="bras-arrow">→</span>';
+      rightHtml='<span class="copa-arrow">→</span>';
     }
 
-    var cardCls=live?'bras-card is-live':fin?'bras-card is-done':'bras-card is-next';
+    var cardCls=live?'copa-card is-live':fin?'copa-card is-done':'copa-card is-next';
 
     return '<div class="'+cardCls+'">'
-      +'<div class="bras-card-top"><span class="bras-card-date">'+dateStr+'</span>'+rightHtml+'</div>'
-      +'<div class="bras-teams-col">'
-        +'<div class="bras-team-row">'+flagImg(ev.strHomeTeam||'',ev.strHomeTeamBadge||'')+'<span class="bras-tname'+(homeW?' winner':'')+'">'+((ev.strHomeTeam||'—'))+'</span>'+(hasScore?'<span class="bras-tgoal'+gCls+'">'+hs+'</span>':'')+'</div>'
-        +'<div class="bras-team-row">'+flagImg(ev.strAwayTeam||'',ev.strAwayTeamBadge||'')+'<span class="bras-tname'+(awayW?' winner':'')+'">'+((ev.strAwayTeam||'—'))+'</span>'+(hasScore?'<span class="bras-tgoal'+gCls+'">'+as_+'</span>':'')+'</div>'
+      +'<div class="copa-card-top"><span class="copa-card-date">'+dateStr+'</span>'+rightHtml+'</div>'
+      +'<div class="copa-teams-col">'
+        +'<div class="copa-team-row">'+flagImg(ev.strHomeTeam||'',ev.strHomeTeamBadge||'')+'<span class="copa-tname'+(homeW?' winner':'')+'">'+((ev.strHomeTeam||'—'))+'</span>'+(hasScore?'<span class="copa-tgoal'+gCls+'">'+hs+'</span>':'')+'</div>'
+        +'<div class="copa-team-row">'+flagImg(ev.strAwayTeam||'',ev.strAwayTeamBadge||'')+'<span class="copa-tname'+(awayW?' winner':'')+'">'+((ev.strAwayTeam||'—'))+'</span>'+(hasScore?'<span class="copa-tgoal'+gCls+'">'+as_+'</span>':'')+'</div>'
       +'</div>'
-      +'<div class="bras-round-line">'+round+'</div>'
+      +'<div class="copa-round-line">'+round+'</div>'
     +'</div>';
   }
 
@@ -705,7 +610,7 @@ db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'
   }
 
   function render(evs){
-    var track=document.getElementById('brasTrack');if(!track)return;
+    var track=document.getElementById('copaTrack');if(!track)return;
     var list;
     if(activeTab==='todos'){
       var today=localDate(),past3=localDate(-3),next3=localDate(3);
@@ -718,12 +623,12 @@ db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'
     } else {
       list=sortByTime(filterList(evs,activeTab));
     }
-    track.innerHTML=list.length?list.map(buildCard).join(''):'<div class="bras-empty">Nenhum jogo nesta aba.</div>';
+    track.innerHTML=list.length?list.map(buildCard).join(''):'<div class="copa-empty">Nenhum jogo nesta aba.</div>';
 
-    var badge=document.getElementById('brasLiveBadge');
+    var badge=document.getElementById('copaLiveBadge');
     if(badge)badge.style.display=evs.some(function(e){return liveNow(e);})?'inline-flex':'none';
 
-    var ref=document.getElementById('brasRefreshTime');
+    var ref=document.getElementById('copaRefreshTime');
     var now=new Date();
     if(ref)ref.textContent='Atualizado às '+('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);
   }
@@ -741,13 +646,13 @@ db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'
       safeFetch(BASE+'/eventsday.php?d='+yest+'&l='+LEAGUE)
     ]).then(function(results){
       var evs=merge([results[0].events,results[1].events,results[2].events,results[3].events,results[4].events]);
-      var track=document.getElementById('brasTrack');
-      if(!evs.length){if(track)track.innerHTML='<div class="bras-empty">Nenhum jogo encontrado.</div>';return;}
+      var track=document.getElementById('copaTrack');
+      if(!evs.length){if(track)track.innerHTML='<div class="copa-empty">Nenhum jogo encontrado.</div>';return;}
       allEvs=evs;render(evs);schedule();
     }).catch(function(e){
-      console.error('[Brasileirão]',e);
-      var track=document.getElementById('brasTrack');
-      if(track)track.innerHTML='<div class="bras-empty">Erro ao carregar jogos.</div>';
+      console.error('[Copa]',e);
+      var track=document.getElementById('copaTrack');
+      if(track)track.innerHTML='<div class="copa-empty">Erro ao carregar jogos.</div>';
     });
   }
 
@@ -757,9 +662,9 @@ db.channel('hora').on('postgres_changes',{event:'*',schema:'public',table:'hora'
     timer=setTimeout(fetchAll,hasLive?30000:180000);
   }
 
-  window.brasSetTab=function(tab,el){
+  window.copaSetTab=function(tab,el){
     activeTab=tab;
-    document.querySelectorAll('.bras-tab').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.copa-tab').forEach(function(t){t.classList.remove('active');});
     if(el)el.classList.add('active');
     render(allEvs);
   };
